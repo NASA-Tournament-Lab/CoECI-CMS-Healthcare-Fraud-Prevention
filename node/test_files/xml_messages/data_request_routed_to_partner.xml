@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Query>Query Text</Query>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+    <!-- Whether cache is available -->
+    <CacheAvailable>true</CacheAvailable>
+    <!-- Cache timestamp -->
+    <CacheTimestamp>2013-07-11T09:30:10-06:00</CacheTimestamp>
+</DataRequest>

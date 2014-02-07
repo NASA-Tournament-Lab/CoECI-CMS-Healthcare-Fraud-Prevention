@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms
+                           http://www.springframework.org/schema/jms/spring-jms.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<array>
+				<value>classpath:config.properties</value>
+			</array>
+		</property>
+	</bean>
+
+	<context:annotation-config />
+	<tx:annotation-driven transaction-manager="jtaTransactionManager"
+		proxy-target-class="true" />
+
+	<bean id="ehcache1" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="ehcache1" />
+	</bean>
+
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="shared" value="true" />
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+	</bean>
+
+	<!-- CacheService -->
+	<bean id="cacheService" class="com.hfpp.network.hub.services.impl.CacheServiceImpl">
+		<property name="ehcache" ref="ehcache1" />
+	</bean>
+
+	<!-- LookupService -->
+	<bean id="lookupService" class="com.hfpp.network.hub.services.impl.LookupServiceImpl">
+		<property name="entityManager" ref="entityManager" />
+	</bean>
+
+	<!-- AuditService -->
+	<bean id="auditService" class="com.hfpp.network.hub.services.impl.AuditServiceImpl">
+		<property name="entityManager" ref="entityManager" />
+	</bean>
+
+	<!-- AuthorizationService -->
+	<util:map id="permissions">
+		<entry key="operation1">
+			<set>
+				<value>role1</value>
+			</set>
+		</entry>
+		<entry key="operation2">
+			<set>
+				<value>role1</value>
+				<value>role2</value>
+				<value>role3</value>
+			</set>
+		</entry>
+		<entry key="testoperation">
+			<set>
+				<value>role1</value>
+				<!--comment below to test Authorization Errors-->
+				<value>role2</value>
+				<value>role3</value>
+			</set>
+		</entry>
+	</util:map>
+	<bean id="authorizationService"
+		class="com.hfpp.network.hub.services.impl.AuthorizationServiceImpl">
+		<property name="entityManager" ref="entityManager" />
+		<property name="permissions" ref="permissions" />
+	</bean>
+
+	<bean id="passwordEncryptor" class="org.jasypt.util.password.StrongPasswordEncryptor">
+	</bean>
+
+	<!-- UserService -->
+	<util:list id="rolesEligibleToReceiveDataRequests">
+		<value>role1</value>
+		<value>role2</value>
+		<value>role3</value>
+	</util:list>
+	<util:list id="rolesEligibleToInitiateDataRequests">
+		<value>role1</value>
+		<value>role2</value>
+		<value>role3</value>
+	</util:list>
+	<bean id="userService" class="com.hfpp.network.hub.services.impl.UserServiceImpl">
+		<property name="entityManager" ref="entityManager" />
+		<property name="initialRespondedRequestsValue" value="${initialRespondedRequestsValue}" />
+		<property name="participationRatioThreshold" value="${participationRatioThreshold}" />
+		<property name="passwordEncryptor" ref="passwordEncryptor" />
+		<property name="rolesEligibleToReceiveDataRequests" ref="rolesEligibleToReceiveDataRequests" />
+		<property name="rolesEligibleToInitiateDataRequests" ref="rolesEligibleToInitiateDataRequests" />
+	</bean>
+
+	<!-- AuthenticationService -->
+	<bean id="authenticationService"
+		class="com.hfpp.network.hub.services.impl.AuthenticationServiceImpl">
+		<property name="entityManager" ref="entityManager" />
+		<property name="passwordEncryptor" ref="passwordEncryptor" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<!-- JMS Template -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+
+	<bean id="velocityEngine" class="org.apache.velocity.app.VelocityEngine">
+	</bean>
+
+	<!-- DataExchangeService -->
+	<bean id="dataExchangeService"
+		class="com.hfpp.network.hub.services.impl.DataExchangeServiceImpl">
+		<property name="entityManager" ref="entityManager" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="cacheService" ref="cacheService" />
+		<property name="userService" ref="userService" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="analysisResultQueuePrefix" value="${analysisResultQueuePrefix}" />
+		<property name="dataResponseQueuePrefix" value="${dataResponseQueuePrefix}" />
+		<property name="dataRequestQueuePrefix" value="${dataRequestQueuePrefix}" />
+		<property name="dataResponseTemplatePath" value="${dataResponseTemplatePath}" />
+		<property name="dataRequestTemplatePath" value="${dataRequestTemplatePath}" />
+	</bean>
+
+	<!-- JMS Connection Factory uses jtaTransactionManager -->
+	<bean id="qpidConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+		<property name="connectionURLString"
+			value="amqp://guest:guest@clientid/default?brokerlist='tcp://localhost:5672'" />
+	</bean>
+	<bean id="jmsConnectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="qpidConnectionFactory" />
+	</bean>
+
+	<!-- JPA EntityManager Factory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"
+		depends-on="btmConfig">
+		<property name="persistenceUnitName" value="persistenceUnitJTA" />
+	</bean>
+
+	<bean id="entityManager"
+		class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="btmConfig" factory-method="getConfiguration"
+		class="bitronix.tm.TransactionManagerServices">
+		<property name="serverId" value="spring-btm" />
+		<property name="logPart1Filename" value="@installer_folder@/temp/btm1.tlog" />
+		<property name="logPart2Filename" value="@installer_folder@/temp/btm2.tlog" />
+		<property name="warnAboutZeroResourceTransaction" value="false" />
+		<property name="gracefulShutdownInterval" value="2" />
+	</bean>
+
+	<bean id="bitronixTransactionManager" factory-method="getTransactionManager"
+		class="bitronix.tm.TransactionManagerServices" depends-on="btmConfig"
+		destroy-method="shutdown" />
+	<bean id="jtaTransactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="transactionManager" ref="bitronixTransactionManager" />
+		<property name="userTransaction" ref="bitronixTransactionManager" />
+	</bean>
+
+	<bean id="partnerStatisticsRequestMessageHandler"
+		class="com.hfpp.network.hub.messaging.handlers.PartnerStatisticsRequestMessageHandler">
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<bean id="partnerListRequestMessageHandler"
+		class="com.hfpp.network.hub.messaging.handlers.PartnerListRequestMessageHandler">
+		<property name="userService" ref="userService" />
+	</bean>
+	
+    <bean id="partnerAddRequestMessageHandler"
+        class="com.hfpp.network.hub.messaging.handlers.PartnerAddRequestMessageHandler">
+        <property name="userService" ref="userService" />
+         <property name="lookupService" ref="lookupService" />
+         <property name="jmsTemplate" ref="jmsTemplate" />
+    </bean>
+    
+    <bean id="partnerEditRequestMessageHandler"
+        class="com.hfpp.network.hub.messaging.handlers.PartnerEditRequestMessageHandler">
+        <property name="userService" ref="userService" />
+         <property name="lookupService" ref="lookupService" />
+    </bean>
+    
+    <bean id="partnerDeleteRequestMessageHandler"
+        class="com.hfpp.network.hub.messaging.handlers.PartnerDeleteRequestMessageHandler">
+        <property name="userService" ref="userService" />
+        <property name="jmsTemplate" ref="jmsTemplate" />
+    </bean>
+    
+    <bean id="partnerGetRequestMessageHandler"
+        class="com.hfpp.network.hub.messaging.handlers.PartnerGetRequestMessageHandler">
+        <property name="userService" ref="userService" />
+    </bean>
+    
+    <bean id="partnerRoleListRequestMessageHandler"
+        class="com.hfpp.network.hub.messaging.handlers.PartnerRoleListRequestMessageHandler">
+        <property name="lookupService" ref="lookupService" />
+    </bean>
+
+	<bean id="dataRequestMessageHandler"
+		class="com.hfpp.network.hub.messaging.handlers.DataRequestMessageHandler">
+		<property name="dataExchangeService" ref="dataExchangeService" />
+	</bean>
+
+	<bean id="dataResponseMessageHandler"
+		class="com.hfpp.network.hub.messaging.handlers.DataResponseMessageHandler">
+		<property name="dataExchangeService" ref="dataExchangeService" />
+	</bean>
+
+	<bean id="analysisResultMessageHandler"
+		class="com.hfpp.network.hub.messaging.handlers.AnalysisResultMessageHandler">
+		<property name="dataExchangeService" ref="dataExchangeService" />
+	</bean>
+
+	<bean id="analysisResultQueue" class="org.apache.qpid.client.AMQAnyDestination">
+		<constructor-arg index="0" value="${analysisResultQueue}" />
+	</bean>
+
+	<bean id="dataRequestQueue" class="org.apache.qpid.client.AMQAnyDestination">
+		<constructor-arg index="0" value="${dataRequestQueue}" />
+	</bean>
+
+	<bean id="dataResponseQueue" class="org.apache.qpid.client.AMQAnyDestination">
+		<constructor-arg index="0" value="${dataResponseQueue}" />
+	</bean>
+
+	<bean id="generalServiceQueue" class="org.apache.qpid.client.AMQAnyDestination">
+		<constructor-arg index="0" value="${generalServiceQueue}" />
+	</bean>
+
+	<util:map id="exceptionErrorCodes">
+		<entry key="com.hfpp.network.hub.services.NetworkHubServiceException"
+			value="000" />
+		<entry key="com.hfpp.network.hub.services.EntityNotFoundException"
+			value="000" />
+		<entry key="com.hfpp.network.hub.services.AuthorizationException"
+			value="002" />
+		<entry key="com.hfpp.network.hub.services.AuthenticationException"
+			value="001" />
+		<entry key="com.hfpp.network.hub.services.DataRequestExpiredException"
+			value="003" />
+		<entry
+			key="com.hfpp.network.hub.services.InsufficientParticipationRatioException"
+			value="003" />
+		<entry key="org.xml.sax.SAXParseException" value="100" />
+
+		<entry key="org.xml.sax.SAXException" value="100" />
+	</util:map>
+
+	<util:map id="exceptionErrorMessages">
+		<entry key="com.hfpp.network.hub.services.NetworkHubServiceException"
+			value="service error" />
+		<entry key="com.hfpp.network.hub.services.EntityNotFoundException"
+			value="entity not found error" />
+		<entry key="com.hfpp.network.hub.services.AuthorizationException"
+			value="authorization error" />
+		<entry key="com.hfpp.network.hub.services.AuthenticationException"
+			value="authentication error" />
+		<entry key="com.hfpp.network.hub.services.DataRequestExpiredException"
+			value="dataRequest expired error" />
+		<entry
+			key="com.hfpp.network.hub.services.InsufficientParticipationRatioException"
+			value="insufficient participation ratio error" />
+		<entry key="org.xml.sax.SAXParseException" value="xml parse error" />
+		<entry key="org.xml.sax.SAXException" value="xml sax error" />
+	</util:map>
+
+	<bean id="dataRequestMessageListener"
+		class="com.hfpp.network.hub.messaging.DataRequestMessageListener">
+		<property name="defaultErrorCode"
+			value="${dataRequestMessageListener.defaultErrorCode}" />
+		<property name="defaultErrorMessage"
+			value="${dataRequestMessageListener.defaultErrorMessage}" />
+		<property name="usernameHeader" value="${usernameHeader}" />
+		<property name="passwordHeader" value="${passwordHeader}" />
+		<property name="schemaPath" value="${dataRequestMessageListener.schemaPath}" />
+		<property name="templatePath" value="${dataRequestMessageListener.templatePath}" />
+		<property name="operationName" value="${dataRequestMessageListener.operationName}" />
+		<property name="auditService" ref="auditService" />
+		<property name="authenticationService" ref="authenticationService" />
+		<property name="authorizationService" ref="authorizationService" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="messageHandler" ref="dataRequestMessageHandler" />
+		<property name="exceptionErrorCodes" ref="exceptionErrorCodes" />
+		<property name="exceptionErrorMessages" ref="exceptionErrorMessages" />
+	</bean>
+
+	<bean id="dataRequestMessageContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="dataRequestQueue" />
+		<property name="messageListener" ref="dataRequestMessageListener" />
+		<property name="transactionManager" ref="jtaTransactionManager" />
+		<property name="sessionTransacted" value="true" />
+	</bean>
+
+
+	<bean id="dataResponseMessageListener"
+		class="com.hfpp.network.hub.messaging.DataResponseMessageListener">
+		<property name="defaultErrorCode"
+			value="${dataResponseMessageListener.defaultErrorCode}" />
+		<property name="defaultErrorMessage"
+			value="${dataResponseMessageListener.defaultErrorMessage}" />
+		<property name="usernameHeader" value="${usernameHeader}" />
+		<property name="passwordHeader" value="${passwordHeader}" />
+		<property name="schemaPath" value="${dataResponseMessageListener.schemaPath}" />
+		<property name="templatePath" value="${dataResponseMessageListener.templatePath}" />
+		<property name="operationName" value="${dataResponseMessageListener.operationName}" />
+		<property name="auditService" ref="auditService" />
+		<property name="authenticationService" ref="authenticationService" />
+		<property name="authorizationService" ref="authorizationService" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="messageHandler" ref="dataResponseMessageHandler" />
+		<property name="exceptionErrorCodes" ref="exceptionErrorCodes" />
+		<property name="exceptionErrorMessages" ref="exceptionErrorMessages" />
+	</bean>
+
+	<bean id="dataResponseMessageContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="dataResponseQueue" />
+		<property name="messageListener" ref="dataResponseMessageListener" />
+		<property name="transactionManager" ref="jtaTransactionManager" />
+		<property name="sessionTransacted" value="true" />
+		<property name="autoStartup" value="false" />
+	</bean>
+	<bean id="analysisResultMessageListener"
+		class="com.hfpp.network.hub.messaging.AnalysisResultMessageListener">
+		<property name="defaultErrorCode"
+			value="${analysisResultMessageListener.defaultErrorCode}" />
+		<property name="defaultErrorMessage"
+			value="${analysisResultMessageListener.defaultErrorMessage}" />
+		<property name="usernameHeader" value="${usernameHeader}" />
+		<property name="passwordHeader" value="${passwordHeader}" />
+		<property name="schemaPath" value="${analysisResultMessageListener.schemaPath}" />
+		<property name="templatePath"
+			value="${analysisResultMessageListener.templatePath}" />
+		<property name="operationName"
+			value="${analysisResultMessageListener.operationName}" />
+		<property name="auditService" ref="auditService" />
+		<property name="authenticationService" ref="authenticationService" />
+		<property name="authorizationService" ref="authorizationService" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="messageHandler" ref="analysisResultMessageHandler" />
+		<property name="exceptionErrorCodes" ref="exceptionErrorCodes" />
+		<property name="exceptionErrorMessages" ref="exceptionErrorMessages" />
+	</bean>
+
+	<bean id="analysisResultMessageContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="analysisResultQueue" />
+		<property name="messageListener" ref="analysisResultMessageListener" />
+		<property name="transactionManager" ref="jtaTransactionManager" />
+		<property name="sessionTransacted" value="true" />
+		<property name="autoStartup" value="false" />
+	</bean>
+
+	<util:map id="schemaPaths">
+		<entry key="PartnerListRequest" value="${partnerListRequestMessageHandler.schemaPath}" />
+		<entry key="PartnerStatisticsRequest"
+			value="${partnerStatisticsRequestMessageHandler.schemaPath}" />
+	    <entry key="PartnerAddRequest" value="${partnerAddRequestMessageHandler.schemaPath}" />
+	    <entry key="PartnerEditRequest" value="${partnerEditRequestMessageHandler.schemaPath}" />
+	    <entry key="PartnerDeleteRequest" value="${partnerDeleteRequestMessageHandler.schemaPath}" />
+	    <entry key="PartnerGetRequest" value="${partnerGetRequestMessageHandler.schemaPath}" />
+	    <entry key="PartnerRoleListRequest" value="${partnerRoleListRequestMessageHandler.schemaPath}" />
+	</util:map>
+	<util:map id="templatePaths">
+		<entry key="PartnerListRequest" value="${partnerListRequestMessageHandler.templatePath}" />
+		<entry key="PartnerStatisticsRequest"
+			value="${partnerStatisticsRequestMessageHandler.templatePath}" />
+	    <entry key="PartnerAddRequest" value="${partnerAddRequestMessageHandler.templatePath}" />
+	    <entry key="PartnerEditRequest" value="${partnerEditRequestMessageHandler.templatePath}" />
+	    <entry key="PartnerDeleteRequest" value="${partnerDeleteRequestMessageHandler.templatePath}" />
+	    <entry key="PartnerGetRequest" value="${partnerGetRequestMessageHandler.templatePath}" />
+	    <entry key="PartnerRoleListRequest" value="${partnerRoleListRequestMessageHandler.templatePath}" />
+	</util:map>
+	<util:map id="operationNames">
+		<entry key="PartnerListRequest" value="${partnerListRequestMessageHandler.operationName}" />
+		<entry key="PartnerStatisticsRequest"
+			value="${partnerStatisticsRequestMessageHandler.operationName}" />
+	    <entry key="PartnerAddRequest" value="${partnerAddRequestMessageHandler.operationName}" />
+	    <entry key="PartnerEditRequest" value="${partnerEditRequestMessageHandler.operationName}" />
+	    <entry key="PartnerDeleteRequest" value="${partnerDeleteRequestMessageHandler.operationName}" />
+	    <entry key="PartnerGetRequest" value="${partnerGetRequestMessageHandler.operationName}" />
+	    <entry key="PartnerRoleListRequest" value="${partnerRoleListRequestMessageHandler.operationName}" />
+	</util:map>
+
+	<util:map id="messageHandlers">
+		<entry key="PartnerListRequest" value-ref="partnerListRequestMessageHandler" />
+		<entry key="PartnerStatisticsRequest" value-ref="partnerStatisticsRequestMessageHandler" />
+		<entry key="PartnerAddRequest" value-ref="partnerAddRequestMessageHandler" />
+		<entry key="PartnerEditRequest" value-ref="partnerEditRequestMessageHandler" />
+		<entry key="PartnerDeleteRequest" value-ref="partnerDeleteRequestMessageHandler" />
+		<entry key="PartnerGetRequest" value-ref="partnerGetRequestMessageHandler" />
+		<entry key="PartnerRoleListRequest" value-ref="partnerRoleListRequestMessageHandler" />
+	</util:map>
+
+	<bean id="generalServiceMessageListener"
+		class="com.hfpp.network.hub.messaging.GeneralServiceMessageListener">
+		<property name="defaultErrorCode"
+			value="${generalServiceMessageListener.defaultErrorCode}" />
+		<property name="defaultErrorMessage"
+			value="${generalServiceMessageListener.defaultErrorMessage}" />
+		<property name="usernameHeader" value="${usernameHeader}" />
+		<property name="passwordHeader" value="${passwordHeader}" />
+		<property name="auditService" ref="auditService" />
+		<property name="authenticationService" ref="authenticationService" />
+		<property name="authorizationService" ref="authorizationService" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="schemaPaths" ref="schemaPaths" />
+		<property name="templatePaths" ref="templatePaths" />
+		<property name="operationNames" ref="operationNames" />
+		<property name="messageHandlers" ref="messageHandlers" />
+		<property name="exceptionErrorCodes" ref="exceptionErrorCodes" />
+		<property name="exceptionErrorMessages" ref="exceptionErrorMessages" />
+	</bean>
+
+	<bean id="generalServicetMessageContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="generalServiceQueue" />
+		<property name="messageListener" ref="generalServiceMessageListener" />
+		<property name="transactionManager" ref="jtaTransactionManager" />
+		<property name="sessionTransacted" value="true" />
+		<property name="autoStartup" value="false" />
+	</bean>
+</beans>

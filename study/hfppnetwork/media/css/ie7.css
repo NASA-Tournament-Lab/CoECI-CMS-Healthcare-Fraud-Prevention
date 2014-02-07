@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS Document */
+.textarea-section{
+	display:inline;
+	}
+
+/* Study Details */	
+.study-details{
+	min-height:10px;
+	}
+		
+/* Filter Claims */
+.filter-claims-content .sub-tab-container{
+	position:static;
+	}
+	
+.visual-analysis-content .text{
+	position:static;
+	}
+	
+/* Action Search */
+.transaction-container .table-action .search-action{
+	width:340px;
+	}
+
+/* corner issue in IE 7*/
+.bl{
+	background-position:0 -3px;
+	bottom:0;
+	left:0;
+	}
+	
+.br{
+	background-position:-3px -3px;
+	bottom:0;
+	right:0;
+	}
+	
+#tab-partners .partner-lists .partner-list-box ul li a{
+	font-size:14px;
+	}

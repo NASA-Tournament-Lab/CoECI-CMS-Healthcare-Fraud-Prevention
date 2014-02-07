@@ -1,0 +1,43 @@
+Test case 1:
+curl -i --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 2:
+curl -i -X POST -H "Accept:application/json" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 3:
+curl -i -X POST -d "" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 4:
+curl -i -X POST --data @test1.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 5:
+curl -i -X POST --data @test2.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 6:
+curl -i -X POST --data @test3.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 7:
+curl -i -X POST --data @test4.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 8:
+curl -i -X POST --data @test5.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 9:
+curl -i -X POST --data @test6.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 10:
+curl -i -X POST --data @test7.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 11:
+curl -i -X POST --data @test8.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 12:
+curl -i -X POST --data @test3.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 13:
+curl -i -X POST --data @test5.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+Test case 14:
+curl -i -X POST --data @test8.xml -H "Content-Type:application/xml" --cacert ../conf/cert.cer https://test.com:8070/callbacks/data_request
+
+

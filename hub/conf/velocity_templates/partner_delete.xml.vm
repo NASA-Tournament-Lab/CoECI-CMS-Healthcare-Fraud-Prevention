@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerDelete>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+    <PartnerID>$partnerID</PartnerID>
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</PartnerDelete>

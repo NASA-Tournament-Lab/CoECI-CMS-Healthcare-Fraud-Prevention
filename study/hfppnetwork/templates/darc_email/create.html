@@ -1,0 +1,86 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template defines the page for adding new DARC email. #}
+
+{% extends "base.html" %} {% block bodyid %} id="partnerPage"{% endblock %} {% block content %}
+<div id="main-container">
+    <div class="title">
+        <h2>Add DARC Email</h2>
+    </div>
+    <!-- End .title -->
+
+    <div class="tab-container partner-tab-container">
+        <div class="tab-wrapper">
+            <div class="tab-content" id="tab-partners">
+                <div class="partner-wrapper">
+                    <div class="partner-content">
+
+                        <div id="partner-add-box" style="margin-left: 0px"
+                            class="partner-main-content">
+                            <div class="buttons">
+                                <h3>Add New DARC Email</h3>
+                            </div>
+                            <!-- End .buttons -->
+                            <div class="partner-content-container">
+                                <div class="partner-inner">
+                                    <form action="" method="post" id="darc-email-add-form">
+                                        {% csrf_token %}
+                                        <div class="form-header">
+                                            <h4>Partner Detail Information</h4>
+                                        </div>
+                                        <div class="form-body">
+                                            <dl class="form">
+                                                <dd>
+                                                    <div class="icon icon-floor"></div>
+                                                    <label for="darc-email-email">Email</label>
+                                                    <div class="right-field">
+                                                        <input type="text" class="text"
+                                                            id="darc-email-email" name="email"
+                                                            maxlength="100"{% if form.email.value %} value="{{form.email.value}}"{% endif %} />
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div style="color:#F00">
+                                                    {% if form.email.errors %}
+                                                    Invalid email format.
+                                                    {% endif %}
+                                                    {% if errors and errors.email %}
+                                                    {{errors.email}}
+                                                    {% endif %}
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="form-command">
+                                            <div
+                                                class="button btn-orange btn-form-save js-action-save-add-email">
+                                                <span><span>SAVE</span></span>
+                                            </div>
+                                            <div
+                                                class="button btn-blue btn-form-cancel js-action-cancel-add-email">
+                                                <span><span>CANCEL</span></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="corner bl"></div>
+                                <div class="corner br"></div>
+                                <div class="corner tl"></div>
+                                <div class="corner tr"></div>
+                            </div>
+                        </div>
+                        <!-- End #partner-add-box -->
+                    </div>
+                    <!-- End .partner-content -->
+                    <div class="clear"></div>
+                </div>
+                <!-- End .partner-wrapper -->
+            </div>
+            <!-- End .tab-content -->
+        </div>
+        <!-- End .tab-wrapper -->
+    </div>
+    <!-- End .tab-container -->
+</div>
+<!-- End #main-container -->
+{% endblock %}

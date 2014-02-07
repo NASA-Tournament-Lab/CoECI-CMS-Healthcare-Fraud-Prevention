@@ -1,0 +1,387 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block main-container %}
+<div class="title">
+    <a href="/studies/create" class="btn-new-study"><span><span><span class="icon">NEW STUDY</span></span></span></a>
+    <!-- This link lead to New_Study.html -->
+    <h2>Studies</h2>
+</div>
+<!-- End .title -->
+<div class="filter">
+    <div class="field">
+        <form id="search_form" action="/studies" method="get">{% csrf_token %}
+            {{ search_form.status | attr:'type:hidden' | add_class:"js-search-form-status" }}
+            <a href="javascript:$('#search_form').submit();" class="btn-search"><span><span><span class="icon">SEARCH</span></span></span></a>
+            <div class="column column-first">
+                <div class="row">
+                    <label for="id_id">Study ID</label>
+                    {{ search_form.id | add_class:'text study-id' }}
+                </div>
+                <div class="row">
+                    <label for="id_description">Study Description</label>
+                    {{ search_form.description | add_class:'text study-description' }}
+                </div>
+            </div>
+            <!-- End .column -->
+            <div class="column column-second">
+                <div class="row">
+                    <label for="create-between">Created Between</label>
+                    {{ search_form.created_on_from | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                    <span class="date-txt">and</span>
+                    {{ search_form.created_on_to | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                </div>
+                <div class="row">
+                    <label for="last-modified-between">Last Modified Between</label>
+                    {{ search_form.last_modified_on_from | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                    <span class="date-txt">and</span>
+                    {{ search_form.last_modified_on_to | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                </div>
+            </div>
+            <!-- End .column -->
+            <div class="column column-second">
+                <div class="row">
+                    <label for="executed-between">Executed Between</label>
+                    {{ search_form.executed_on_from | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                    <span class="date-txt">and</span>
+                    {{ search_form.executed_on_to | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                </div>
+                <div class="row">
+                    <label for="completed-between">Completed  Between</label>
+                    {{ search_form.completed_on_from | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                    <span class="date-txt">and</span>
+                    {{ search_form.completed_on_to | add_class:'text date-picker' | attr:'readonly:readonly' }}
+                </div>
+            </div>
+        </form>
+        <!-- End .column -->
+    </div>
+</div>
+<!-- End .filter -->
+<div class="tab-container">
+    <div class="tab" id="js-home-anchors">
+        <ul>
+            <li class="active tab-item js-anchor-draft js-anchor-tab"><a href="javascript:;">
+                Draft
+                <span class="number">{{ count_of_draft_studies }}</span>
+            </a></li>
+            <li class="tab-item js-anchor-inprogress js-anchor-tab"><a href="javascript:;">
+                In Progress
+                <span class="number">{{ count_of_in_progress_studies }}</span>
+            </a></li>
+            <li class="tab-item js-anchor-completed js-anchor-tab"><a href="javascript:;">
+                Completed
+                <span class="number">{{ count_of_analysis_studies }}</span>
+            </a></li>
+            <li class="tab-item js-anchor-archived js-anchor-tab"><a href="javascript:;">
+                Archived
+                <span class="number">{{ count_of_archived_studies }}</span>
+            </a></li>
+        </ul>
+        <div class="pagination">
+            <div class="pagination-buttons">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{{ extra_vars }}" class="btn-previous"><span class="icon">Previous</span></a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{{ extra_vars }}" class="btn-next"><span class="icon">Next</span></a>
+                {% endif %}
+            </div>
+            <div class="total">
+                <strong>{{ page_obj.start_index }}</strong>-<strong>{{ page_obj.end_index }}</strong> of <strong>{{ paginator.count }}</strong> Studies
+            </div>
+            <div class="page-turn form">
+                <span class="page-turn-txt">Show</span>
+                <select class="js-search-study-page-size" data-page-size='{{ extra_vars }}'>
+                    <option>5</option>
+                    <option selected="selected">10</option>
+                    <option>25</option>
+                    <option>50</option>
+                    <option>All</option>
+                </select>
+                <span class="page-turn-txt">per page</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- End .tab -->
+    <div class="tab-wrapper home-tab-wrapper">
+        <div class="tab-content" id="table-draft">
+            <div class="buttons">
+                <a href="javascript:;" class="btn-execute-transactions js-execute-transactions"><span><span><span class="icon">EXECUTE TRANSACTIONS</span></span></span></a>
+                <a href="javascript:;" class="btn-execute-transactions js-delete-transactions"><span><span><span class="icon">DELETE TRANSACTIONS</span></span></span></a>
+            </div>
+            <div class="table-wrapper form">
+                <div class="table-header">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="cell-check"><input type="checkbox" /></th>
+                                <th class="cell-study-id">Study ID</th>
+                                <th class="cell-study-description">Study Description</th>
+                                <th class="cell-create-on">Created On</th>
+                                <th class="cell-last-modify">Last Modified On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-tbody">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <form id="draft_form" method="post">{% csrf_token %}
+                            {% for study in object_list %}
+                            <tr>
+                                <td class="cell-check js-draft-check-wrapper"><input type="checkbox" /></td>
+                                <td class="cell-study-id">
+                                    <a href="/studies/{{ study.id }}/business_rule" class="study-id-link">{{ study.id }}</a>
+                                    <!-- This link lead to Study_Details_Draft.html -->
+                                </td>
+                                <td class="cell-study-description"><p>{{ study.description }}</p></td>
+                                <td class="cell-create-on">{{ study.created_on | date:"m/d/Y H:i" }}</td>
+                                <td class="cell-last-modify">{{ study.last_modified_on | date:"m/d/Y H:i" }}</td>
+                            </tr>
+                            {% endfor %}
+                            </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End .table-wrapper -->
+        </div>
+        <!-- End .tab-content -->
+        <div class="tab-content" id="table-in-progress">
+            <div class="buttons">
+                <a href="javascript:;" class="btn-transactions js-finalize-transactions"><span><span><span class="icon">FINALIZE TRANSACTIONS</span></span></span></a>
+            </div>
+            <div class="table-wrapper form">
+                <div class="table-header">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="cell-check"><input type="checkbox" /></th>
+                                <th class="cell-study-id">Study ID</th>
+                                <th class="study-description">Study Description</th>
+                                <th class="cell-create-on">Created On</th>
+                                <th class="cell-execute-on">Executed On</th>
+                                <th class="cell-current-status">Current Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-tbody">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <form id="inprogress_form" method="post">{% csrf_token %}
+                            {% for study in object_list %}
+                            <tr>
+                                <td class="cell-check js-inprogress-check-wrapper"><input type="checkbox" /></td>
+                                <td class="cell-study-id">
+                                    <a href="/studies/{{ study.id }}/transactions" class="study-id-link">{{ study.id }}</a>
+                                    <!-- This link lead to Study_Details_In_Progress.html -->
+                                </td>
+                                <td class="study-description"><p>{{ study.description }}</p></td>
+                                <td class="cell-create-on">{{ study.created_on | date:"m/d/Y H:i" }}</td>
+                                <td class="cell-execute-on">{{ study.executed_on | date:"m/d/Y H:i" }}</td>
+                                <td class="cell-current-status">
+                                    <div class="progress">
+                                        <div class="progress-inner"><span class="js-study-progress">0%</span></div>
+                                    </div>
+                                    <div class="requsts"><strong><span class="js-study-cnt-satisfied">{{ study.count_of_data_requests_satisfied }}</span></strong> of <strong><span class="js-study-cnt-sent">{{ study.count_of_data_requests_sent }}</span></strong></div>
+                                    <p>Requests satisfied</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End .table-wrapper -->
+        </div>
+        <!-- End .tab-content -->
+        <div class="tab-content" id="table-completed">
+            <div class="table-completed">
+                <div class="table-wrapper form">
+                    <div class="table-header">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="cell-check"><input type="checkbox" /></th>
+                                    <th class="cell-study-id">Study ID</th>
+                                    <th class="cell-study-description">Study Description</th>
+                                    <th class="cell-create-on">Created On</th>
+                                    <th class="cell-execute-on">Executed On</th>
+                                    <th class="cell-completed-on">Completed On</th>
+                                    <th class="cell-report">Report</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-tbody">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <form id="completed_form" method="post">{% csrf_token %}
+                                {% for study in object_list %}
+                                <tr>
+                                    <td class="cell-check"><input type="checkbox" /></td>
+                                    <td class="cell-study-id">
+                                        <a href="/studies/{{ study.id }}/results" class="study-id-link">{{ study.id }}</a>
+                                        <!-- This link lead to Study_Details_Completed.html -->
+                                    </td>
+                                    <td class="study-description"><p>{{ study.description }}</p></td>
+                                    <td class="cell-create-on">{{ study.created_on | date:"m/d/Y H:i" }}</td>
+                                    <td class="cell-execute-on">{{ study.executed_on | date:"m/d/Y H:i" }}</td>
+                                    <td class="cell-completed-on">{{ study.completed_on | date:"m/d/Y H:i" }}</td>
+                                    {% if study.report != '' %}
+                                    <td class="cell-report"><a href="/studies/{{ study.id }}/report" class="report-link">{{ study.id }}.xlsx</a></td>
+                                    {% else %}
+                                    <td class="cell-report"><a href="javascript:;" class="report-link"></a></td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- End .table-wrapper -->
+            </div>
+        </div>
+        <!-- End .tab-content -->
+        <div class="tab-content" id="table-archived">
+
+            <!-- End .pagination -->
+
+            <div class="table-wrapper form">
+                <div class="table-header">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="cell-check"><input type="checkbox" /></th>
+                                <th class="cell-study-id">Study ID</th>
+                                <th class="cell-study-description">Study Description</th>
+                                <th class="cell-create-on">Created On</th>
+                                <th class="cell-execute-on">Executed On</th>
+                                <th class="cell-completed-on">Completed On</th>
+                                <th class="cell-report">Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-tbody">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            {% for study in object_list %}
+                            <tr>
+                                <td class="cell-check"><input type="checkbox" /></td>
+                                <td class="cell-study-id">
+                                    <a href="/studies/{{ study.id }}/results" class="study-id-link">{{ study.id }}</a>
+                                    <!-- This link lead to Study_Details_Archived.html -->
+                                </td>
+                                <td class="cell-study-description"><p>{{ study.description }}</p></td>
+                                <td class="cell-execute-on">{{ study.created_on | date:"m/d/Y H:i" }}</td>
+                                <td class="cell-execute-on">{{ study.executed_on | date:"m/d/Y H:i" }}</td>
+                                <td class="cell-completed-on">{{ study.completed_on | date:"m/d/Y H:i" }}</td>
+                                {% if study.report != '' %}
+                                <td class="cell-report"><a href="/studies/{{ study.id }}/report" class="report-link">{{ study.id }}.xlsx</a></td>
+                                {% else %}
+                                <td class="cell-report"><a href="javascript:;" class="report-link"></a></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End .table-wrapper -->
+
+        </div>
+        <!-- End .tab-content -->
+    </div>
+    <!-- End .tab-wrapper -->
+</div>
+<!-- End .tab-container -->
+{% endblock %}
+
+{% block modal %}
+    <div id="modal">
+
+        <div class="modal" id="modal-execute-transactions">
+            <div class="modal-header">
+                <a href="/studies" class="close-modal">CLOSE</a>
+                <h2>Message</h2>
+            </div>
+            <!-- End .modal-header -->
+            <div class="modal-container">
+
+                <p>Selected Studies <span id='exec_trans_results'></span> have been <span id='study_op'></span>.</p>
+
+                <div class="buttons">
+                    <a href="/studies" class="btn-ok close-modal"><span><span><span>OK</span></span></span></a>
+                </div>
+
+            </div>
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #modal-execute-transactions -->
+
+        <div class="modal" id="modal-finalize-transactions" data-src="list">
+            <div class="modal-header">
+                <a href="/studies?status=1" class="close-modal">CLOSE</a>
+                <h2>Finalize Transactions</h2>
+            </div>
+            <!-- End .modal-header -->
+            <div class="modal-container">
+
+                <p>Are you sure you want to finalize the transactions
+and complete the study?</p>
+
+                <div class="buttons">
+                    <a href="javascript:;" class="btn-yes"><span><span><span>YES</span></span></span></a>
+                    <a href="javascript:;" class="btn-no close-modal"><span><span><span>NO</span></span></span></a>
+                </div>
+
+            </div>
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #modal-finalize-transactions -->
+
+        <div class="modal" id="modal-finalize-transactions-success">
+            <div class="modal-header">
+                <a href="javascript:;" class="close-modal">CLOSE</a>
+                <h2>Successfull</h2>
+            </div>
+            <!-- End .modal-header -->
+            <div class="modal-container">
+
+                <p>Transactions are finalized and study is ready for analysis.</p>
+
+                <div class="buttons">
+                    <a href="/studies?status=1" class="btn-ok close-modal"><span><span><span>OK</span></span></span></a>
+                </div>
+
+            </div>
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #modal-finalize-transactions-success -->
+
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerStatistics>
+    <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+    <Status>Accepted</Status>
+    <NumberOfDataRequestsReceived>55</NumberOfDataRequestsReceived>
+    <NumberOfDataRequestsResponded>50</NumberOfDataRequestsResponded>
+    <NumberOfDataRequestsInitiated>3</NumberOfDataRequestsInitiated>
+    <NumberOfDataRequestsDeclined>1</NumberOfDataRequestsDeclined>
+</PartnerStatistics>

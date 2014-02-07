@@ -1,0 +1,113 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template defines page to show user profile. #}
+
+{% extends "base.html" %}
+{% block bodyid %} id="partnerPage"{% endblock %}
+
+{% block content %}
+<div id="main-container">
+    <div class="title">
+        <h2>User Profile</h2>
+    </div>
+    <!-- End .title -->
+    <div class="tab-container partner-tab-container">
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="tab-content" id="tab-partners">
+                <div class="partner-wrapper">
+                    <!-- End .partner-lists -->
+                    <div class="partner-content">
+                        <div id="partner-detail-box" style="margin-left:0px">
+                                <!-- End .buttons -->
+                                <div class="partner-content-container">
+                                    <div class="partner-inner">
+                                        <div class="form-header">
+                                            <h4>User Detail Information</h4>
+                                        </div>
+                                        <div class="form-body">
+                                            <dl class="form">
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Username</label>
+                                                    <div class="label">{{ user.username }}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                               <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Password</label>
+                                                    <div class="label">*********</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>First name</label>
+                                                    <div class="label">{{ user.first_name }}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Last name</label>
+                                                    <div class="label">{{ user.last_name }}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="state-row">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Email</label>
+                                                    <div class="label">{{ user.email }}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Active</label>
+                                                    <div class="label">{%if user.is_active%}Yes{%else%}No{%endif%}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Staff status</label>
+                                                    <div class="label">{%if user.is_staff%}Yes{%else%}No{%endif%}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Superuser status</label>
+                                                    <div class="label">{%if user.is_superuser%}Yes{%else%}No{%endif%}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Date joined</label>
+                                                    <div class="label">{{ user.date_joined }}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd>
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Last login</label>
+                                                    <div class="label">{{ user.last_login }}</div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="corner tl"></div>
+                                    <div class="corner tr"></div>
+                                    <div class="corner bl"></div>
+                                    <div class="corner br"></div>
+                                </div>
+                        </div>
+                        <!-- End #partner-detail-box -->
+                                                
+                    </div>
+                    <!-- End .partner-content -->
+                    <div class="clear"></div>
+                </div>
+                <!-- End .partner-wrapper -->
+            </div>
+            <!-- End .tab-content -->
+        </div>
+        <!-- End .tab-wrapper -->
+    </div>
+    <!-- End .tab-container -->
+</div>
+<!-- End #main-container -->
+{% endblock %}

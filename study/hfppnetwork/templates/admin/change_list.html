@@ -1,0 +1,88 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template overwrite the default user list page to hfppnetwork style. #}
+
+{% extends "base.html" %}
+{% load i18n admin_urls admin_static admin_list %}
+{% block bodyid %} id="partnerPage"{% endblock %}
+
+{% block content %}
+<div id="main-container">
+    <div class="title">
+        <h2>HFPP User Management</h2>
+    </div>
+    <!-- End .title -->
+
+    <div class="tab-container partner-tab-container">
+        <div class="tab-wrapper">
+            <div class="tab-content" id="tab-users">
+                <div class="buttons">
+                    <h3>User details</h3>
+                    <div class="btn-new-partners js-action-user-add">
+                        <span><span><span class="icon">ADD USER</span></span></span>
+                    </div>
+                    <div class="btn-new-partners js-action-user-delete">
+                        <span><span><span>DELETE SELECTED</span></span></span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!-- End .buttons -->
+                <div class="table-wrapper form">
+                    <div class="pagination-bar pagination-bar-bottom-no-border"></div>
+                    <!-- End .pagination-bar -->
+                    {% result_list cl %}
+                    <div class="pagination-bar pagination-bar-top-no-border"></div>
+                    <!-- End .pagination-bar -->
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+                </div>
+                <!-- End .table-wrapper -->
+
+            </div>
+            <!-- End .tab-content -->
+        </div>
+        <!-- End .tab-wrapper -->
+    </div>
+    <!-- End .tab-container -->
+</div>
+<!-- End #main-container -->
+{% endblock %}
+
+{% block modal %}
+<!-- modal -->
+<div id="modal-background"></div>
+<div id="modal">
+    <div class="modal" id="modal-delete-partner">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Delete User</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+        
+            <div class="partner-delete-form">
+                <p>Warning: you are about to delete the selected users. Proceed?</p>
+            </div>
+            <form action="" method="post">{% csrf_token %}
+                <!-- The list of users to delete -->
+                <div id="user-delete-list">
+                     <!--input type="hidden" name="_selected_action" value="2" /-->
+                </div>
+                <input type="hidden" name="action" value="delete_selected" />
+                <input type="hidden" name="post" value="yes" />
+                <div class="buttons">
+                    <div class="btn-partner-cancel close-modal"><span><span><span>CANCEL</span></span></span></div>
+                    <div class="btn-partner-okay js-action-save-delete-user"><span><span><span>YES</span></span></span></div>
+                </div>
+            </form>
+        
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-delete-partner -->
+
+</div>
+<!-- End #modal -->
+{% endblock %}
+

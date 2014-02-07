@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>$request.id</RequestID>
+    <StudyID>$request.studyId</StudyID>
+    <Query><![CDATA[ $request.query ]]></Query>
+    <ExpirationTime>$expirationTime</ExpirationTime>
+    <CacheAvailable>$cacheAvailable</CacheAvailable>
+    #if( $cacheAvailable )
+    <CacheTimestamp>$cacheTimestamp</CacheTimestamp>
+    #end
+</DataRequest>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerStatistics>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+    <NumberOfDataRequestsReceived>$user.dataRequestsReceived</NumberOfDataRequestsReceived>
+    <NumberOfDataRequestsResponded>$user.dataRequestsResponded</NumberOfDataRequestsResponded>
+    <NumberOfDataRequestsInitiated>$user.dataRequestsInitiated</NumberOfDataRequestsInitiated>
+    <NumberOfDataRequestsDeclined>$user.dataRequestsDeclined</NumberOfDataRequestsDeclined>
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</PartnerStatistics>

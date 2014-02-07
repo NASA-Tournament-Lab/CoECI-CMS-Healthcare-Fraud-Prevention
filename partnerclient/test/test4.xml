@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8c4</RequestID>
+    <StudyID>4</StudyID>
+    <Query>{"file_types":["beneficiary"],"logical_expressions":["'Sex' equal to 1"]}</Query>
+    <ExpirationTime>2014-09-22T09:30:10-06:00</ExpirationTime>
+    <!-- Whether cache is available -->
+    <CacheAvailable>true</CacheAvailable>
+    <!-- Cache timestamp -->
+    <CacheTimestamp>2014-07-11T09:30:10-06:00</CacheTimestamp>
+</DataRequest>

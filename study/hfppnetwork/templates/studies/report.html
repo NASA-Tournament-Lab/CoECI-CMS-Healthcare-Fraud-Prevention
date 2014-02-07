@@ -1,0 +1,25 @@
+<ul>
+<li>Study ID: {{ study_id }}</li>
+<li>summary: {{ summary }}</li>
+<li>beneficiary_claim_data: </li>
+{% for claim_data in beneficiary_claim_data %}
+<li>BeneficiaryCode: {{ claim_data.desynpuf_id }}</li>
+{% endfor %}
+<li>carrier_claim_data:</li>
+{% for claim_data in carrier_claim_data %}
+<li>BeneficiaryCode: {{ claim_data.desynpuf_id }}</li>
+{% endfor %}
+<li>inpatient_claim_data:</li>
+{% for claim_data in inpatient_claim_data %}
+<li>BeneficiaryCode: {{ claim_data.desynpuf_id }}</li>
+{% endfor %}
+<li>outpatient_claim_data:</li>
+{% for claim_data in outpatient_claim_data %}
+<li>BeneficiaryCode: {{ claim_data.desynpuf_id }}</li>
+{% endfor %}
+<li>prescription_claim_data:</li>
+{% for claim_data in prescription_claim_data %}
+<li>BeneficiaryCode: {{ claim_data.desynpuf_id }}</li>
+{% endfor %}
+</ul>
+

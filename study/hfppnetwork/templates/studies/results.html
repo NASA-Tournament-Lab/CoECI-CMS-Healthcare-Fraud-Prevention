@@ -1,0 +1,767 @@
+{% extends "studies/detail_base.html" %}
+{% load widget_tweaks %}
+{% load custom_filters %}
+{% block extra_js %}
+var fieldTypesAll=[{},{},{},{},{}];
+    {% for field in selected_beneficiary_claim_data_fields %}
+    fieldTypesAll[0]["{{ field.field_name }}"] = "{{ field.type }}";
+    {% endfor %}
+    {% for field in selected_carrier_claim_data_fields %}
+    fieldTypesAll[1]["{{ field.field_name }}"] = "{{ field.type }}";
+    {% endfor %}
+    {% for field in selected_inpatient_claim_data_fields %}
+    fieldTypesAll[2]["{{ field.field_name }}"] = "{{ field.type }}";
+    {% endfor %}
+    {% for field in selected_outpatient_claim_data_fields %}
+    fieldTypesAll[3]["{{ field.field_name }}"] = "{{ field.type }}";
+    {% endfor %}
+    {% for field in selected_prescription_claim_data_fields %}
+    fieldTypesAll[4]["{{ field.field_name }}"] = "{{ field.type }}";
+    {% endfor %}
+for(var ti=0; ti < 5; ti += 1) {
+    for(var tti in fieldTypesAll[ti]) {
+        if (fieldTypesAll[ti][tti] === "datetime") {
+            fieldTypesAll[ti][tti] = "date";
+        } else if (fieldTypesAll[ti][tti] == "int") {
+            fieldTypesAll[ti][tti] = "integer";
+        } else if (fieldTypesAll[ti][tti] == "float") {
+            fieldTypesAll[ti][tti] = "integer";
+        } else if (fieldTypesAll[ti][tti] = "str") {
+            fieldTypesAll[ti][tti] = "string";
+        }
+    }
+}
+{% endblock %}
+{% block switch-tab-wrapper %}
+<form id="study-chart-form" method="post"> {% csrf_token %}
+<input id="id_chart_study" name="study" type="hidden">
+<input id="id_chart_name" name="name" type="hidden">
+<textarea cols="40" id="id_chart_svg" name="svg" rows="10" class="js-hidden"></textarea>
+</form>
+<form id="delete-study-chart-form" method="post"> {% csrf_token %}
+    <input id="id_study_chart" name="ids" type="hidden">
+</form>
+<div class="switch-tab-content study-result-content">
+    <div class="action">
+        {% if study.report == '' %}
+        <a href="javascript:;" class="btn-generate-report"><span class="icon">GENERATE REPORT</span></a>
+        {% endif %}
+        <ul>
+            <li><a href="javascript:;" class="filter-claims">Display</a></li>
+            <li><a href="javascript:;" class="show-hide-columns">Show/Hide Columns</a></li>
+            <li><a href="javascript:;" class="visual-analysis">Visual Analysis</a></li>
+        </ul>
+    </div>
+    <!-- End .action -->
+
+    <div class="action-container">
+        <div class="action-content filter-claims-content">
+            <div class="sub-tab-container">
+                <div class="sub-tab">
+                    <a href="javascript:$('#results-columns-form').submit();" class="btn-apply"><span class="icon">APPLY</span></a>
+                </div>
+                <div class="tab-wrapper">
+                </div>
+            </div>
+        </div>
+        <!-- End .action-content -->
+        <div class="action-content show-hide-content">
+            <div class="lookup-area">
+                <a href="javascript:;" class="btn-apply js-apply-columns"><span class="icon">APPLY</span></a>
+                <div class="lookup-action">
+                    <label for="column-name">Column Name</label>
+                    <input type="text" class="text js-lookup-columns-text" id="column-name" />
+                    <a href="javascript:;" class="btn-lookup js-lookup-columns"><span class="icon">LOOKUP</span></a>
+                </div>
+                <!-- End .lookup-action -->
+            </div>            <!-- End .lookup-arae -->
+
+            <form id="results-columns-form" method="get">
+                {{ search_form.beneficiary_query | attr:"type:hidden"}}
+                {{ search_form.carrier_query | attr:"type:hidden"}}
+                {{ search_form.inpatient_query | attr:"type:hidden"}}
+                {{ search_form.outpatient_query | attr:"type:hidden"}}
+                {{ search_form.prescription_query | attr:"type:hidden"}}
+                {{ search_form.beneficiary_fields | attr:"type:hidden"}}
+                {{ search_form.carrier_fields | attr:"type:hidden"}}
+                {{ search_form.inpatient_fields | attr:"type:hidden"}}
+                {{ search_form.outpatient_fields | attr:"type:hidden"}}
+                {{ search_form.prescription_fields | attr:"type:hidden"}}
+                <div class="claim-data-column-tab-container">
+                    <div class="tab">
+                        <ul>
+                            <li><a href="javascript:;">Beneficiary</a></li>
+                            <li><a href="javascript:;">Carrier</a></li>
+                            <li><a href="javascript:;">Inpatient</a></li>
+                            <li><a href="javascript:;">Outpatient</a></li>
+                            <li><a href="javascript:;">Prescription</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column-area form">
+                    <div class="claim-data-column-content-container">
+                    {% for columns in beneficiary_claim_data_fields %}
+                    <div class="column">
+                        {% for column in columns %}
+                        {% if column != None %}
+                        <div class="rows">
+                            {% if column.selected %}
+                            <input type="checkbox" checked="true" data-name="selected_beneficiary_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% else %}
+                            <input type="checkbox" data-name="selected_beneficiary_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% endif %}
+                            <label>{{ column.column_name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <div class="claim-data-column-content-container">
+                    {% for columns in carrier_claim_data_fields %}
+                    <div class="column">
+                        {% for column in columns %}
+                        {% if column != None %}
+                        <div class="rows">
+                            {% if column.selected %}
+                            <input type="checkbox" checked="true" data-name="selected_carrier_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% else %}
+                            <input type="checkbox" data-name="selected_carrier_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% endif %}
+                            <label>{{ column.column_name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <div class="claim-data-column-content-container">
+                    {% for columns in inpatient_claim_data_fields %}
+                    <div class="column">
+                        {% for column in columns %}
+                        {% if column != None %}
+                        <div class="rows">
+                            {% if column.selected %}
+                            <input type="checkbox" checked="true" data-name="selected_inpatient_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% else %}
+                            <input type="checkbox" data-name="selected_inpatient_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% endif %}
+                            <label>{{ column.column_name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <div class="claim-data-column-content-container">
+                    {% for columns in outpatient_claim_data_fields %}
+                    <div class="column">
+                        {% for column in columns %}
+                        {% if column != None %}
+                        <div class="rows">
+                            {% if column.selected %}
+                            <input type="checkbox" checked="true" data-name="selected_outpatient_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% else %}
+                            <input type="checkbox" data-name="selected_outpatient_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% endif %}
+                            <label>{{ column.column_name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <div class="claim-data-column-content-container">
+                    {% for columns in prescription_claim_data_fields %}
+                    <div class="column">
+                        {% for column in columns %}
+                        {% if column != None %}
+                        <div class="rows">
+                            {% if column.selected %}
+                            <input type="checkbox" checked="true" data-name="selected_prescription_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% else %}
+                            <input type="checkbox" data-name="selected_prescription_claim_data_fields" data-field="{{ column.field_name }}" />
+                            {% endif %}
+                            <label>{{ column.column_name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    </div>
+                <div class="column-bottom"></div>
+                <!-- End .column -->
+                </div>
+            <!-- End .column-area -->
+            </form>
+        </div>
+        <!-- End .action-content -->
+        <div class="action-content visual-analysis-content">
+            <div class="analysis-content">
+                <div class="error-message">
+                    <div class="error-title">ERROR OCCURED</div>
+                    <div class="error-text"></div>
+                </div>
+                <div class="rows">
+                    <label for="chart-name">Chart Name</label>
+                    <input type="text" class="text" id="chart-name" value="A" />
+                </div>
+                <div class="form">
+                    <label>Select Chart Type</label>
+                    <select id="chart-type">
+                        <option value="bars">Bar Chart</option>
+                        <option value="lines">Line Chart</option>
+                        <option value="pie">Pie Chart</option>
+                    </select>
+                </div>
+                <div class="bar-config">
+                    <div class="form bar-type">
+                        <label>Bar Type</label>
+                        <select id="bar-type">
+                            <option value="groups" selected="selected">Grouped Bars</option>
+                            <option value="stacked">Stacked Bars</option>
+                        </select>
+                    </div>
+                    <div class="form bar-orientation">
+                        <label>Bar Orientation</label>
+                        <select id="bar-orientation">
+                            <option value="vertical" selected="selected">Vertical Bars</option>
+                            <option value="horizontal">Horizontal Bars</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form fancy">
+                    <label>Fancy Pie</label>
+                    <input type="checkbox" id="fancy"/>
+                </div>
+                <div class="form dimension">
+                    <label>X</label>
+                    <select class="js-chart-x">
+                        {% for field in selected_beneficiary_claim_data_fields %}
+                        <option value="{{ field.field_name }}">{{ field.column_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="dimension-config type-string">
+                    <div class="form minValue">
+                        <label>Min value</label>
+                        <input type="text" class="digit-only"/>
+                    </div>
+                    <div class="form maxValue">
+                        <label>Max value</label>
+                        <input type="text" class="digit-only"/>
+                    </div>
+                    <div class="form discreteSet">
+                        <label>Discrete set</label>
+                        <input type="text"/>
+                    </div>
+                    <div class="form dateAggregation">
+                        <label>Date aggregation</label>
+                        <select>
+                            <option value="year">by Year</option>
+                            <option value="month">by Month</option>
+                            <option value="day">by Day</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form measure">
+                    <label>Y</label>
+                    <select class="js-chart-y">
+                        {% for field in selected_beneficiary_claim_data_fields %}
+                        {% if field.type == 'int' %}
+                        <option value="{{ field.field_name }}">{{ field.column_name }}</option>
+                        {% endif %}
+                        {% if field.type == 'float' %}
+                        <option value="{{ field.field_name }}">{{ field.column_name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <div class="dimension-config type-integer">
+                        <div class="form minValue">
+                            <label>Min axis value</label>
+                            <input type="text"/>
+                        </div>
+                        <div class="form maxValue">
+                            <label>Max axis value</label>
+                            <input type="text"/>
+                        </div>
+                        <div class="form autofit">
+                            <label>Auto fit axis scale</label>
+                            <input type="checkbox" id="autofit"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form dimension">
+                    <label>Group/Stack</label>
+                    <select class="js-chart-group">
+                        <option selected="selected">--</option>
+                        {% for field in selected_beneficiary_claim_data_fields %}
+                        {% if field.type != 'str' %}
+                        <option value="{{ field.field_name }}">{{ field.column_name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="dimension-config type-none">
+                    <div class="form minValue">
+                        <label>Min value</label>
+                        <input type="text" class="digit-only"/>
+                    </div>
+                    <div class="form maxValue">
+                        <label>Max value</label>
+                        <input type="text" class="digit-only"/>
+                    </div>
+                    <div class="form discreteSet">
+                        <label>Discrete set</label>
+                        <input type="text"/>
+                    </div>
+                    <div class="form dateAggregation">
+                        <label>Date aggregation</label>
+                        <select>
+                            <option value="year">by Year</option>
+                            <option value="month">by Month</option>
+                            <option value="day">by Day</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <a href="javascript:;" class="btn-generate"><span class="icon">GENERATE</span></a>
+                </div>
+            </div>
+            <!-- End .analysis-content -->
+            <div class="sub-tab-container js-study-chart-tab">
+                <div class="sub-tab">
+                    <ul>
+                        <!--li class="active"><div class="sub-tab-title"><a href="javascript:;">Chart Name 1</a></div><a href="javascript:;" class="remove" style="display: none;">REMOVE</a></li-->
+                        {% for study_chart in study_charts %}
+                        {% if forloop.counter == 1 %}
+                        <li class="active" data-id="{{ study_chart.id }}"><div class="sub-tab-title"><a href="javascript:;">{{ study_chart.name }}</a></div><a href="javascript:;" class="remove">REMOVE</a></li>
+                        {% else %}
+                        <li class="" data-id="{{ study_chart.id }}"><div class="sub-tab-title"><a href="javascript:;">{{ study_chart.name }}</a></div><a href="javascript:;" class="remove">REMOVE</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- End .sub-tab -->
+                <div class="tab-wrapper ui-resizable">
+                    <!--div class="sub-tab-content">
+                        <div class="placeholder">CHART 1<br />PLACEHOLDER</div>
+                    </div-->
+                    <div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+                    {% for study_chart in study_charts %}
+                    {% if forloop.counter == 1 %}
+                    <div class="sub-tab-content" style="display: block;">{{ study_chart.svg |safe|escape}}<div class=""></div></div>
+                    {% else %}
+                    <div class="sub-tab-content" style="display: none;">{{ study_chart.svg |safe|escape}}<div class=""></div></div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="clear"></div>
+            <!-- End .sub-tab-container -->
+        </div>
+        <!-- End .action-content -->
+    </div>
+    <!-- End .action-container -->
+    <div class="claim-data-tab-container">
+        <div class="tab">
+            <ul>
+                <li><a href="javascript:;">Beneficiary</a></li>
+                <li><a href="javascript:;">Carrier</a></li>
+                <li><a href="javascript:;">Inpatient</a></li>
+                <li><a href="javascript:;">Outpatient</a></li>
+                <li><a href="javascript:;">Prescription</a></li>
+            </ul>
+        </div>
+
+        <div class="switch-claim-data-tab-wrapper">
+            <div class="switch-claim-data-tab-content">
+                <div class="sub-claim-data-tab-container">
+                    <div class="table-wrapper form default-expend js-beneficiary" id="study-result">
+                        <div class="table-tbody js-results">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th class="cell-check"><input type="checkbox" /></th>
+                                        {% for field in selected_beneficiary_claim_data_fields %}
+                                        <th class="cell-claim-data"><span data-type="{{ field.type }}" data-field="{{ field.field_name }}">{{ field.column_name |safe|escape }}</span></th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody class="js-results">
+                                    {% for claim_data in beneficiary_claims %}
+                                    <tr class="js-row">
+                                        <td class="cell-check"><input type="checkbox" class="result-row-study-id" data-id="{{ claim_data.id }}" /></td>
+                                        {% for field in selected_beneficiary_claim_data_fields %}
+                                            {% if field.type == 'date' %}
+                                            <td class="cell-claim-data">
+                                                {% ifequal claim_data|get_attr:field.field_name|date:"Y-m-d" "9999-12-31"%}
+                                                N/A
+                                                {% else %}
+                                                {{ claim_data | get_attr:field.field_name | date:"Y-m-d" }}
+                                                {% endifequal %}
+                                            </td>
+                                            {% endif %}
+                                            {% if field.type == 'datetime' %}
+                                            <td class="cell-claim-data">
+                                                {{ claim_data | get_attr:field.field_name | date:"Y-m-d H:i:s"}}
+                                            </td>
+                                            {% endif %}
+                                            {% if field.type == 'float' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | floatformat:2 }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'int' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'str' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                    <tr class="details">
+                                        <td colspan="50">
+                                            <div class="details-table">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    {% for detail in claim_data.detail %}
+                                                    <tr>
+                                                        {% for sd in detail %}
+                                                        {% if sd.column_name != '' %}
+                                                        <th><span>{{ sd.column_name }}:</span></th>
+                                                        <td class="cell-claim-data">
+                                                            {% ifequal sd.column_name "Date of Death" %}
+                                                                {% ifequal sd.value|date:"Y-m-d" "9999-12-31" %}
+                                                                    N/A
+                                                                {% else %}
+                                                                    {{ sd.value }}
+                                                                {% endifequal %}
+                                                            {% else %}
+                                                                {{ sd.value }}
+                                                            {% endifequal %}
+                                                        </td>
+                                                        {% else %}
+                                                        <th><span></span></th>
+                                                        <td class="cell-claim-data"></td>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    <!-- End .table-wrapper -->
+                    <div class="table-wrapper form default-expend js-carrier" id="study-result">
+                        <div class="table-tbody js-results">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th class="cell-check"><input type="checkbox" /></th>
+                                        {% for field in selected_carrier_claim_data_fields %}
+                                        <th class="cell-claim-data"><span data-type="{{ field.type }}" data-field="{{ field.field_name }}">{{ field.column_name |safe|escape }}</span></th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody class="js-results">
+                                    {% for claim_data in carrier_claims %}
+                                    <tr class="js-row">
+                                        <td class="cell-check"><input type="checkbox" class="result-row-study-id" data-id="{{ claim_data.id }}" /></td>
+                                        {% for field in selected_carrier_claim_data_fields %}
+                                            {% if field.type == 'date' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d" }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'datetime' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d H:i:s"}}</td>
+                                            {% endif %}
+                                            {% if field.type == 'float' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | floatformat:2 }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'int' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'str' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                    <tr class="details">
+                                        <td colspan="50">
+                                            <div class="details-table">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    {% for detail in claim_data.detail %}
+                                                    <tr>
+                                                        {% for sd in detail %}
+                                                        {% if sd.column_name != '' %}
+                                                        <th><span>{{ sd.column_name }}:</span></th>
+                                                        <td class="cell-claim-data">{{ sd.value }}</td>
+                                                        {% else %}
+                                                        <th><span></span></th>
+                                                        <td class="cell-claim-data"></td>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    <!-- End .table-wrapper -->
+                    <div class="table-wrapper form default-expend js-inpatient" id="study-result">
+                        <div class="table-tbody js-results">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th class="cell-check"><input type="checkbox" /></th>
+                                        {% for field in selected_inpatient_claim_data_fields %}
+                                        <th class="cell-claim-data"><span data-type="{{ field.type }}" data-field="{{ field.field_name }}">{{ field.column_name |safe|escape }}</span></th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody class="js-results">
+                                    {% for claim_data in inpatient_claims %}
+                                    <tr class="js-row">
+                                        <td class="cell-check"><input type="checkbox" class="result-row-study-id" data-id="{{ claim_data.id }}"  /></td>
+                                        {% for field in selected_inpatient_claim_data_fields %}
+                                            {% if field.type == 'date' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d" }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'datetime' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d H:i:s"}}</td>
+                                            {% endif %}
+                                            {% if field.type == 'float' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | floatformat:2 }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'int' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'str' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                    <tr class="details">
+                                        <td colspan="50">
+                                            <div class="details-table">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    {% for detail in claim_data.detail %}
+                                                    <tr>
+                                                        {% for sd in detail %}
+                                                        {% if sd.column_name != '' %}
+                                                        <th><span>{{ sd.column_name }}:</span></th>
+                                                        <td class="cell-claim-data">{{ sd.value }}</td>
+                                                        {% else %}
+                                                        <th><span></span></th>
+                                                        <td class="cell-claim-data"></td>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    <!-- End .table-wrapper -->
+                    <div class="table-wrapper form default-expend js-outpatient" id="study-result">
+                        <div class="table-tbody js-results">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th class="cell-check"><input type="checkbox" /></th>
+                                        {% for field in selected_outpatient_claim_data_fields %}
+                                        <th class="cell-claim-data"><span data-type="{{ field.type }}" data-field="{{ field.field_name }}">{{ field.column_name |safe|escape }}</span></th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody class="js-results">
+                                    {% for claim_data in outpatient_claims %}
+                                    <tr class="js-row">
+                                        <td class="cell-check"><input type="checkbox" class="result-row-study-id" data-id="{{ claim_data.id }}" /></td>
+                                        {% for field in selected_outpatient_claim_data_fields %}
+                                            {% if field.type == 'date' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d" }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'datetime' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d H:i:s"}}</td>
+                                            {% endif %}
+                                            {% if field.type == 'float' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | floatformat:2 }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'int' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'str' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                    <tr class="details">
+                                        <td colspan="50">
+                                            <div class="details-table">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    {% for detail in claim_data.detail %}
+                                                    <tr>
+                                                        {% for sd in detail %}
+                                                        {% if sd.column_name != '' %}
+                                                        <th><span>{{ sd.column_name }}:</span></th>
+                                                        <td class="cell-claim-data">{{ sd.value }}</td>
+                                                        {% else %}
+                                                        <th><span></span></th>
+                                                        <td class="cell-claim-data"></td>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    <!-- End .table-wrapper -->
+                    <div class="table-wrapper form default-expend js-prescription" id="study-result">
+                        <div class="table-tbody js-results">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th class="cell-check"><input type="checkbox" /></th>
+                                        {% for field in selected_prescription_claim_data_fields %}
+                                        <th class="cell-claim-data"><span data-type="{{ field.type }}" data-field="{{ field.field_name }}">{{ field.column_name |safe|escape }}</span></th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody class="js-results">
+                                    {% for claim_data in prescription_claims %}
+                                    <tr class="js-row">
+                                        <td class="cell-check"><input type="checkbox" class="result-row-study-id" data-id="{{ claim_data.id }}" /></td>
+                                        {% for field in selected_prescription_claim_data_fields %}
+                                            {% if field.type == 'date' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d" }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'datetime' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | date:"Y-m-d H:i:s"}}</td>
+                                            {% endif %}
+                                            {% if field.type == 'float' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name | floatformat:2 }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'int' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                            {% if field.type == 'str' %}
+                                            <td class="cell-claim-data">{{ claim_data | get_attr:field.field_name }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                    <tr class="details">
+                                        <td colspan="50">
+                                            <div class="details-table">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    {% for detail in claim_data.detail %}
+                                                    <tr>
+                                                        {% for sd in detail %}
+                                                        {% if sd.column_name != '' %}
+                                                        <th><span>{{ sd.column_name }}:</span></th>
+                                                        <td class="cell-claim-data">{{ sd.value }}</td>
+                                                        {% else %}
+                                                        <th><span></span></th>
+                                                        <td class="cell-claim-data"></td>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    <!-- End .table-wrapper -->
+               </div>
+          </div>
+     </div>
+</div>
+<!-- End .switch-tab-content -->
+
+{% endblock %}
+{% block modal %}
+<div id="modal">
+<div class="modal" id="modal-archived">
+    <div class="modal-header">
+        <a href="/studies" class="close-modal">CLOSE</a>
+        <!-- This link lead to Home.html -->
+        <h2>Archived</h2>
+    </div>
+    <!-- End .modal-header -->
+    <div class="modal-container">
+
+        <p>Study <strong>{{ study.id }}</strong> has been sucessfully archived.<br />
+You can still look it up under the archived tab.</p>
+
+        <div class="buttons">
+            <a href="/studies" class="btn-ok close-modal"><span><span><span>OK</span></span></span></a>
+            <!-- This link lead to Home.html -->
+        </div>
+
+    </div>
+    <!-- End .modal-container -->
+</div>
+<!-- End #modal-archived -->
+<div class="modal" id="modal-generate-report">
+    <div class="modal-header">
+        <a href="javascript:;" class="close-modal">CLOSE</a>
+        <h2>Generate Report</h2>
+    </div>
+    <!-- End .modal-header -->
+    <div class="modal-container">
+
+        <div class="generate-form">
+            <div class="field">
+                <label>Study Result Summary</label>
+                <textarea rows="6" cols="60" id="summary-text"></textarea>
+            </div>
+            <div class="field claims-field">
+                <strong>No of Fraudulent / Waste Claims : <span id="no-of-claims">0</span></strong>
+            </div>
+            <div class="field form chart-field">
+                <strong>Include Charts</strong>
+                {% for study_chart in study_charts %}
+                <input type="checkbox" class="js-report-study-chart" data-id="{{ study_chart.id }}" />
+                <label>{{ study_chart.name }}</label>
+                {% endfor %}
+            </div>
+            <div class="field form send-field">
+                <strong>Send Report to</strong>
+                <input type="checkbox" id="send-to-darc" />
+                <label>DARC</label>
+                <input type="checkbox" id="send-to-partners"/>
+                <label>Partners who contributed to the study</label>
+                <input type="checkbox" id="send-to-all-partners"/>
+                <label>All partners</label>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="javascript:;" class="btn-cancel close-modal"><span><span><span>CANCEL</span></span></span></a>
+            <a href="javascript:;" class="btn-send-report close-modal"><span><span><span>SEND REPORT</span></span></span></a>
+        </div>
+
+    </div>
+    <!-- End .modal-container -->
+</div>
+<!-- End #modal-generate-report -->
+</div>
+{% endblock %}

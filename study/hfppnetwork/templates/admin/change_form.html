@@ -1,0 +1,173 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template overwrite the default modify user information page to hfppnetwork style. #}
+
+{% extends "base.html" %}
+{% block bodyid %} id="partnerPage"{% endblock %}
+
+{% block content %}
+<div id="main-container">
+    <div class="title">
+        <h2>User Management</h2>
+    </div>
+    <!-- End .title -->
+    
+    <div class="tab-container partner-tab-container">
+        <div class="tab-wrapper">
+            <div class="tab-content" id="tab-partners">
+                <div class="partner-wrapper">
+                    <div class="partner-content">
+                        <div id="partner-edit-box"  style="margin-left:0px">
+                                <div class="buttons">
+                                    <h3>Edit User Detail Information</h3>
+                                </div>
+                                <!-- End .buttons -->
+                                <div class="partner-content-container">
+                                    <div class="partner-inner">
+                                        <form enctype="multipart/form-data" action="" method="post" id="user-edit-form">{% csrf_token %}
+                                            <div class="form-header">
+                                                <h4>Partner Detail Information</h4>
+                                            </div>
+                                            <div class="form-body">
+                                                <div class="error-infor hide" id="partner-edit-error-infor">Invalid form data.</div>
+                                                <dl class="form">
+                                                {% for fieldset in adminform %}
+                                                {% for line in fieldset %}
+                                                {% if line.fields|length_is:'1' %}
+                                                    <dd>
+                                                        <span style="width:250px;"></span>
+                                                        <div style="color:#F00">
+                                                        {{ line.errors }}
+                                                        </div>
+                                                    </dd>
+                                                {% endif %}
+                                                {% for field in line %}
+                                                {% if field.is_checkbox %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="id-{{field.field.name}}">{{ field.label_tag }}</label>
+                                                        <div class="right-field">
+                                                            <input type="checkbox" class="checkbox" id="id-{{field.field.name}}" name="{{field.field.name}}"{% if field.field.value %} checked="checked" {% endif %} />
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                {% else %}
+                                                    {% ifequal field.field.name 'username' %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="user-edit-username">{{ field.label_tag }}</label>
+                                                        <div class="right-field">
+                                                            <input type="text" maxlength="30" class="text" id="user-edit-username" name="{{field.field.name}}" value="{{field.field.value}}" />
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    {%endifequal%}
+                                                    {% ifequal field.field.name 'email' %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="user-edit-email">{{ field.label_tag }}</label>
+                                                        <div class="right-field">
+                                                            <input type="email" maxlength="50" class="text" id="user-edit-email" name="{{field.field.name}}" value="{{field.field.value}}" />
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    {%endifequal%}
+                                                    {% ifequal field.field.name 'first_name' %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="user-edit-first_name">{{ field.label_tag }}</label>
+                                                        <div class="right-field">
+                                                            <input type="text" maxlength="30" class="text" id="user-edit-first_name" name="{{field.field.name}}" value="{{field.field.value}}" />
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    {%endifequal%}
+                                                    {% ifequal field.field.name 'last_name' %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="user-edit-last_name">{{ field.label_tag }}</label>
+                                                        <div class="right-field">
+                                                            <input type="text" maxlength="30" class="text" id="user-edit-last_name" name="{{field.field.name}}" value="{{field.field.value}}" />
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    {%endifequal%}
+                                                    {% ifequal field.field.name 'last_login' %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label> Last Login Date </label>
+                                                        <div class="right-field">
+                                                            <label>{{field.field.value|date:'Y-m-d H:i:s'}}</label>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="text" size="10" class="text" id="user-edit-last_login_0" name="last_login_0" value="{{field.field.value|date:'Y-m-d'}}" />
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="text" size="8" class="text" id="user-edit-last_login_1" name="last_login_1" value="{{field.field.value|date:'H:i:s'}}" />
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="hidden" id="user-edit-initial-id_last_login_0" name="initial-last_login_0" value="{{field.field.value|date:'Y-m-d'}}" />
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="hidden" id="user-edit-initial-id_last_login_1" name="initial-last_login_1" value="{{field.field.value|date:'H:i:s'}}" />
+                                                    </dd>
+                                                    {%endifequal%}
+                                                    {% ifequal field.field.name 'date_joined' %}
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label> Joined Date </label>
+                                                        <div class="right-field">
+                                                            <label>{{field.field.value|date:'Y-m-d H:i:s'}}</label>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="text" size="10" class="text" id="user-edit-id_date_joined_0" name="date_joined_0" value="{{field.field.value|date:'Y-m-d'}}" />
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="text" size="8" class="text" id="user-edit-id_date_joined_1" name="date_joined_1" value="{{field.field.value|date:'H:i:s'}}" />
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="hidden" id="user-edit-initial-id_date_joined_0" name="initial-date_joined_0" value="{{field.field.value|date:'Y-m-d'}}" />
+                                                    </dd>
+                                                    <dd class="hide">
+                                                        <input type="hidden" id="user-edit-initial-id_date_joined_1" name="initial-date_joined_1" value="{{field.field.value|date:'H:i:s'}}" />
+                                                    </dd>
+                                                    {%endifequal%}
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% endfor %}
+                                                {% endfor %}
+                                                </dl>
+                                            </div>
+                                        <div class="tags-list-command">
+                                            <div class="button btn-orange btn-orange-save-changes js-action-save-edit-user"><span><span>SAVE CHANGES</span></span></div>
+                                            <div class="button btn-blue btn-blue-discard js-action-cancel-edit-user"><span><span>CANCEL</span></span></div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="corner bl"></div>
+                                    <div class="corner br"></div>
+                                    <div class="corner tl"></div>
+                                    <div class="corner tr"></div>
+                                </div>
+                        </div>
+                        <!-- End #partner-edit-box -->
+                    </div>
+                    <!-- End .partner-content -->
+                    <div class="clear"></div>
+                </div>
+                <!-- End .partner-wrapper -->
+            </div>
+            <!-- End .tab-content -->
+        </div>
+        <!-- End .tab-wrapper -->
+    </div>
+    <!-- End .tab-container -->
+</div>
+<!-- End #main-container -->
+{% endblock %}
+
+{% block modal %}
+{% endblock %}

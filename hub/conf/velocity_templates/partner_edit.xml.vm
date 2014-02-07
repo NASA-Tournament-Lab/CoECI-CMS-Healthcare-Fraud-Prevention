@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerEdit>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+    <PartnerID>$user.id</PartnerID>
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</PartnerEdit>

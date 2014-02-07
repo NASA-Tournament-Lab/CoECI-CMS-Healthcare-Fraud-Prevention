@@ -1,0 +1,1211 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template is the base for both partners/list and partner_tags/list. #}
+
+{% extends "base.html" %}
+{% block scripts %}
+<script type="text/javascript" src="/js/jquery.formset.js"></script>
+<script>
+$(function() {
+    $('#hidden-contact-edit table').formset({
+        prefix: 'partnercontact_set'
+    });
+    $("#hidden-contact-edit .delete-row").trigger("click");
+});
+</script>
+{% endblock %}
+{% block bodyid %} id="partnerPage"{% endblock %}
+
+{% block content %}
+<div id="main-container">
+    <div class="title">
+        <h2>Partner Management</h2>
+    </div>
+    <!-- End .title -->
+
+    <div class="tab-container partner-tab-container">
+        <div class="tab">
+            <ul>
+            {% block tabSelection %}
+                <li class="active"><a href="javascript:;">PARTNERS</a></li>
+                <li><a href="javascript:;">TAGS</a></li>
+            {% endblock %}
+            </ul>
+        </div>
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="tab-content{% block hidePartners %}{% endblock %}" id="tab-partners">
+                <div class="partner-wrapper">
+                    <div class="partner-lists">
+                        <div class="buttons">
+                            <h3>Partner Lists</h3>
+                        </div>
+                        <!-- End .buttons -->
+                        <div class="partner-lists-container">
+                            <div class="partner-inner">
+                                <div class="partner-search">
+                                    <form action="{% url 'list_partners' %}" method="get">{% csrf_token %}
+                                        <div class="text-field-wrapper">
+                                            <input type="text" class="text search-parter-tags-id" id="search-parter-tags-id" name="company_name" value="{% if search_form.company_name and search_form.company_name.value %}{{search_form.company_name.value}}{% endif %}" />
+                                            <input type="hidden" class="text" name="page_size" value="{{paginator.per_page}}" />
+                                        </div>
+                                        <div class="btn-search btn-search-partner"><span class="icon">SEARCH</span></div>
+                                        <div class="clear"></div>
+                                    </form>
+                                </div>
+                                <!-- End .partner-search -->
+                                <div class="partner-list-box">
+                                    <ul>
+                                    {% for partner in partners %}
+                                        <li class="hide"><span>
+                                            <span class="partnerId">{{ partner.id }}</span>
+                                            <span class="hfpp_network_id">{{ partner.hfpp_network_id }}</span>
+                                            <span class="company">{{ partner.company_name }}</span>
+                                            <span class="city">{{ partner.city }}</span>
+                                            <span class="state">{{ partner.state }}</span>
+                                            <span class="division">{{ partner.division }}</span>
+                                            <span class="region">{{ partner.region }}</span>
+                                            <span class="noi">{{ partner.number_of_insured }}</span>
+                                            <span class="username">{{ partner.network_username }}</span>
+                                            <span class="orgname">{{ partner.network_organization_name }}</span>
+                                            <span class="role">{{ partner.network_role }}</span>
+                                            <span class="cached">{{ partner.network_auto_retrieve_cached_data }}</span>
+                                            <span>
+                                            {% for tag in partner.tags.all %}
+                                                <span class="tagId">{{ tag.id }}</span>
+                                                <span class="tagName">{{ tag.name }}</span>
+                                            {% endfor %}
+                                            </span>
+                                        </span></li>
+                                        <li><span class="js-action-partner-details">{{ partner.company_name }}</span></li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                                <!-- End .partner-list-box -->
+                                {% if paginator.count > 0 %}
+                                <div class="pagination">
+                                    <div class="page-turn form">
+                                        <span class="page-turn-txt">Show</span>
+                                        <select id="id-partner-page-size">
+                                            <option value="5" {% if paginator.per_page == 5 %}selected="selected"{% endif %}>5</option>
+                                            <option value="10" {% if paginator.per_page == 10 %}selected="selected"{% endif %}>10</option>
+                                            <option value="25" {% if paginator.per_page == 25 %}selected="selected"{% endif %}>25</option>
+                                            <option value="50" {% if paginator.per_page == 50 %}selected="selected"{% endif %}>50</option>
+                                            <option value="-1" {% if paginator.per_page == 65536 %}selected="selected"{% endif %}>All</option>
+                                        </select>
+                                        <span class="page-turn-txt">per page</span>
+                                    </div>
+                                    <div class="total">
+                                    {% if page_obj %}
+                                        <strong>{{ page_obj.start_index }}</strong>-<strong>{{ page_obj.end_index }}</strong> of <strong>{{ paginator.count }}</strong> Partners
+                                        {% else %}
+                                        <strong>0</strong>-<strong>0</strong> of <strong>0</strong> Partner
+                                    {% endif %}
+                                    </div>
+                                    <div class="pagination-buttons">
+                                    {% if page_obj %}
+                                        {% if page_obj.has_previous %}
+                                            <div class="btn-pagination btn-previous"><span class="icon">Previous</span></div>
+                                            <div class="previousHref hide">?page={{ page_obj.previous_page_number }}{{ extra_vars }}</div>
+                                        {% endif %}
+                                        {% if page_obj.has_next %}
+                                            <div class="btn-pagination btn-next"><span class="icon">Next</span></div>
+                                            <div class="nextHref hide">?page={{ page_obj.next_page_number }}{{ extra_vars }}</div>
+                                        {% endif %}
+                                    {% endif %}
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <!-- End .pagination -->
+                                {% endif %}
+                                <div class="corner tl"></div>
+                                <div class="corner tr"></div>
+                                <div class="corner bl"></div>
+                                <div class="corner br"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End .partner-lists -->
+                    <div class="partner-content">
+                        <div id="partner-no-selected-placeholder" class="partner-main-content">
+                                <div class="buttons">
+                                    <div class="btn-new-partners js-action-add-partner"><span><span><span class="icon">ADD PARTNERS</span></span></span></div>
+                                </div>
+                                <!-- End .buttons -->
+                                <div class="partner-content-container">
+                                    <div class="partner-inner">
+                                        <h4>No partner selected</h4>
+                                        <p>Please select the partner form the left parter list</p>
+                                    </div>
+                                    <div class="corner tl"></div>
+                                    <div class="corner tr"></div>
+                                    <div class="corner bl"></div>
+                                    <div class="corner br"></div>
+                                </div>
+                        </div>
+                        <!-- End #partner-no-selected-placeholder -->
+
+                        <div id="partner-add-box" class="partner-main-content hide">
+                                <div class="buttons">
+                                    <h3>Add New Partner</h3>
+                                </div>
+                                <!-- End .buttons -->
+                                <div class="partner-content-container">
+                                    <div class="partner-inner">
+                                        <form action="" method="post" id="partner-add-form">{% csrf_token %}
+                                            <div class="form-header">
+                                                <h4>Partner Detail Information</h4>
+                                            </div>
+                                            <div class="form-body">
+                                                <div class="error-infor js-partner-add-error-infor hide">Invalid form data.</div>
+                                                <dl class="form">
+                                                    <dt><input type="hidden" name="reciprocity" value="0.0" /><input type="hidden" name="hfpp_network_id" value="dummy" /></dt>
+                                                    <!--dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-hfpp_network_id">Hfpp Network ID</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-hfpp_network_id" name="hfpp_network_id" maxlength="100" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-hfpp_network_id">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd-->
+                                                    <dd>
+                                                        <div class="icon icon-floor"></div>
+                                                        <label for="partner-company-name">Company Name</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-company-name" name="company_name" maxlength="100" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-company_name">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-pavilion"></div>
+                                                        <label for="partner-city">City</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-city" name="city" maxlength="100" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-city">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd class="state-row">
+                                                        <div class="icon icon-map"></div>
+                                                        <label>State</label>
+                                                        <div class="right-field">
+                                                            <select id="partner-state" name="state">
+                                                                <option>Select State </option>
+                                                                {% for state in states %}
+                                                                <option value="{{ state.0 }}">{{ state.1 }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-state">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-division">Division</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-division" name="division" maxlength="100" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-division">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-globe"></div>
+                                                        <label for="partner-region">Region</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-region" name="region" maxlength="100" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-region">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="partner-number-insured">Number of insured</label>
+                                                        <div class="right-field">
+                                                            <input type="number" min="0" class="text" id="partner-number-insured" name="number_of_insured" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-noi">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-network-username">Username</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-network-username" name="network_username" maxlength="50" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-username">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-network-password">Password</label>
+                                                        <div class="right-field">
+                                                            <input type="password" class="text" id="partner-network-password" name="network_password" maxlength="50" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-password">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-network-organization-name">Organization Name</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-network-organization-name" name="network_organization_name" maxlength="50" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-orgname">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-network-role">Role</label>
+                                                        <div class="right-field">
+                                                            <select id="partner-network-role" name="network_role">
+                                                                {% for role in role_list %}
+                                                                {% if forloop.counter == 1 %}
+                                                                <option selected="selected" value="{{ role.id }}">{{ role.name }}</option>
+                                                                {% else %}
+                                                                <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-role">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-network-auto-retrieve-cached-data">Auto Retrieve Cached Data</label>
+                                                        <div class="right-field">
+                                                            <select id="partner-network-auto-retrieve-cached-data" name="network_auto_retrieve_cached_data">
+                                                                <option selected="selected" value="true">True</option>
+                                                                <option value="false">False</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-cached">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                    </dd>
+                                                    <dd class="last-row">
+                                                        <div class="left-cell">
+                                                            <div class="icon icon-tags"></div>
+                                                            <label>Tags</label>
+                                                        </div>
+                                                        <div class="right-cell">
+                                                            <div class="right-cell-inner">
+                                                                <div class="tags-lists hide">
+                                                                    <div class="clear mark-tag-last-clear"></div>
+                                                                </div>
+                                                                <div class="tags-add">
+                                                                    <select id="partner-tags">
+                                                                        <option value="0" selected="selected">Select Tag</option>
+                                                                        {% for tag in partner_tags %}
+                                                                            <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <div class="button-color btn-new-tag js-action-add-tag"><span class="icon">ADD TAG</span></div>
+                                                                    <div class="error-infor js-partner-add-error-infor hide" id="partner-add-error-infor-tags">
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </div>
+                                                                <a href="javascript:;" class="link-tag-setting js-link-tags">Tag Settings</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+
+                                            <div class="form-header">
+                                                <h4>Contacts</h4>
+                                                <div class="right-column">
+                                                    <div class="button-light btn-new-contact js-new-contact"><span><span><span class="icon">ADD NEW CONTACT</span></span></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-contact-list hide table-wrapper">
+                                                <div class="table-tbody">
+                                                    <table border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="empty-row"><td></td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="corner bl"></div>
+                                                <div class="corner br"></div>
+                                            </div>
+
+                                            <div class="form-command">
+                                                <div class="button btn-orange btn-form-save js-action-save-add-partner"><span><span>SAVE</span></span></div>
+                                                <div class="button btn-blue btn-form-cancel js-action-no-selected"><span><span>CANCEL</span></span></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="corner tl"></div>
+                                    <div class="corner tr"></div>
+                                </div>
+                        </div>
+                        <!-- End #partner-add-box -->
+
+                        <div id="partner-edit-box" class="partner-main-content hide">
+                                <div class="buttons">
+                                    <h3>Edit Partner Detail Information</h3>
+                                </div>
+                                <!-- End .buttons -->
+                                <div class="partner-content-container">
+                                    <div class="partner-inner">
+                                        <form action="" method="post" id="partner-edit-form">{% csrf_token %}
+                                            <div class="form-header">
+                                                <h4>Partner Detail Information</h4>
+                                            </div>
+                                            <div class="form-body">
+                                                <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor">Invalid form data.</div>
+                                                <dl class="form">
+                                                    <dt><input type="hidden" name="reciprocity" value="0.0" /></dt>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-hfpp_network_id">Hfpp Network ID</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" readonly="readonly" id="partner-edit-hfpp_network_id" name="hfpp_network_id" maxlength="100" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-hfpp_network_id">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dt><input type="hidden" id="partner-edit-partner-id" name="id" value="0" /></dt>
+                                                    <dd>
+                                                        <div class="icon icon-floor"></div>
+                                                        <label for="partner-edit-company-name">Company Name</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-edit-company-name" name="company_name" value="" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-company_name">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-pavilion"></div>
+                                                        <label for="partner-edit-city">City</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-edit-city" name="city" value="" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-city">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd class="state-row">
+                                                        <div class="icon icon-map"></div>
+                                                        <label>State</label>
+                                                        <div class="right-field">
+                                                            <select id="partner-edit-state" name="state">
+                                                                <option>Select State</option>
+                                                                {% for state in states %}
+                                                                <option value="{{ state.0 }}">{{ state.1 }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </select>
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-state">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-division">Division</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-edit-division" name="division" value="" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-division">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-globe"></div>
+                                                        <label for="partner-edit-region">Region</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-edit-region" name="region" value="" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-region">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-shield"></div>
+                                                        <label for="partner-edit-number-insured">Number of insured</label>
+                                                        <div class="right-field">
+                                                            <input type="number" min="0" class="text" id="partner-edit-number-insured" name="number_of_insured" value="" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-noi">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-network-username">Username</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-edit-network-username" name="network_username" maxlength="50" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-username">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-network-password">Password</label>
+                                                        <div class="right-field">
+                                                            <input type="password" class="text" id="partner-edit-network-password" name="network_password" maxlength="50" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-password">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-network-organization-name">Organization Name</label>
+                                                        <div class="right-field">
+                                                            <input type="text" class="text" id="partner-edit-network-organization-name" name="network_organization_name" maxlength="50" />
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-orgname">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-network-role">Role</label>
+                                                        <div class="right-field">
+                                                            <select id="partner-edit-network-role" name="network_role">
+                                                                {% for role in role_list %}
+                                                                <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-role">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd>
+                                                        <div class="icon icon-division"></div>
+                                                        <label for="partner-edit-network-auto-retrieve-cached-data">Auto Retrieve Cached Data</label>
+                                                        <div class="right-field">
+                                                            <select id="partner-edit-network-auto-retrieve-cached-data" name="network_auto_retrieve_cached_data">
+                                                                <option value="true">True</option>
+                                                                <option value="false">False</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-cached">
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                    <dd class="last-row">
+                                                        <div class="left-cell">
+                                                            <div class="icon icon-tags"></div>
+                                                            <label>Tags</label>
+                                                        </div>
+                                                        <div class="right-cell">
+                                                            <div class="right-cell-inner">
+                                                                <div class="tags-lists">
+                                                                    <div class="clear mark-tag-last-clear"></div>
+                                                                </div>
+                                                                <div class="tags-add">
+                                                                    <select id="partner-edit-tags">
+                                                                        <option value="0" selected="selected">Select Tag</option>
+                                                                        {% for tag in partner_tags %}
+                                                                            <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <div class="button-color btn-new-tag js-action-add-tag"><span class="icon">ADD TAG</span></div>
+                                                                    <div class="error-infor js-partner-edit-error-infor hide" id="partner-edit-error-infor-tags">
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </div>
+                                                                <a href="javascript:;" class="link-tag-setting js-link-tags">Tag Settings</a>
+                                                                <div class="clear"></div>
+                                                                <div class="tags-list-command">
+                                                                    <div class="button btn-blue btn-blue-discard js-action-no-selected"><span><span>DISCARD</span></span></div>
+                                                                    <div class="button btn-orange btn-orange-save-changes js-action-save-edit-partner"><span><span>SAVE CHANGES</span></span></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+
+                                            <div class="form-header">
+                                                <h4>Contacts</h4>
+                                                <div class="right-column">
+                                                    <div class="button-light btn-new-contact js-new-contact"><span><span><span class="icon">ADD NEW CONTACT</span></span></span></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-contact-list table-wrapper">
+                                            <div class="table-tbody">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="corner bl"></div>
+                                            <div class="corner br"></div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="corner tl"></div>
+                                    <div class="corner tr"></div>
+                                </div>
+                        </div>
+                        <!-- End #partner-edit-box -->
+
+                        <div id="partner-detail-box" class="partner-main-content hide">
+                                <div class="buttons">
+                                    <div class="btn-new-partners js-action-add-partner"><span><span><span class="icon">ADD PARTNERS</span></span></span></div>
+                                </div>
+                                <!-- End .buttons -->
+                                <div class="partner-content-container">
+                                    <div class="partner-inner">
+                                        <div class="form-header">
+                                            <h4>Partner Detail Information</h4>
+                                            <div class="right-column">
+                                                <div class="button-light btn-partner-delete js-action-partner-delete"><span><span><span class="icon">DELETE</span></span></span></div>
+                                                <div class="button-light btn-partner-edit js-action-partner-edit"><span><span><span class="icon">EDIT</span></span></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-body">
+                                            <dl class="form">
+                                                <dt><input type="hidden" name="id" class="partnerId" value="{{ partner.id }}" /></dt>
+                                                <dd class="hfpp_network_id">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Hfpp Network ID</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="company">
+                                                    <div class="icon icon-floor"></div>
+                                                    <label>Company Name</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="city">
+                                                    <div class="icon icon-pavilion"></div>
+                                                    <label>City</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="state-row state">
+                                                    <!-- We use this to store the actual state id -->
+                                                    <div class="hide">stateId</div>
+                                                    <div class="icon icon-map"></div>
+                                                    <label>State</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="division">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Division</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="region">
+                                                    <div class="icon icon-globe"></div>
+                                                    <label>Region</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="noi">
+                                                    <div class="icon icon-shield"></div>
+                                                    <label>Number of insured</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="username">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Username</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="orgname">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Orngaization Name</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="role">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Role</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="cached">
+                                                    <div class="icon icon-division"></div>
+                                                    <label>Auto Retrieve Cached Data</label>
+                                                    <div class="label"></div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                                <dd class="last-row">
+                                                    <div class="left-cell">
+                                                        <div class="icon icon-tags"></div>
+                                                        <label>Tags</label>
+                                                    </div>
+                                                    <div class="right-cell">
+                                                        <div class="right-cell-inner">
+                                                            <div class="tags-lists">
+                                                                <div class="hide tagId"></div>
+                                                                <div class="mark-tag"><span><span class="tagName">Tag Name</span></span></div>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </dd>
+                                            </dl>
+                                        </div>
+
+                                        <div class="form-header">
+                                            <h4>Contacts</h4>
+                                        </div>
+                                        <div class="form-contact-list table-wrapper">
+                                            <div class="table-tbody">
+                                                <table border="0" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="corner bl"></div>
+                                            <div class="corner br"></div>
+                                        </div>
+                                    </div>
+                                    <div class="corner tl"></div>
+                                    <div class="corner tr"></div>
+                                </div>
+                        </div>
+                        <!-- End #partner-detail-box -->
+
+                    </div>
+                    <!-- End .partner-content -->
+                    <div class="clear"></div>
+                </div>
+                <!-- End .partner-wrapper -->
+            </div>
+            <!-- End .tab-content -->
+            <div class="tab-content{% block hideTags %}{% endblock %}" id="tab-tags">
+                <div class="buttons">
+                    <h3>Tags</h3>
+                    <div class="btn-new-partners js-action-tag-add"><span><span><span class="icon">ADD NEW TAG</span></span></span></div>
+                    <div class="clear"></div>
+                </div>
+                <!-- End .buttons -->
+                <div class="table-wrapper form">
+                    <div class="pagination-bar pagination-bar-bottom-no-border">
+                        {% if paginator.count > 0 %}
+                        <div class="pagination">
+                            <div class="page-turn form">
+                                <span class="page-turn-txt">Show</span>
+                                <select>
+                                    <option value="5" {% if paginator.per_page == 5 %}selected="selected"{% endif %}>5</option>
+                                    <option value="10" {% if paginator.per_page == 10 %}selected="selected"{% endif %}>10</option>
+                                    <option value="25" {% if paginator.per_page == 25 %}selected="selected"{% endif %}>25</option>
+                                    <option value="50" {% if paginator.per_page == 50 %}selected="selected"{% endif %}>50</option>
+                                    <option value="-1" {% if paginator.per_page == 65536 %}selected="selected"{% endif %}>All</option>
+                                </select>
+                                <span class="page-turn-txt">per page</span>
+                            </div>
+                            <div class="total">
+                            {% if page_obj %}
+                                <strong>{{ page_obj.start_index }}</strong>-<strong>{{ page_obj.end_index }}</strong> of <strong>{{ paginator.count }}</strong> Tags
+                            {% else %}
+                                <strong>0</strong>-<strong>0</strong> of <strong>0</strong> Tag
+                            {% endif %}
+                            </div>
+                            <div class="pagination-buttons">
+                            {% if page_obj %}
+                                {% if page_obj.has_previous %}
+                                    <div class="btn-pagination btn-previous"><span class="icon">Previous</span></div>
+                                    <div class="previousHref hide">?page={{ page_obj.previous_page_number }}{{ extra_vars }}</div>
+                                {% endif %}
+                                {% if page_obj.has_next %}
+                                    <div class="btn-pagination btn-next"><span class="icon">Next</span></div>
+                                    <div class="nextHref hide">?page={{ page_obj.next_page_number }}{{ extra_vars }}</div>
+                                {% endif %}
+                            {% endif %}
+                            </div>
+                        </div>
+                        <!-- End .pagination -->
+                        {% endif %}
+                        <div class="tags-search">
+                            <form action="{% url 'list_partner_tags' %}" method="get">{% csrf_token %}
+                                <div class="text-field-wrapper">
+                                    <input type="text" class="text" name="name" value="{% if search_form.name and search_form.name.value %}{{search_form.name.value}}{% endif %}" />
+                                    <input type="hidden" class="text" name="page_size" value="{{paginator.per_page}}" />
+                                </div>
+                                <div class="btn-search btn-search-tags"><span class="icon">SEARCH</span></div>
+                                <div class="clear"></div>
+                            </form>
+                        </div>
+                        <!-- End .tags-search -->
+                        <div class="clear"></div>
+                    </div>
+                    <!-- End .pagination-bar -->
+                    <div class="table-header">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="cell-tag-name">TAG NAME</th>
+                                    <th class="cell-tag-description">TAG DESCRIPTION</th>
+                                    <th class="cell-tag-action">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody class="hide"><tr><td></td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="table-tbody">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            {% for partner_tag in partner_tags %}
+                                <tr>
+                                    <td class="cell-tag-name">
+                                        <strong>{{ partner_tag.name }}</strong>
+                                    </td>
+                                    <td class="cell-tag-description"><p>{{ partner_tag.description }}</p></td>
+                                    <td class="hide">{{ partner_tag.id }}</td>
+                                    <td class="cell-tag-action">
+                                        <form action="{% url 'delete_partner_tags' %}" method="post">{% csrf_token %}
+                                            <input type="hidden" name="ids" value="{{ partner_tag.id }}" />
+                                            <div class="button btn-blue-dark btn-blue-edit js-action-tag-edit"><span><span><span class="icon">EDIT</span></span></span></div>
+                                            <div class="button btn-blue-dark btn-blue-delete js-action-tag-delete"><span><span><span class="icon">DELETE</span></span></span></div>
+                                            <div class="clear"></div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-bar pagination-bar-top-no-border">
+                        {% if paginator.count > 0 %}
+                        <div class="pagination">
+                            <div class="page-turn form">
+                                <span class="page-turn-txt">Show</span>
+                                <select>
+                                    <option value="5" {% if paginator.per_page == 5 %}selected="selected"{% endif %}>5</option>
+                                    <option value="10" {% if paginator.per_page == 10 %}selected="selected"{% endif %}>10</option>
+                                    <option value="25" {% if paginator.per_page == 25 %}selected="selected"{% endif %}>25</option>
+                                    <option value="50" {% if paginator.per_page == 50 %}selected="selected"{% endif %}>50</option>
+                                    <option value="-1" {% if paginator.per_page == 65536 %}selected="selected"{% endif %}>All</option>
+                                </select>
+                                <span class="page-turn-txt">per page</span>
+                            </div>
+                            <div class="total">
+                            {% if page_obj %}
+                                <strong>{{ page_obj.start_index }}</strong>-<strong>{{ page_obj.end_index }}</strong> of <strong>{{ paginator.count }}</strong> Tags
+                            {% else %}
+                                <strong>0</strong>-<strong>0</strong> of <strong>0</strong> Tag
+                            {% endif %}
+                            </div>
+                            <div class="pagination-buttons">
+                            {% if page_obj %}
+                                {% if page_obj.has_previous %}
+                                    <div class="btn-pagination btn-previous"><span class="icon">Previous</span></div>
+                                    <div class="previousHref hide">?page={{ page_obj.previous_page_number }}{{ extra_vars }}</div>
+                                {% endif %}
+                                {% if page_obj.has_next %}
+                                    <div class="btn-pagination btn-next"><span class="icon">Next</span></div>
+                                    <div class="nextHref hide">?page={{ page_obj.next_page_number }}{{ extra_vars }}</div>
+                                {% endif %}
+                            {% endif %}
+                            </div>
+                        </div>
+                        <!-- End .pagination -->
+                        {% endif %}
+                        <div class="tags-search">
+                            <form action="{% url 'list_partner_tags' %}" method="get">{% csrf_token %}
+                                <div class="text-field-wrapper">
+                                    <input type="text" class="text" name="name" value="{% if search_form.name and search_form.name.value %}{{search_form.name.value}}{% endif %}" />
+                                    <input type="hidden" class="text" name="page_size" value="{{paginator.per_page}}" />
+                                </div>
+                                <div class="btn-search btn-search-tags"><span class="icon">SEARCH</span></div>
+                                <div class="clear"></div>
+                            </form>
+                        </div>
+                        <!-- End .tags-search -->
+                        <div class="clear"></div>
+                    </div>
+                    <!-- End .pagination-bar -->
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+                </div>
+                <!-- End .table-wrapper -->
+
+            </div>
+            <!-- End .tab-content -->
+        </div>
+        <!-- End .tab-wrapper -->
+    </div>
+    <!-- End .tab-container -->
+</div>
+<!-- End #main-container -->
+{% endblock %}
+
+{% block modal %}
+<!-- modal -->
+<div id="modal-background"></div>
+<div id="modal">
+
+    <div class="modal" id="modal-contact-details">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Contact Details</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="contact-details-form">
+                <dl>
+                    <dt class="hide"></dt>
+                    <dd>
+                        <label>Full Name</label>
+                        <span id="contact-detail-full-name"></span>
+                    </dd>
+                    <dd>
+                        <label>Job Title</label>
+                        <span id="contact-detail-job-title"></span>
+                    </dd>
+                    <dd>
+                        <label>Company Name</label>
+                        <span id="contact-detail-company-name"></span>
+                    </dd>
+                    <dd>
+                        <label>Office Address</label>
+                        <span id="contact-detail-office-address"></span>
+                    </dd>
+                    <dd>
+                        <label>Email</label>
+                        <span  id="contact-detail-email"></span>
+                    </dd>
+                    <dd>
+                        <label>Phone</label>
+                        <span id="contact-detail-phone"></span>
+                    </dd>
+                    <dd>
+                        <label>Notes</label>
+                        <span  id="contact-detail-notes"></span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="buttons">
+                <div class="btn-okay close-modal"><span><span><span>OK</span></span></span></div>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-contact-details -->
+
+    <div class="modal" id="modal-contact-new">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Add New Contact</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="contact-details-form">
+                <dl>
+                    <dt class="hide"></dt>
+                    <dd>
+                        <label for="contact-add-full-name">Full Name</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-full-name" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-full-name">Full name should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-add-job-title">Job Title</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-job-title" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-job-title">Job title should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-add-company-name">Company Name</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-company-name" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-company-name">Company name should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-add-office-address">Office Address</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-office-address" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-office-address">Office address should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-add-email">Email</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-email" maxlength="75" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-email">Email invalid</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-add-phone">Phone</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-phone" maxlength="50" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-phone">Phone number invalid</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-add-notes">Notes</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-add-notes" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-add-error-infor hide" id="contact-add-error-infor-notes">Notes should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="buttons">
+                <div class="btn-cancel-add close-modal"><span><span><span>CANCEL</span></span></span></div>
+                <div class="btn-add js-modal-add-contact"><span><span><span>ADD</span></span></span></div>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-contact-new -->
+
+    <div class="modal" id="modal-contact-edit">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Edit Contact</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="contact-details-form">
+                <dl>
+                    <dt class="hide"></dt>
+                    <dt class="hide" id="contact-edit-full_name_id"></dt>
+                    <dd>
+                        <label for="contact-edit-full-name">Full Name</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-full-name" value="Firstname Lastname" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-full-name">Full name should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-edit-job-title">Job Title</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-job-title" value="Job Title" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-job-title">Job title should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-edit-company-name">Company Name</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-company-name" value="Company Name" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-company-name">Company name should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-edit-office-address">Office Address</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-office-address" value="Glastonburry Blvd" maxlength="100" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-office-address">Office address should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-edit-email">Email</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-email" value="email@email.com" maxlength="75" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-email">Email invalid</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-edit-phone">Phone</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-phone" value="123" maxlength="50" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-phone">Phone number invalid</div>
+                        <div class="clear"></div>
+                    </dd>
+                    <dd>
+                        <label for="contact-edit-notes">Notes</label>
+                        <div class="right-field">
+                            <input type="text" class="text" id="contact-edit-notes" value="lorem ipsum dolor sit amet" />
+                        </div>
+                        <div style="color:#F00" class="js-contact-edit-error-infor hide" id="contact-edit-error-infor-notes">Notes should not be empty</div>
+                        <div class="clear"></div>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="buttons">
+                <div class="btn-cancel-add close-modal"><span><span><span>CANCEL</span></span></span></div>
+                <div class="btn-add js-modal-update-contact"><span><span><span>UPDATE</span></span></span></div>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-contact-edit -->
+
+    <div class="modal" id="modal-tag-add">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Add New Tag</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="tag-form">
+                <dl>
+                    <form action="" method="post" id="tag-add-form">{% csrf_token %}
+                        <dt>Tag Name</dt>
+                        <dd>
+                            <input type="text" class="text" name="name" maxlength="100" />
+                            <div style="color:#F00" class="error-infor js-tag-add-error-infor hide" id="tag-add-error-infor-name"></div>
+                        </dd>
+                        <dt>Tag Description</dt>
+                        <dd>
+                            <textarea rows="10" cols="40" class="textarea-section" name="description"></textarea>
+                            <div style="color:#F00" class="error-infor js-tag-add-error-infor hide" id="tag-add-error-infor-description"></div>
+                        </dd>
+                    </form>
+                </dl>
+            </div>
+
+            <div class="buttons">
+                <div class="btn-tags-cancel js-action-cancel-new-tag"><span><span><span>CANCEL</span></span></span></div>
+                <div class="btn-tags-add js-action-save-new-tag"><span><span><span>ADD</span></span></span></div>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-tag-add -->
+
+    <div class="modal" id="modal-tag-edit">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Edit Tag</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="tag-form">
+                <form action="" method="post" id="tag-edit-form">{% csrf_token %}
+                    <input type="hidden" name="id" value="0" />
+                    <dl>
+                        <dt>Tag Name</dt>
+                        <dd>
+                            <input type="text" class="text" value="Tag Name" name="name" maxlength="100" />
+                            <div style="color:#F00" class="error-infor js-tag-edit-error-infor hide" id="tag-edit-error-infor-name">
+                            Tag title should not be empty.
+                            </div>
+                        </dd>
+                        <dt>Tag Description</dt>
+                        <dd>
+                            <textarea rows="10" cols="40" class="textarea-section" name="description"></textarea>
+                            <div style="color:#F00" class="error-infor js-tag-edit-error-infor hide" id="tag-edit-error-infor-description">
+                            Tag description should not be empty.
+                            </div>
+                        </dd>
+                    </dl>
+                </form>
+            </div>
+
+            <div class="buttons">
+                <div class="btn-tags-cancel js-action-cancel-edit-tag"><span><span><span>CANCEL</span></span></span></div>
+                <div class="btn-tags-add js-action-save-edit-tag"><span><span><span>UPDATE</span></span></span></div>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-tag-edit -->
+
+    <div class="modal" id="modal-delete-partner">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Delete Partner</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="partner-delete-form">
+                <p>Warning: you are about to delete all information about this partner(include the user in hub). Proceed?</p>
+            </div>
+            <form action="{% url 'delete_partners' %}" method="post">{% csrf_token %}
+                <input type="hidden" class="partnerId" name="ids" value="" />
+                <div class="buttons">
+                    <div class="btn-partner-cancel close-modal"><span><span><span>CANCEL</span></span></span></div>
+                    <div class="btn-partner-okay js-action-save-delete-partner"><span><span><span>YES</span></span></span></div>
+                </div>
+            </form>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-delete-partner -->
+
+    <div class="modal" id="modal-delete-tag">
+        <div class="modal-header">
+            <div class="close-modal">CLOSE</div>
+            <h2>Delete Partner Tag</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <div class="tag-delete-form">
+                <p>Warning: you are about to delete the selected tag. Proceed?</p>
+            </div>
+            <form action="{% url 'delete_partner_tags' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="ids" value="" />
+                <div class="buttons">
+                    <div class="btn-tag-cancel close-modal"><span><span><span>CANCEL</span></span></span></div>
+                    <div class="btn-tag-okay js-action-save-delete-tag"><span><span><span>YES</span></span></span></div>
+                </div>
+            </form>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-delete-partner -->
+
+</div>
+<!-- End #modal -->
+
+
+<div class="hide" id="hidden-contact-edit">
+<form action="" method="post">
+
+</form>
+<div id="hidden-active-partner">{{active_partner_id}}</div>
+</div>
+{% endblock %}

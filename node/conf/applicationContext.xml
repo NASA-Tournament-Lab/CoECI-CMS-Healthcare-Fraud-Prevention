@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms 
+                           http://www.springframework.org/schema/jms/spring-jms.xsd
+                           http://www.springframework.org/schema/mvc
+        				   http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+	<context:annotation-config />
+	
+    <!-- JMS Connection Settings -->
+	<bean id="jmsConnectionFactory" 
+          class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="qpidConnectionFactory" />
+	</bean>
+	
+	<bean id="jmsListenerConnectionFactory" 
+          class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="qpidConnectionFactory" />
+	</bean>
+
+    <bean id="qpidConnectionFactory" 
+          class="org.apache.qpid.client.AMQConnectionFactory">
+    	<property name="connectionURLString" value="amqp://guest:guest@clientid/default?brokerlist='tcp://localhost:5672'" />
+    </bean>
+    
+    <!-- Queue Settings -->
+    <bean id="analysisResultQueue" 
+          class="org.apache.qpid.client.AMQAnyDestination">
+    	<constructor-arg type="java.lang.String">
+    		<value>hfpp.queue.analysis_results.091f80d7-8ecb-429c-8f0b-caeaae18dcd8</value>
+    	</constructor-arg>
+    </bean>
+    
+    <bean id="dataRequestQueue" 
+          class="org.apache.qpid.client.AMQAnyDestination">
+    	<constructor-arg type="java.lang.String">
+    		<value>hfpp.queue.data_requests.091f80d7-8ecb-429c-8f0b-caeaae18dcd8</value>
+    	</constructor-arg>
+    </bean>
+    
+    <bean id="dataResponseQueue" 
+          class="org.apache.qpid.client.AMQAnyDestination">
+    	<constructor-arg type="java.lang.String">
+    		<value>hfpp.queue.data_responses.091f80d7-8ecb-429c-8f0b-caeaae18dcd8</value>
+    	</constructor-arg>
+    </bean>
+    
+    <!-- JMS MessageListener & container Settings -->
+    <bean id="dataRequestJMSListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	    <property name="connectionFactory" ref="jmsListenerConnectionFactory"/>
+	    <property name="destination" ref="dataRequestQueue"/>
+	    <property name="messageListener" ref="dataRequestMessageListener"/>
+	</bean>
+	
+    <bean id="dataRequestMessageListener" 
+          class="com.hfpp.network.node.messaging.DataRequestMessageListener">
+        <property name="callbackURL" value="https://test.com:8070/callbacks/data_request" />
+        <property name="jmsTemplate" ref="jmsTemplate" />
+    </bean>
+    
+    <bean id="dataResponseJMSListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	    <property name="connectionFactory" ref="jmsListenerConnectionFactory"/>
+	    <property name="destination" ref="dataResponseQueue"/>
+	    <property name="messageListener" ref="dataResponseMessageListener"/>
+	</bean>
+	
+    <bean id="dataResponseMessageListener" 
+          class="com.hfpp.network.node.messaging.DataResponseMessageListener">
+        <property name="callbackURL" value="http://test.com:8050/data_response" />
+        <property name="jmsTemplate" ref="jmsTemplate" />
+    </bean>
+    
+    <bean id="analysisResultJMSListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	    <property name="connectionFactory" ref="jmsListenerConnectionFactory"/>
+	    <property name="destination" ref="analysisResultQueue"/>
+	    <property name="messageListener" ref="analysisResultMessageListener"/>
+	</bean>
+	
+    <bean id="analysisResultMessageListener" 
+          class="com.hfpp.network.node.messaging.AnalysisResultMessageListener">
+        <property name="callbackURL" value="http://test.com:8050/analysis_result" />
+        <property name="jmsTemplate" ref="jmsTemplate" />
+    </bean>
+    
+    <!-- DataExchangeService -->
+	<bean id="dataExchangeService" class="com.hfpp.network.node.services.impl.DataExchangeServiceImpl">
+        <property name="jmsTemplate" ref="jmsTemplate" />
+        <property name="schemaPaths">
+            <map>
+                <entry key="DataRequest" value="/home/tcsassembler/hfpp/node/schemas/data_request.xsd" />
+                <entry key="DataResponse" value="/home/tcsassembler/hfpp/node/schemas/data_response.xsd" />
+                <entry key="AnalysisResult" value="/home/tcsassembler/hfpp/node/schemas/analysis_result.xsd" />
+                <entry key="PartnerListRequest" value="/home/tcsassembler/hfpp/node/schemas/partner_list_request.xsd" />
+                <entry key="PartnerStatisticsRequest" value="/home/tcsassembler/hfpp/node/schemas/partner_statistics_request.xsd" />
+            </map>
+        </property>
+    </bean>
+    
+    <!-- JMS Template -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    	<property name="connectionFactory" ref="jmsConnectionFactory"/>
+    </bean>
+</beans>

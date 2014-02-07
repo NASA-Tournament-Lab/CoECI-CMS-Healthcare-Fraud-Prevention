@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>$requestId</RequestID>
+    <StudyID>$studyId</StudyID>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</DataRequestAcknowledgement>

@@ -1,0 +1,109 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This is the template defines partner requests list. #}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Healthcare Fraud Prevention Decision Module</title>
+<script type="text/javascript">
+</script>
+</head>
+
+<body>
+<h1>Healthcare Fraud Prevention Decision Module</h1>
+<div>
+    <div>
+        <h2>Pending requests</h2>
+        <div class="Pending">
+            <table>
+                <tr>
+                    <th>Request Id</th>
+                    <th>Study Id</th>
+                    <th>Query String</th>
+                    <th>Expiration Time</th>
+                    <th>Cache Available</th>
+                    <th>Cache Timestamp</th>
+                </tr>
+                {% for request in pending %}
+                <tr>
+                    <td>{{request.request_id}}</td>
+                    <td>{{request.study_id}}</td>
+                    <td>{{request.query}}</td>
+                    <td>{{request.expiration_time}}</td>
+                    <td>{{request.cache_available}}</td>
+                    <td>{{request.cache_timestamp}}</td>
+                    <td>
+                        <form action="{% url 'approval_requests' %}" method="post">{% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{request.request_id}}"/>
+                            <input type="submit" value="Approval" />
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'deny_requests' %}" method="post">{% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{request.request_id}}"/>
+                            <input type="submit" value="Deny" />
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {%  if approved %}
+    <div>
+        <h2>Approved requests</h2>
+        <div class="Approved">
+            <table>
+                <tr>
+                    <th>Request Id</th>
+                    <th>Study Id</th>
+                    <th>Query String</th>
+                    <th>Expiration Time</th>
+                    <th>Cache Available</th>
+                    <th>Cache Timestamp</th>
+                </tr>
+                {% for request in approved %}
+                <tr>
+                    <td>{{request.request_id}}</td>
+                    <td>{{request.study_id}}</td>
+                    <td>{{request.query}}</td>
+                    <td>{{request.expiration_time}}</td>
+                    <td>{{request.cache_available}}</td>
+                    <td>{{request.cache_timestamp}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    {%  if denied %}
+    <div>
+        <h2>Denied requests</h2>
+        <div class="Denied">
+            <table>
+                <tr>
+                    <th>Request Id</th>
+                    <th>Study Id</th>
+                    <th>Query String</th>
+                    <th>Expiration Time</th>
+                    <th>Cache Available</th>
+                    <th>Cache Timestamp</th>
+                </tr>
+                {% for request in denied %}
+                <tr>
+                    <td>{{request.request_id}}</td>
+                    <td>{{request.study_id}}</td>
+                    <td>{{request.query}}</td>
+                    <td>{{request.expiration_time}}</td>
+                    <td>{{request.cache_available}}</td>
+                    <td>{{request.cache_timestamp}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

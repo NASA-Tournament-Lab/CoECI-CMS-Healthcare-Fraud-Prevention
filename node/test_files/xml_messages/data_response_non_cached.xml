@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]>
+    </Data>
+</DataResponse>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerRoleList>
+    <Role>
+        <RoleID>1</RoleID>
+        <Name>role1</Name>
+    </Role>
+    <Role>
+        <RoleID>2</RoleID>
+        <Name>role2</Name>
+    </Role>
+    <Role>
+        <RoleID>3</RoleID>
+        <Name>role3</Name>
+    </Role>
+</PartnerRoleList>

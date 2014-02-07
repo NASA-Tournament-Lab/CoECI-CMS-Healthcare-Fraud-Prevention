@@ -1,0 +1,11 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template defines page to show/edit/create/delete partner tags. #}
+{# It inherites from PartnerAndTagBase. #}
+
+{% extends "PartnerAndTagBase.html" %}
+{% block tabSelection %}
+    <li><a href="javascript:;">PARTNERS</a></li>
+    <li class="active"><a href="javascript:;">TAGS</a></li>
+{% endblock %}
+{% block hidePartners %} hide{% endblock %}
+{% block hideTags %}{% endblock %}

@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	<!-- define the properties file to use -->
+	<util:properties id="configProperties" location="classpath:config.properties" />
+
+	<!-- JPA EntityManager Factory -->
+	<bean id="entityManagerFactoryTest"
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean" depends-on="btmConfig">
+		<property name="persistenceUnitName" value="persistenceUnit" />
+	</bean>
+</beans>

@@ -1,0 +1,117 @@
+<!-- 
+ Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+ 
+ @author TCSASSEMBLER
+ @version 1.0 
+ 
+ Renders the index test page. 
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Network Node Test Page</title>
+<script src="jquery-1.10.2.js"></script>
+<style type="text/css">
+.container {
+    margin: 0 auto;
+}
+.left {
+    float: left;
+    width: 46%; 
+}
+.right {
+    float: right;
+    width: 46%; 
+}
+
+</style>
+<script>
+    var urls={
+      "0":'services/data_request',
+      "1":'services/data_response',
+      "2":'services/analysis_result',
+      "3":'services/general_service'
+   };
+   function xmlEscape(str) {
+       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+   }
+   function test() {
+      $('#response').html('Waiting for response...');
+      var username = $('#username').val().trim();
+      var password = $('#password').val();
+      var url =  $('#url').val();
+      var xml = $('#request').val();
+      if(username.length==0 || password.length ==0
+      ||url.length==0 || xml.length==0){
+         alert("Please input username or password or url or request xml");
+         return;
+      }
+      $.ajax({
+         type: 'POST',
+         url: "../"+url,
+         data: xml,
+         contentType: "application/xml",
+         dataType:"text",
+         headers : {'x-hfpp-username' : username, 'x-hfpp-password' : password},
+         success : function(data) {
+            $('#response').html(xmlEscape(data));
+         },
+         error : function(jqXHR, textStatus, errorThrown ) { 
+           $('#response').html(jqXHR.responseText);
+         }
+      });
+   }
+   function change(){
+      var url = $("#messageType").val();
+      var type = $("#messageType option:selected").data("type");
+      $("#url").val(urls[type]);
+      $('#request').html('Waiting for request...');
+      $.ajax({
+         type: 'GET',
+         url: url,
+         dataType:"text",
+         success : function(data) {
+            $('#request').html(xmlEscape(data));
+			$('#response').html("");
+         }
+      });
+   }
+   $(document).ready(function(){
+     $.ajaxSetup ({
+      cache: false
+      });
+     $("#messageType").change(change);
+     change();
+   });
+</script>
+
+</head>
+<body>
+<h1>This is test page to show Hub and Node can work well together</h1>
+Username: <input type="text" id="username" value="user1"/> <p>
+Password: <input type="text" id="password" value="pass1"/> <p>
+Url Path: <input type="text" id="url" readonly/> <p>
+Message :
+<select id="messageType">
+<option value="data_request.xml" data-type="0" selected="selected">Data Request</option>
+<option value="data_response.xml" data-type="1">DataResponse</option>
+<option value="analysis_result.xml" data-type="2">AnalysisResult</option>
+<option value="partner_list.xml" data-type="3">PartnerListRequest</option>
+<option value="partner_statistics.xml" data-type="3">PartnerStatisticsRequest</option>
+<option value="partner_add.xml" data-type="3">PartnerAddRequest</option>
+<option value="partner_edit.xml" data-type="3">PartnerEditRequest</option>
+<option value="partner_get.xml" data-type="3">PartnerGetRequest</option>
+<option value="partner_delete.xml" data-type="3">PartnerDeleteRequest</option>
+<option value="partner_role_list.xml" data-type="3">PartnerRoleListRequest</option>
+</select> <p>
+<p>left text area is request message and right text area is response message</p>
+<input type="submit" value="Test" onclick="test();"/>
+<div class="container">
+<textarea id="request" class="left" cols="50" rows="20">
+</textarea> 
+<textarea id="response" class="right" cols="50" rows="20" readonly>
+</textarea> 
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<xs:schema>
+  <xs:element name="DataResponseAcknowledgement">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="RequestID"/>
+        <xs:element type="xs:string" name="Status"/>
+        <xs:element type="xs:unsignedInt" name="ErrorCode" maxOccurs="1" minOccurs="0" />
+        <xs:element type="xs:string" name="ErrorMessage" maxOccurs="1" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

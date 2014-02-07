@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <StudyID>1</StudyID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>

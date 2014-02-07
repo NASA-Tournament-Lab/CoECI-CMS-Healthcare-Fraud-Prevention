@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerGet>
+    <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+    <Username>user4</Username>
+    <OrganizationName>org4</OrganizationName>
+    <RoleID>1</RoleID>
+    <AutoRetrieveCachedData>true</AutoRetrieveCachedData>
+</PartnerGet>

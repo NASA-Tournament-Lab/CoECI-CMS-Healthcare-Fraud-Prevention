@@ -1,0 +1,67 @@
+Testsuite: com.hfpp.network.CreateQueueSuite
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 14.643 sec
+------------- Standard Output ---------------
+2013-12-26 13:52:47,019 - org.springframework.beans.factory.xml.XmlBeanDefinitionReader - INFO - Loading XML bean definitions from class path resource [applicationContext.xml]
+2013-12-26 13:52:47,716 - org.springframework.beans.factory.xml.XmlBeanDefinitionReader - INFO - Loading XML bean definitions from class path resource [test-context.xml]
+2013-12-26 13:52:47,804 - org.springframework.context.support.GenericApplicationContext - INFO - Refreshing org.springframework.context.support.GenericApplicationContext@2f8a49e0: startup date [Thu Dec 26 13:52:47 CST 2013]; root of context hierarchy
+2013-12-26 13:52:48,318 - org.springframework.beans.factory.config.PropertyPlaceholderConfigurer - INFO - Loading properties file from class path resource [config.properties]
+2013-12-26 13:52:48,525 - org.springframework.beans.factory.support.DefaultListableBeanFactory - INFO - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@76caf6c1: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,ehcache1,cacheManager,cacheService,lookupService,auditService,permissions,authorizationService,passwordEncryptor,rolesEligibleToReceiveDataRequests,rolesEligibleToInitiateDataRequests,userService,authenticationService,jmsTemplate,velocityEngine,dataExchangeService,qpidConnectionFactory,jmsConnectionFactory,entityManagerFactory,entityManager,btmConfig,bitronixTransactionManager,jtaTransactionManager,partnerStatisticsRequestMessageHandler,partnerListRequestMessageHandler,dataRequestMessageHandler,dataResponseMessageHandler,analysisResultMessageHandler,analysisResultQueue,dataRequestQueue,dataResponseQueue,generalServiceQueue,exceptionErrorCodes,exceptionErrorMessages,dataRequestMessageListener,dataRequestMessageContainer,dataResponseMessageListener,dataResponseMessageContainer,analysisResultMessageListener,analysisResultMessageContainer,schemaPaths,templatePaths,operationNames,messageHandlers,generalServiceMessageListener,generalServicetMessageContainer,configProperties,entityManagerFactoryTest,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2013-12-26 13:52:48,794 - org.springframework.cache.ehcache.EhCacheManagerFactoryBean - INFO - Initializing EhCache CacheManager
+2013-12-26 13:52:49,991 - org.springframework.orm.jpa.LocalEntityManagerFactoryBean - INFO - Building JPA EntityManagerFactory for persistence unit 'persistenceUnitJTA'
+2013-12-26 13:52:50,624 - org.hibernate.annotations.common.Version - INFO - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2013-12-26 13:52:50,653 - org.hibernate.Version - INFO - HHH000412: Hibernate Core {4.2.3.Final}
+2013-12-26 13:52:50,666 - org.hibernate.cfg.Environment - INFO - HHH000206: hibernate.properties not found
+2013-12-26 13:52:50,686 - org.hibernate.cfg.Environment - INFO - HHH000021: Bytecode provider name : javassist
+2013-12-26 13:52:51,629 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-12-26 13:52:51,657 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000115: Hibernate connection pool size: 20
+2013-12-26 13:52:51,658 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000006: Autocommit mode: true
+2013-12-26 13:52:51,660 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/hfpp_hub]
+2013-12-26 13:52:51,660 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000046: Connection properties: {user=root, password=****, autocommit=true, release_mode=auto}
+2013-12-26 13:52:52,920 - org.hibernate.dialect.Dialect - INFO - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-12-26 13:52:53,746 - org.hibernate.engine.transaction.internal.TransactionFactoryInitiator - INFO - HHH000268: Transaction strategy: org.hibernate.engine.transaction.internal.jta.CMTTransactionFactory
+2013-12-26 13:52:53,764 - org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory - INFO - HHH000397: Using ASTQueryTranslatorFactory
+2013-12-26 13:52:53,835 - org.hibernate.cache.spi.UpdateTimestampsCache - INFO - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+2013-12-26 13:52:53,844 - org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory - WARN - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+2013-12-26 13:52:54,038 - org.hibernate.cache.internal.StandardQueryCache - INFO - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+2013-12-26 13:52:54,040 - org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory - WARN - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+2013-12-26 13:52:54,527 - org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory - WARN - HHH020003: Could not find a specific ehcache configuration for cache named [com.hfpp.network.models.Role]; using defaults.
+2013-12-26 13:52:54,778 - bitronix.tm.BitronixTransactionManager - INFO - Bitronix Transaction Manager version 2.1.3
+2013-12-26 13:52:54,779 - bitronix.tm.Configuration - INFO - JVM unique ID: <spring-btm>
+2013-12-26 13:52:54,981 - bitronix.tm.recovery.Recoverer - INFO - recovery committed 0 dangling transaction(s) and rolled back 0 aborted transaction(s) on 0 resource(s) [] (restricted to serverId 'spring-btm')
+2013-12-26 13:52:55,895 - org.springframework.transaction.jta.JtaTransactionManager - INFO - Using JTA UserTransaction: a BitronixTransactionManager with 0 in-flight transaction(s)
+2013-12-26 13:52:55,896 - org.springframework.transaction.jta.JtaTransactionManager - INFO - Using JTA TransactionManager: a BitronixTransactionManager with 0 in-flight transaction(s)
+2013-12-26 13:52:56,496 - org.springframework.beans.factory.config.PropertiesFactoryBean - INFO - Loading properties file from class path resource [config.properties]
+2013-12-26 13:52:56,500 - org.springframework.orm.jpa.LocalEntityManagerFactoryBean - INFO - Building JPA EntityManagerFactory for persistence unit 'persistenceUnit'
+2013-12-26 13:52:56,703 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-12-26 13:52:56,703 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000115: Hibernate connection pool size: 20
+2013-12-26 13:52:56,703 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000006: Autocommit mode: true
+2013-12-26 13:52:56,704 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/hfpp_hub]
+2013-12-26 13:52:56,704 - org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl - INFO - HHH000046: Connection properties: {user=root, password=****, autocommit=true, release_mode=auto}
+2013-12-26 13:52:56,795 - org.hibernate.dialect.Dialect - INFO - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-12-26 13:52:56,959 - org.hibernate.engine.transaction.internal.TransactionFactoryInitiator - INFO - HHH000268: Transaction strategy: org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
+2013-12-26 13:52:56,961 - org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory - INFO - HHH000397: Using ASTQueryTranslatorFactory
+2013-12-26 13:52:56,962 - org.hibernate.cache.spi.UpdateTimestampsCache - INFO - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+2013-12-26 13:52:56,963 - org.hibernate.cache.internal.StandardQueryCache - INFO - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+2013-12-26 13:52:57,083 - org.hibernate.internal.SessionFactoryImpl - WARN - HHH000008: JTASessionContext being used with JDBCTransactionFactory; auto-flush will not operate correctly with getCurrentSession()
+2013-12-26 13:52:57,109 - org.springframework.context.support.DefaultLifecycleProcessor - INFO - Starting beans in phase 2147483647
+2013-12-26 13:52:57,333 - org.springframework.test.context.transaction.TransactionalTestExecutionListener - INFO - Began transaction (1): transaction manager [org.springframework.transaction.jta.JtaTransactionManager@4acf7fd0]; rollback [true]
+2013-12-26 13:52:58,616 - org.apache.qpid.client.security.DynamicSaslRegistrar - INFO - Additional SASL providers successfully registered.
+2013-12-26 13:52:58,621 - org.apache.qpid.client.security.CallbackHandlerRegistry - INFO - Callback handlers available for SASL mechanisms: [EXTERNAL, GSSAPI, CRAM-MD5-HASHED, CRAM-MD5, AMQPLAIN, PLAIN, ANONYMOUS]
+2013-12-26 13:52:58,652 - org.apache.qpid.client.AMQConnection - INFO - Connection 1 now connected from /127.0.0.1:59102 to localhost/127.0.0.1:5672
+2013-12-26 13:52:58,653 - org.springframework.jms.connection.SingleConnectionFactory - INFO - Established shared JMS Connection: AMQConnection:
+Host: localhost
+Port: 5672
+Virtual Host: default
+Client ID: clientid
+Active session count: 0
+2013-12-26 13:53:01,466 - org.springframework.test.context.transaction.TransactionalTestExecutionListener - INFO - Rolled back transaction after test execution for test context [TestContext@62918c34 testClass = CreateQueueTest, testInstance = null(com.hfpp.network.CreateQueueTest), testMethod = testCreateQueue@CreateQueueTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@418bdc7a testClass = CreateQueueTest, locations = '{classpath:applicationContext.xml, classpath:test-context.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/tcsassembler/tcs/HfppSystemIntegration/integrate/hub/lib/slf4j-1.7.2/slf4j-log4j12-1.7.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/tcsassembler/tcs/HfppSystemIntegration/integrate/hub/lib/slf4j-log4j12-1.7.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+------------- ---------------- ---------------
+
+Testcase: testCreateQueue took 14.582 sec

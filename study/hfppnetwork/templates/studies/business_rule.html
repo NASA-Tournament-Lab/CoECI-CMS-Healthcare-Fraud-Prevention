@@ -1,0 +1,49 @@
+{% extends "studies/detail_base.html" %}
+{% block switch-tab-wrapper %}
+<div class="switch-tab-content business-rules-section">
+    <div class="sub-tab-container"> 
+         <ul class="sd-content">
+            <li>
+                <label>Query String:</label>
+                <p>
+                    <span>Beneficiary: {{ study.beneficiary_query }}</span>
+                    <span>Carrier: {{ study.carrier_query }}</span>
+                    <span>Inpatient: {{ study.inpatient_query }}</span>
+                    <span>Outpatient: {{ study.outpatient_query }}</span>
+                    <span>Prescription: {{ study.prescription_query }}</span>
+                </p>
+            </li>
+            <li>
+                <label>Selected Partners:</label>
+                <p>
+                    {% for study_data_request in transactions %}
+                    <span>{{ study_data_request.partner.company_name }}</span>
+                    {% endfor %}
+                </p>
+            </li>
+         </ul>    
+    </div>
+    <!-- End .sub-tab-container -->
+</div>
+{% endblock %}
+{% block modal %}
+<div id="modal">
+    <div class="modal" id="modal-execute-transactions">
+        <div class="modal-header">
+            <a href="/studies?status=1" class="close-modal">CLOSE</a>
+            <h2>Message</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+        
+            <p>Study <span id='exec_trans_results'></span> have been <span id='study_op'></span>.</p>
+
+            <div class="buttons">
+                <a href="/studies?status=1" class="btn-ok close-modal"><span><span><span>OK</span></span></span></a>
+            </div>
+        
+        </div>
+        <!-- End .modal-container -->
+    </div>
+</div>
+{% endblock %}

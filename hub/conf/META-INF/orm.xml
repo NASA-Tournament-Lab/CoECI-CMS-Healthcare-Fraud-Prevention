@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+    http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+    version="2.0">
+
+    <description>OR Mapping</description>
+
+  <mapped-superclass class="com.hfpp.network.models.IdentifiableObject">
+    <attributes>
+      <id name="id">
+        <column name="id" nullable="false" column-definition="VARCHAR(50)" />
+      </id>
+    </attributes>
+  </mapped-superclass>
+
+  <mapped-superclass class="com.hfpp.network.models.LookupObject">
+    <attributes>
+      <basic name="name">
+        <column name="name" nullable="false" column-definition="VARCHAR(50)" />
+      </basic>
+    </attributes>
+  </mapped-superclass>
+
+  <mapped-superclass class="com.hfpp.network.models.AuditableObject">
+    <attributes>
+      <basic name="createdBy">
+        <column name="created_by" nullable="true" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="createdDate">
+        <column name="created_date" nullable="false" column-definition="TIMESTAMP" />
+      </basic>
+      <basic name="updatedBy">
+        <column name="updated_by" nullable="true" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="updatedDate">
+        <column name="updated_date" nullable="true" column-definition="TIMESTAMP" />
+      </basic>
+    </attributes>
+  </mapped-superclass>
+
+  <entity class="com.hfpp.network.models.Role" cacheable="true">
+    <table name="role" />
+  </entity>
+
+  <entity class="com.hfpp.network.models.User">
+    <table name="user" />
+    <attributes>
+      <basic name="username">
+        <column name="username" nullable="false" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="organizationName">
+        <column name="organization_name" nullable="false" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="autoRetrieveCachedData">
+        <column name="auto_retrieve_cached_data" nullable="false" column-definition="BIT" />
+      </basic>
+      <many-to-one name="role" target-entity="com.hfpp.network.models.Role">
+        <join-column name="role_id" />
+      </many-to-one>
+      <transient name="eligibleToReceiveDataRequests"/>
+      <transient name="eligibleToInitiateDataRequests"/>
+    </attributes>
+  </entity>
+
+  <entity class="com.hfpp.network.models.AuditRecord">
+    <table name="audit_record" />
+    <attributes>
+      <basic name="userId">
+        <column name="user_id" nullable="false" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="timestamp">
+        <column name="record_timestamp" nullable="false" column-definition="TIMESTAMP" />
+      </basic>
+      <basic name="action">
+        <column name="action" nullable="false" column-definition="VARCHAR(100)" />
+      </basic>
+      <basic name="denied">
+        <column name="denied" nullable="false" column-definition="BIT" />
+      </basic>
+      <basic name="message">
+        <column name="message" nullable="true" column-definition="LONGTEXT" />
+      </basic>
+    </attributes>
+  </entity>
+
+  <entity class="com.hfpp.network.models.DataRequest">
+    <table name="data_request" />
+    <attributes>
+      <basic name="requesterId">
+        <column name="requester_id" nullable="false" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="studyId">
+        <column name="study_id" nullable="false" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="originalRequesterId">
+        <column name="original_requester_id" nullable="true" column-definition="VARCHAR(50)" />
+      </basic>
+      <basic name="query">
+        <column name="query" nullable="false" column-definition="TEXT" />
+      </basic>
+      <basic name="expirationTime">
+        <column name="expiration_time" nullable="false" column-definition="TIMESTAMP" />
+      </basic>
+      <basic name="cacheSafe">
+        <column name="cache_safe" nullable="false" column-definition="BIT" />
+      </basic>
+      <element-collection name="requestedPartners" fetch="EAGER">
+        <column name="user_id" nullable="false" column-definition="CHAR" />
+        <collection-table name="data_request_requested_user">
+          <join-column name="data_request_id" />
+        </collection-table>
+      </element-collection>
+    </attributes>
+  </entity>
+
+  <entity class="com.hfpp.network.models.DataResponse">
+    <table name="data_response" />
+    <attributes>
+      <id name="respondentId">
+        <column name="respondent_id" nullable="false" column-definition="VARCHAR(50)" />
+      </id>
+      <id name="requestId">
+        <column name="data_request_id" nullable="false" column-definition="VARCHAR(50)" />
+      </id>
+      <basic name="responseTimestamp">
+        <column name="response_timestamp" nullable="false" column-definition="TIMESTAMP" />
+      </basic>
+      <basic name="requestDenied">
+        <column name="request_denied" nullable="false" column-definition="BIT" />
+      </basic>
+      <transient name="data"/>
+      <transient name="errorMessage"/>
+    </attributes>
+  </entity>
+
+  <entity class="com.hfpp.network.models.UserStatistics">
+    <table name="user_stat" />
+    <attributes>
+      <id name="userId">
+        <column name="user_id" nullable="false" column-definition="VARCHAR(50)" />
+      </id>
+      <basic name="dataRequestsReceived">
+        <column name="data_requests_received" nullable="false" column-definition="INT" />
+      </basic>
+      <basic name="dataRequestsResponded">
+        <column name="data_requests_responded" nullable="false" column-definition="INT" />
+      </basic>
+      <basic name="dataRequestsInitiated">
+        <column name="data_requests_initiated" nullable="false" column-definition="INT" />
+      </basic>
+      <basic name="dataRequestsDeclined">
+        <column name="data_requests_declined" nullable="false" column-definition="INT" />
+      </basic>
+    </attributes>
+  </entity>
+</entity-mappings>

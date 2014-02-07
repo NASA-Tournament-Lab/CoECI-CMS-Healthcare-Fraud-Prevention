@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Not Accepted</Status>
+    <!-- Error Code, can be
+        000: unexpected service internal error
+        001: authentication failed
+        002: insufficient authorization
+        100: invalid request (malformed XML)
+    -->
+    <ErrorCode>001</ErrorCode>
+    <ErrorMessage>authentication failed.</ErrorMessage>
+</PartnerList>

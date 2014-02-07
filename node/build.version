@@ -1,0 +1,9 @@
+# Property file defining the component's information.
+component.name=healthcare fraud prevention - data exchange network node module assembly
+component.distfilename=healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly
+component.package=com.hfpp.network.node
+component.packagedir=com/hfpp/network/node
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=1

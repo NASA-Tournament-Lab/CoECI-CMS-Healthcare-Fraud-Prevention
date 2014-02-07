@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Healthcare Fraud Prevention Partnership</title>
+<link href="/css/screen.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/ie7.css" />
+<![endif]-->
+<!--[if lt IE 9]>
+    <script src="/js/PIE-ie678.js" type="text/javascript"></script>
+    <![endif]-->
+<!--[if IE 9]>
+    <script src="/js/PIE-ie9.js" type="text/javascript"></script>
+    <![endif]-->
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.min.js"></script>
+<!-- JQ Transform -->
+<script type="text/javascript" src="/js/jquery.jqtransform.js"></script>
+<!-- Date Picker -->
+<script type="text/javascript" src="/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/js/jquery.ui.datepicker.js"></script>
+{% block scripts %}{% endblock %}
+<script type="text/javascript" src="/js/script.js"></script>
+{% block extra_js_src %}
+{% endblock %}
+<script type="text/javascript">
+{% block extra_js %}
+{% endblock %}
+</script>
+
+</head>
+
+<body {% block bodyid %}{% endblock %}>
+    <div id="wrapper">
+        <div id="main">
+            <div id="header">
+                <div class="inner">
+                    <h1>
+                        <a href="/studies">HFPP Study Management Interface</a>
+                    </h1>
+                   {% if user.is_authenticated %}
+                    <!-- End Logo -->
+                    <div class="welcome">
+                       <a href="{% url 'logout' %}" class="btn-logout"><span><span>LOGOUT</span></span></a>
+                        <!-- This link lead to Login.html -->
+                        <div class="welcome-widget">
+                            Welcome
+                            <a href="javascript:;" class="username">{{ user.username }}</a>
+                            <!-- End .username -->
+                            <div class="profile-flyout">
+                                <div class="arrow-profile-flyout">
+                                    <div class="inner-profile-flyout">
+                                        <ul>
+                                           {% if user.is_staff %}
+	                                    		<!-- We can only use hard coded reference for studies -->
+	                                        	<li><a href="/studies">Studies</a></li>
+	                                            <li><a href="{% url 'list_partners' %}">Partners</a></li>
+	                                            <li><a href="{% url 'list_partner_tags' %}">Partner Tags</a></li>
+                                                <li><a href="{% url 'list_darc_emails' %}">DARC emails</a></li>
+	                                            <li><a href="/admin/auth/user">Manage Users</a></li>
+	                                        {% else %}
+	                                            <!-- We can only use hard coded reference for studies -->
+	                                            <li><a href="/studies">Studies</a></li>
+	                                            <!-- show partners menu only for superuser -->
+	                                            {% if user.is_superuser %}
+		                                            <li><a href="{% url 'list_partners' %}">Partners</a></li>
+		                                            <li><a href="{% url 'list_partner_tags' %}">Partner Tags</a></li>
+		                                        {% endif %}
+	                                        {% endif %}
+                                            <li><a href="/profile">My Profile</a></li> 
+<!--                                            <li><a href="javascript:;">Settings</a></li> -->
+                                            <li class="logout"><a href="{% url 'logout' %}">LOGOUT</a></li>
+                                            <!-- This link lead to Login.html -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End .profile-flyout -->
+                        </div>
+                    </div>
+                    <!-- End .welcome -->
+                   {% endif %}
+                </div>
+            </div>
+            <!-- End #header -->
+            <div id="main-container">
+                {% block main-container %}{% endblock %}
+            </div>
+            {% block content %}{% endblock %}
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #wrapper -->
+    </div>
+    {% block footer %}
+    <div id="footer">
+        <div class="inner">
+            <ul>
+                <li><a href="javascript:;">Footer</a></li>
+                <li><a href="javascript:;">Lorem Ipsum</a></li>
+                <li><a href="javascript:;">Dolorsit Amet</a></li>
+                <li><a href="javascript:;">Consectetur</a></li>
+                <li class="last"><a href="javascript:;">Adipisci velit</a></li>
+            </ul>
+            <!-- End footer navigation -->
+            <p>Copyright &copy; 2013 Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</p>
+            <!-- End copyright -->
+        </div>
+    </div>
+    {% endblock %}
+    <div id="modal-background"></div>
+    {% block modal %}
+    {% endblock %}
+</body>
+</html>

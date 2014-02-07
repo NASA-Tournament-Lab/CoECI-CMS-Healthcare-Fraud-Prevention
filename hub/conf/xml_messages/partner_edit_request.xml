@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerEditRequest>
+    <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+    <Username>user4</Username>
+    <Password>pass4</Password>
+    <OrganizationName>org4e</OrganizationName>
+    <RoleID>1</RoleID>
+    <AutoRetrieveCachedData>false</AutoRetrieveCachedData>
+</PartnerEditRequest>

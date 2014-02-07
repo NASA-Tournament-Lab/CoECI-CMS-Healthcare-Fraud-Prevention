@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>

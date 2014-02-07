@@ -1,0 +1,23 @@
+import django
+print("django version:")
+print(django.VERSION)
+import pymysql
+import setuptools
+import pyphen
+import six
+import cssselect
+import tinycss
+import html5lib
+import lxml
+import cffi
+import cairocffi
+import cairosvg
+import weasyprint
+import apscheduler
+import widget_tweaks
+import cherrypy
+import isodate
+import cymysql
+import argparse
+import redis
+import xlsxwriter

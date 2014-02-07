@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="home-PC" name="com.hfpp.network.node.AllTests" tests="43" time="71.148" timestamp="2013-08-29T14:34:14">
+  <properties>
+    <property name="java.vendor" value="Sun Microsystems Inc." />
+    <property name="package" value="com.hfpp.network.node" />
+    <property name="docpackage.jar" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly_docs.jar" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.management.compiler" value="HotSpot Client Compiler" />
+    <property name="manifest_file_path" value="build/dist/META-INF/" />
+    <property name="verbose" value="no" />
+    <property name="os.name" value="Windows 7" />
+    <property name="sun.boot.class.path" value="D:\Program Files\Java\jdk1.6.0_25\jre\lib\resources.jar;D:\Program Files\Java\jdk1.6.0_25\jre\lib\rt.jar;D:\Program Files\Java\jdk1.6.0_25\jre\lib\sunrsasign.jar;D:\Program Files\Java\jdk1.6.0_25\jre\lib\jsse.jar;D:\Program Files\Java\jdk1.6.0_25\jre\lib\jce.jar;D:\Program Files\Java\jdk1.6.0_25\jre\lib\charsets.jar;D:\Program Files\Java\jdk1.6.0_25\jre\lib\modules\jdk.boot.jar;D:\Program Files\Java\jdk1.6.0_25\jre\classes" />
+    <property name="docsdir" value="docs" />
+    <property name="javadoc.jar" value="javadocs.jar" />
+    <property name="design_submission.jar" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly_1.0.0_design_submission.jar" />
+    <property name="sun.desktop" value="windows" />
+    <property name="component.tests.jar" value="build/dist/lib/tcs/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly_tests.jar" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="ant.home" value="D:\Program Files\apache-ant-1.8.2" />
+    <property name="java.runtime.version" value="1.6.0_25-b06" />
+    <property name="component_path" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly/1.0.0" />
+    <property name="component.version.micro" value="0" />
+    <property name="user.name" value="db2admin" />
+    <property name="manifest_file" value="build/dist/META-INF//MANIFEST.MF" />
+    <property name="build_dist" value="build/dist" />
+    <property name="log4j.configuration" value="file:conf/log4j.properties" />
+    <property name="debug" value="off" />
+    <property name="warName" value="NetworkNode" />
+    <property name="reports" value="log/reports" />
+    <property name="testfiles" value="test_files" />
+    <property name="component.version.major" value="1" />
+    <property name="component_version" value="1.0.0" />
+    <property name="component.packagedir" value="com/hfpp/network/node" />
+    <property name="user.language" value="zh" />
+    <property name="javadoc.locale" value="en_US" />
+    <property name="sun.boot.library.path" value="D:\Program Files\Java\jdk1.6.0_25\jre\bin" />
+    <property name="ant.project.default-target" value="compile" />
+    <property name="srcdir" value="src" />
+    <property name="ant.project.name" value="Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly Build" />
+    <property name="component.version.minor" value="0" />
+    <property name="java.version" value="1.6.0_25" />
+    <property name="schemas.path" value="D:/hfpp/schemas" />
+    <property name="user.timezone" value="" />
+    <property name="dev_dist.jar" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly_1.0.0_dev_dist.jar" />
+    <property name="sun.arch.data.model" value="32" />
+    <property name="build_libdir" value="build/lib" />
+    <property name="webdir" value="src/web" />
+    <property name="java.endorsed.dirs" value="D:\Program Files\Java\jdk1.6.0_25\jre\lib\endorsed" />
+    <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86" />
+    <property name="packagedir" value="com/hfpp/network/node" />
+    <property name="sun.jnu.encoding" value="GBK" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="file.separator" value="\" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="build_docsdir" value="build/docs" />
+    <property name="java.class.version" value="50.0" />
+    <property name="build_testclassdir" value="build/testClasses" />
+    <property name="user.country" value="CN" />
+    <property name="java.home" value="D:\Program Files\Java\jdk1.6.0_25\jre" />
+    <property name="component.distfilename" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly" />
+    <property name="component.version.build" value="1" />
+    <property name="java.vm.info" value="mixed mode, sharing" />
+    <property name="ant.file.type.Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly Build" value="file" />
+    <property name="ant.file" value="D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\build.xml" />
+    <property name="os.version" value="6.1" />
+    <property name="build_distdir" value="build/dist" />
+    <property name="dist_docpackage" value="build/doc_package" />
+    <property name="build_tcsdistdir" value="build/dist/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly-1.0.0" />
+    <property name="path.separator" value=";" />
+    <property name="testlibdir" value="testlib" />
+    <property name="java.vm.version" value="20.0-b11" />
+    <property name="testlogdir" value="log" />
+    <property name="user.variant" value="" />
+    <property name="ant.library.dir" value="D:\Program Files\apache-ant-1.8.2\lib" />
+    <property name="component.name" value="healthcare fraud prevention - data exchange network node module assembly" />
+    <property name="javamain" value="src/java/main" />
+    <property name="dist_javadocs" value="build/dist/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly-1.0.0/docs/javadocs" />
+    <property name="dist_lib" value="build/dist/lib/tcs" />
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
+    <property name="component" value="healthcare fraud prevention - data exchange network node module assembly" />
+    <property name="url_base" value="http://localhost:8080/NetworkNode" />
+    <property name="user.home" value="C:\Users\db2admin" />
+    <property name="war_path" value="build/dist/NetworkNode" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="java.library.path" value="D:\Program Files\Java\jdk1.6.0_25\jre\bin;.;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\Program Files\PostgreSQL\9.2\bin;D:\Program Files\mongodb-win32-x86_64-2.0.6\bin;D:\Program Files\apache-cxf-2.6.1\bin;D:\Oracle\product\11.2.0\client_1\bin;D:\Oracle\product\11.2.0\dbhome_1\bin;D:\oracle10\product\10.2.0\db_2\bin;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;D:\Program Files\apache-maven-3.1.0\bin;D:\Program Files\apache-ant-1.8.2\bin;D:\Program Files\Java\jdk1.6.0_25\bin;C:\Windows\system32;C:\Windows;C:\Windows\system32\wbem;C:\Windows\system32\windowspowershell\v1.0\;c:\program files\ibm\gsk8\lib64;C:\PROGRA~2\ibm\gsk7\bin;C:\PROGRA~2\ibm\gsk7\lib;C:\Program Files (x86)\IBM\Informix\Client-SDK\bin;C:\Program Files (x86)\ibm\gsk7\bin;C:\Program Files (x86)\ibm\gsk7\lib;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\Common Files\Thunder Network\KanKan\Codecs;D:\Program Files\OpenLDAP\kfw\Binary;d:\Program Files\Subversion\bin;d:\Program Files\Microsoft SQL Server (x86)\100\Tools\Binn\;d:\Program Files\Microsoft SQL Server\100\Tools\Binn\;d:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\Program Files\TortoiseSVN\bin;D:\PROGRA~1\IBM\SQLLIB\BIN;D:\PROGRA~1\IBM\SQLLIB\FUNCTION;D:\PROGRA~1\IBM\SQLLIB\SAMPLES\REPL;C:\Program Files\NCover\;C:\Program Files\nodejs\;D:\Program Files\IDM Computer Solutions\UltraEdit\;D:\Program Files\IDM Computer Solutions\UltraCompare\;C:\Users\db2admin\AppData\Roaming\npm\" />
+    <property name="java.vendor.url" value="http://java.sun.com/" />
+    <property name="ant.file.Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly Build" value="D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\build.xml" />
+    <property name="build_javadocsdir" value="build/docs/javadocs" />
+    <property name="configdir" value="conf" />
+    <property name="java.vm.vendor" value="Sun Microsystems Inc." />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.8.2 compiled on December 20 2010" />
+    <property name="java.class.path" value="D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\build\testClasses;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\cobertura-1.9.4.1\cobertura.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\cobertura-1.9.4.1\lib\asm-3.0.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\cobertura-1.9.4.1\lib\asm-tree-3.0.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\cobertura-1.9.4.1\lib\jakarta-oro-2.0.8.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\cobertura-1.9.4.1\lib\log4j-1.2.17.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\commons-logging-1.1.3\commons-logging-1.1.3.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\geronimo-jms_1.1_spec-1.0\geronimo-jms_1.1_spec-1.0.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\log4j-1.2.17\log4j-1.2.17.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\qpid-0.22\qpid-all.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\qpid-0.22\qpid-client-0.22.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\qpid-0.22\qpid-common-0.22.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\slf4j-1.7.2\slf4j-api-1.7.2.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\slf4j-1.7.2\slf4j-log4j12-1.7.2.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-aop-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-aspects-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-beans-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-build-src-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-context-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-context-support-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-core-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-expression-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-instrument-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-instrument-tomcat-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-jdbc-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-jms-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-orm-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-tx-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-web-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\lib\spring-framework-3.2.3\spring-webmvc-3.2.3.RELEASE.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\testlib\junit-4.10\junit-4.10.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\testlib\mockito-1.9.5\mockito-all-1.9.5.jar;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\build\classes;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\test_files;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\conf;D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly;D:\PROGRA~1\IBM\SQLLIB\java\db2java.zip;D:\PROGRA~1\IBM\SQLLIB\java\db2jcc.jar;D:\PROGRA~1\IBM\SQLLIB\java\sqlj.zip;D:\PROGRA~1\IBM\SQLLIB\java\db2jcc_license_cu.jar;D:\PROGRA~1\IBM\SQLLIB\bin;D:\PROGRA~1\IBM\SQLLIB\java\common.jar;D:\Program Files\apache-ant-1.8.2\lib\ant-launcher.jar;D:\Program Files\apache-ant-1.8.2\lib\ant.jar;D:\Program Files\apache-ant-1.8.2\lib\ant-junit.jar;D:\Program Files\apache-ant-1.8.2\lib\ant-junit4.jar" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.hfpp.network.node.AllTests filtertrace=true haltOnError=false haltOnFailure=false showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter,D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\log\TEST-com.hfpp.network.node.AllTests.txt formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\log\TEST-com.hfpp.network.node.AllTests.xml crashfile=D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\junitvmwatcher7792026745734108042.properties propsfile=D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly\junit2202073336254930361.properties" />
+    <property name="war_name" value="NetworkNode" />
+    <property name="sqldir" value="src/sql" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="builddir" value="build" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="component.dist.jar" value="build/dist/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly-1.0.0.jar" />
+    <property name="sun.os.patch.level" value="Service Pack 1" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="qpid.url" value="amqp://guest:guest@clientid/default?brokerlist=&apos;tcp://localhost:5672&apos;" />
+    <property name="java.io.tmpdir" value="C:\Users\db2admin\AppData\Local\Temp\" />
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi" />
+    <property name="build_targetclassdir" value="build/targetclasses" />
+    <property name="javac.encoding" value="UTF-8" />
+    <property name="build_classdir" value="build/classes" />
+    <property name="javatests" value="src/java/tests" />
+    <property name="javadocsdir" value="docs/javadocs" />
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment" />
+    <property name="os.arch" value="x86" />
+    <property name="test_reflib" value="test_reflib" />
+    <property name="java.ext.dirs" value="D:\Program Files\Java\jdk1.6.0_25\jre\lib\ext;C:\Windows\Sun\Java\lib\ext" />
+    <property name="user.dir" value="D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly" />
+    <property name="design_dist.jar" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly_1.0.0_design_dist.jar" />
+    <property name="javasrc" value="src/java" />
+    <property name="libdir" value="lib" />
+    <property name="line.separator" value="&#xd;&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM" />
+    <property name="distfilename" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly" />
+    <property name="tomcat.home" value="D:/Servers/apache-tomcat-7.0.42" />
+    <property name="basedir" value="D:\TC\comp\dev\java\submission\Healthcare Fraud Prevention - Data Exchange Network Node Module Assembly" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="ant.core.lib" value="D:\Program Files\apache-ant-1.8.2\lib\ant.jar" />
+    <property name="file.encoding" value="GBK" />
+    <property name="dist_docs" value="build/dist/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly-1.0.0/docs" />
+    <property name="component.jar" value="build/dist/lib/tcs/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly/1.0.0/healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly.jar" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="ant.project.invoked-targets" value="test" />
+    <property name="submission.jar" value="healthcare_fraud_prevention_-_data_exchange_network_node_module_assembly_1.0.0_submission.jar" />
+    <property name="component.package" value="com.hfpp.network.node" />
+  </properties>
+  <testcase classname="com.hfpp.network.node.Demo" name="test_InitiateDataRequest" time="5.754" />
+  <testcase classname="com.hfpp.network.node.Demo" name="test_InitiateGeneralServiceRequest" time="5.089" />
+  <testcase classname="com.hfpp.network.node.Demo" name="test_DeliverAnalysisResult" time="5.082" />
+  <testcase classname="com.hfpp.network.node.Demo" name="test_RespondToDataRequest" time="5.093" />
+  <testcase classname="com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesControllerUnitTests" name="testCtor" time="0.067" />
+  <testcase classname="com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesControllerUnitTests" name="test_initiateDataRequest" time="5.101" />
+  <testcase classname="com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesControllerUnitTests" name="test_initiateGeneralServiceRequest" time="5.11" />
+  <testcase classname="com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesControllerUnitTests" name="test_deliverAnalysisResult" time="5.096" />
+  <testcase classname="com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesControllerUnitTests" name="test_respondToDataRequest" time="5.099" />
+  <testcase classname="com.hfpp.network.node.services.impl.DataExchangeServiceImplUnitTests" name="testCtor" time="0.01" />
+  <testcase classname="com.hfpp.network.node.services.impl.DataExchangeServiceImplUnitTests" name="test_initiateDataRequest" time="5.16" />
+  <testcase classname="com.hfpp.network.node.services.impl.DataExchangeServiceImplUnitTests" name="test_initiateGeneralServiceRequest" time="5.093" />
+  <testcase classname="com.hfpp.network.node.services.impl.DataExchangeServiceImplUnitTests" name="test_deliverAnalysisResult" time="5.084" />
+  <testcase classname="com.hfpp.network.node.services.impl.DataExchangeServiceImplUnitTests" name="test_respondToDataRequest" time="5.103" />
+  <testcase classname="com.hfpp.network.node.messaging.AnalysisResultMessageListenerUnitTests" name="testCtor" time="0.134" />
+  <testcase classname="com.hfpp.network.node.messaging.AnalysisResultMessageListenerUnitTests" name="test_onMessage" time="3.335" />
+  <testcase classname="com.hfpp.network.node.messaging.DataRequestMessageListenerUnitTests" name="testCtor" time="0.0010" />
+  <testcase classname="com.hfpp.network.node.messaging.DataRequestMessageListenerUnitTests" name="test_onMessage" time="1.742" />
+  <testcase classname="com.hfpp.network.node.messaging.DataResponseMessageListenerUnitTests" name="testCtor" time="0.0" />
+  <testcase classname="com.hfpp.network.node.messaging.DataResponseMessageListenerUnitTests" name="test_onMessage" time="2.132" />
+  <testcase classname="com.hfpp.network.node.messaging.GenericForwardMessageListenerUnitTests" name="testCtor" time="0.0" />
+  <testcase classname="com.hfpp.network.node.messaging.GenericForwardMessageListenerUnitTests" name="test_onMessage" time="1.778" />
+  <testcase classname="com.hfpp.network.node.ConfigurationExceptionUnitTests" name="testInheritance" time="0.0" />
+  <testcase classname="com.hfpp.network.node.ConfigurationExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.ConfigurationExceptionUnitTests" name="testCtor2" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.NetworkNodeServiceExceptionUnitTests" name="testInheritance" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.NetworkNodeServiceExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.NetworkNodeServiceExceptionUnitTests" name="testCtor2" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.AuthenticationExceptionUnitTests" name="testInheritance" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.AuthenticationExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.AuthenticationExceptionUnitTests" name="testCtor2" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.AuthorizationExceptionUnitTests" name="testInheritance" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.AuthorizationExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.AuthorizationExceptionUnitTests" name="testCtor2" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.DataRequestExpiredExceptionUnitTests" name="testInheritance" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.DataRequestExpiredExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.DataRequestExpiredExceptionUnitTests" name="testCtor2" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.InsufficientParticipationRatioExceptionUnitTests" name="testInheritance" time="0.0010" />
+  <testcase classname="com.hfpp.network.node.services.InsufficientParticipationRatioExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.InsufficientParticipationRatioExceptionUnitTests" name="testCtor2" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.InvalidMessageExceptionUnitTests" name="testInheritance" time="0.0010" />
+  <testcase classname="com.hfpp.network.node.services.InvalidMessageExceptionUnitTests" name="testCtor1" time="0.0" />
+  <testcase classname="com.hfpp.network.node.services.InvalidMessageExceptionUnitTests" name="testCtor2" time="0.0" />
+  <system-out><![CDATA[2013-08-29 22:34:35,435 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:35,435 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]]]><![CDATA[></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>}.
+2013-08-29 22:34:35,436 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:35,436 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]]]><![CDATA[></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>}.
+2013-08-29 22:34:35,532 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:35,532 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataRequestAcknowledgement>
+2013-08-29 22:34:35,532 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:35,532 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataRequestAcknowledgement>
+2013-08-29 22:34:40,549 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateGeneralServiceRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:40,550 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>}.
+2013-08-29 22:34:40,550 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:40,550 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>}.
+2013-08-29 22:34:40,632 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:40,632 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>
+2013-08-29 22:34:40,632 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateGeneralServiceRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:40,632 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>
+2013-08-29 22:34:45,660 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.deliverAnalysisResult(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:45,660 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResult>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Result>
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Study>
+        </Study>
+    ]]]]><![CDATA[>
+    </Result>
+</AnalysisResult>}.
+2013-08-29 22:34:45,660 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:45,660 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResult>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Result>
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Study>
+        </Study>
+    ]]]]><![CDATA[>
+    </Result>
+</AnalysisResult>}.
+2013-08-29 22:34:45,723 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:45,724 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</AnalysisResultAcknowledgement>
+2013-08-29 22:34:45,724 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.deliverAnalysisResult(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:45,724 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</AnalysisResultAcknowledgement>
+2013-08-29 22:34:50,756 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.respondToDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:50,756 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]]]><![CDATA[>
+    </Data>
+</DataResponse>}.
+2013-08-29 22:34:50,756 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:50,756 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]]]><![CDATA[>
+    </Data>
+</DataResponse>}.
+2013-08-29 22:34:50,826 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:50,826 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataResponseAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataResponseAcknowledgement>
+2013-08-29 22:34:50,826 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.respondToDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:50,826 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataResponseAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataResponseAcknowledgement>
+2013-08-29 22:34:55,875 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:55,876 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]]]><![CDATA[></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>}.
+2013-08-29 22:34:56,009 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:56,009 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataRequestAcknowledgement>
+2013-08-29 22:35:01,033 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:01,033 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>}.
+2013-08-29 22:35:01,091 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:01,091 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>
+2013-08-29 22:35:06,107 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:06,107 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResult>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Result>
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Study>
+        </Study>
+    ]]]]><![CDATA[>
+    </Result>
+</AnalysisResult>}.
+2013-08-29 22:35:06,175 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:06,175 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</AnalysisResultAcknowledgement>
+2013-08-29 22:35:11,201 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:11,201 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]]]><![CDATA[>
+    </Data>
+</DataResponse>}.
+2013-08-29 22:35:11,276 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:11,276 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataResponseAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataResponseAcknowledgement>
+2013-08-29 22:35:16,416 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:16,418 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 26400260}.
+2013-08-29 22:35:19,734 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:19,743 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:19,743 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 17292542}.
+2013-08-29 22:35:21,484 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:21,487 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:21,488 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 27059322}.
+2013-08-29 22:35:23,618 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:23,621 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:23,621 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 11320634}.
+2013-08-29 22:35:25,399 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+]]></system-out>
+  <system-err><![CDATA[log4j:WARN No appenders could be found for logger (org.apache.qpid.jndi.PropertiesFileInitialContextFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+]]></system-err>
+</testsuite>

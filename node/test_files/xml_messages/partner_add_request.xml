@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerAddRequest>
+    <Username>user4</Username>
+    <Password>pass4</Password>
+    <OrganizationName>org4</OrganizationName>
+    <RoleID>1</RoleID>
+    <AutoRetrieveCachedData>true</AutoRetrieveCachedData>
+</PartnerAddRequest>

@@ -1,0 +1,1932 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block main-container %}
+
+<span id="operate-result" data-result="{{ operate_result }}"></span>
+<form id="study-form" action="/studies/create" method="post">{% csrf_token %}
+{{ form.description | add_class:"js-hidden"}}
+<input id="id_description" name="description" type="hidden">
+<input id="id_data_request_id" name="data_request_id" type="hidden">
+<input id="id_is_cache_safe" name="is_cache_safe" type="hidden" value="true">
+<input id="id_status" name="status" type="hidden" value="0">
+
+{{ study_data_request_formset.management_form }}
+
+<div class="title">
+    <div class="actions">
+        <a href="javascript:;" class="btn btnClearAll ieFB">
+            <i></i>Clear All
+        </a>
+    </div>
+    <h2>New Study</h2>
+</div>
+<!-- End .title -->
+<div class="partner-choose">
+    <label >Select  Partners:</label>
+    <div class="partner-lists-container" id="js-choose-partner">
+        <div class="partner-inner">
+            <div class="partner-search">
+                <div class="selectWrap">
+                    <a href="javascript:;" class="select">
+                        <span id="search-parter-tags-id" class="val" data-value="">Select Partner/Tag</span><i></i>
+                    </a>
+                    <div class="selListWrap" >
+                        <ul class="selList">
+                            <li class="colDate"><p class="liTitle">Partner</p>
+                                <ul>
+                                    {% for partner in partners %}
+                                    <li><a href="javascript:;" class="js-partner" data-value="c__{{ partner.id }}">{{ partner.company_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <!-- /.dateCol -->
+                            <li class="colMedicalCode"><p class="liTitle">Partner Tag</p>
+                                <ul>
+                                    {% for partner_tag in partner_tags %}
+                                    <li><a href="javascript:;" class="js-partner" data-value="t__{{ partner_tag.id }}">{{ partner_tag.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="btn-search btn-search-partner"><span class="icon">SEARCH</span></div>
+            </div>
+            <!-- End .partner-search -->
+            <div class="partner-list-box">
+                <fieldset class="formset">
+                </fieldset>
+                <ul>
+                </ul>
+            </div>
+            <!-- End .partner-list-box -->
+            <div class="pagination" data-page="0">
+                <div class="page-turn form">
+                    <span class="page-turn-txt">Show</span>
+                    <select class='js-page-size'>
+                        <option>5</option>
+                        <option selected="selected">10</option>
+                        <option>25</option>
+                        <option>50</option>
+                        <option>All</option>
+                    </select>
+                    <span class="page-turn-txt">per page</span>
+                    <a class="js-all select-all" href="javascript:;">Select All</a>
+                </div>
+                <div class="total">
+                    <strong><span id="page-from-idx">0</span></strong>-<strong><span id="page-to-idx">0</span></strong> of <strong><span id="page-total-objs">0</span></strong> Partners
+                </div>
+                <div class="pagination-buttons js-pages" data-page="0" data-total-pages="0">
+                    <div class="btn-pagination btn-previous js-partner-prev"><span class="icon">Previous</span></div>
+                    <div class="btn-pagination btn-next js-partner-next"><span class="icon">Next</span></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!-- End .pagination -->
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+        </div>
+    </div>
+</div>
+<!-- End .partner-choose -->
+
+
+                <div class="switch-tab-container">
+                    <div class="switch-tab">
+                        <ul>
+                            <li class="active"><a href="javascript:;">Beneficiary</a></li>
+                            <li><a href="javascript:;">Carrier</a></li>
+                            <li><a href="javascript:;">Inpatient</a></li>
+                            <li><a href="javascript:;">Outpatient</a></li>
+                            <li><a href="javascript:;">Prescription</a></li>
+                        </ul>
+                    </div>
+                    <!-- End .switch-tab -->
+                    <div class="switch-tab-wrapper">
+                    	<div class="switch-tab-content beneficiary-section">
+                    		<div class="beneficiary-container">
+
+
+
+
+<div class="study-details">
+    <label >Query String:</label>
+    <div class="textarea-section">
+        <div class="textarea queryText" id="beneficiary_builtQuery"></div>
+        {{ form.beneficiary_query | add_class:"study-query" }}
+    </div>
+</div>
+<!-- End .study-details -->
+<div class="rule-switch">
+    <h3>Business Rules to describe the study</h3>
+    <div class="sub-tab-container">
+        {{ form.beneficiary_query.errors }}
+        <div class="empty-error hide" style="color:#F00">Contains empty conditions. Check all 5 tabs.</div>
+        <div class="sub-tab">
+            <ul>
+                <li class="active"><a href="javascript:;">Rule Editor</a></li>
+            </ul>
+        </div>
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="sub-tab-content sub-tab-content-alt">
+                <div id="beneficiary_queryBuilder" class="queryBuilder">
+                    <div class="header">
+                        <div class="actions">
+                            <a class="btn btnMerge" href="javascript:;">Merge</a>
+                            <a href="javascript:;" class="btn btnGroup">Group</a>
+                            <a href="javascript:;" class="btn btnUnGroup">UnGroup</a>
+                        </div>
+                    </div>
+                    <!-- /.header -->
+
+
+                    <div id="beneficiary_queryConstructor" class="queryConstructor">
+                        <div class="template hide">
+                            <p class="qbOp qbOpAlt tempLvl1is">
+                                <a href="javascript:;" class="toggleBtn operator typeIsNot">IS</a>
+                            </p>
+                            <!-- /.templvl1is -->
+                            <div class="qbGr templvl1qbGr">
+                                <div class="selectWrap">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">Select Attribute</span><i></i>
+                                    </a>
+                                    <div class="selListWrap">
+                                        <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Date of Birth</a></li>
+                                                    <li><a href="javascript:;">Date of Death</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Beneficiary Race Code</a></li>
+                                                    <li><a href="javascript:;">State Code</a></li>
+                                                    <li><a href="javascript:;">County Code</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">End stage renal disease Indicator</a></li>
+                                                    <li><a href="javascript:;">Sex</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Total number of months of part A coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Total number of months of part B coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Total number of months of HMO coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Total number of months of part D plan coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Inpatient annual Medicare reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Inpatient annual beneficiary responsibility amount</a></li>
+                                                    <li><a href="javascript:;">Inpatient annual primary payer reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Outpatient annual Medicare reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Outpatient annual beneficiary responsibility amount</a></li>
+                                                    <li><a href="javascript:;">Outpatient annual primary payer reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Carrier annual Medicare reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Carrier annual beneficiary responsibility amount</a></li>
+                                                    <li><a href="javascript:;">Carrier annual primary payer reimbursement amount</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Disease</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Chronic Condition: Alzheimer or related disorders or senile</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Heart Failure</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Chronic Kidney Disease</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Cancer</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Chronic Obstructive Pulmonary Disease</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Depression</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Diabetes</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Ischemic Heart Disease</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Osteoporosis</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Rheumatoid Arthritis or Osteoarthritis (RA/OA)</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Stroke/transient Ischemic Attack</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="extendedAttr">
+                                    <div class="selectWrap selectWrapAlt">
+                                        <a href="javascript:;" class="select">
+                                            <span class="val">less than</span><i></i>
+                                        </a>
+                                        <strong class="toggle operator typeIsNot">IS</strong>
+                                        <div class="selListWrap defaultList">
+                                            <ul class="selList">
+                                                <li>
+                                                    <ul>
+                                                        <li><a href="javascript:;">less than</a></li>
+                                                        <li><a href="javascript:;">equal to</a></li>
+                                                        <li><a href="javascript:;">greater than</a></li>
+                                                        <li><a href="javascript:;">less than or equal to</a></li>
+							<li><a href="javascript:;">greater than or equal to</a></li>
+                                                        <li><a href="javascript:;">between</a></li>
+                                                        <li><a href="javascript:;">is</a></li>
+                                                    </ul>
+                                                </li>
+                                                <!-- /.dateCol -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text txtPrice" />
+                                    <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                    </span>
+                                </div>
+                                <!-- /.extendedAttr -->
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!--  /.qbGr /.templvl1qbGr -->
+
+                            <p class="qbOp tempLvl1qbOp">
+                                <a href="javascript:;" class="toggleBtn operator typeAndOr">AND</a>
+                            </p>
+                            <!-- /.tempLvl1qbOp -->
+
+                            <div class="qbGr qbGrAlt isMovable tempQbGrParent">
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!-- /.tempQbGrParent -->
+
+                        </div>
+                        <!-- /.template -->
+                        <div class="qbGr isMovable">
+                            <div class="selectWrap">
+                                <a href="javascript:;" class="select">
+                                    <span class="val">Select Attribute</span><i></i>
+                                </a>
+                                <div class="selListWrap">
+                                    <ul class="selList">
+                                        <li class="colDate"><p class="liTitle">Date</p>
+                                            <ul>
+                                                    <li><a href="javascript:;">Date of Birth</a></li>
+                                                    <li><a href="javascript:;">Date of Death</a></li>
+                                            </ul></li>
+                                        <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                            <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Beneficiary Race Code</a></li>
+                                                    <li><a href="javascript:;">State Code</a></li>
+                                                    <li><a href="javascript:;">County Code</a></li>
+                                            </ul></li>
+                                        <li class="colID"><p class="liTitle">ID</p>
+                                            <ul>
+                                                    <li><a href="javascript:;">End stage renal disease Indicator</a></li>
+                                                    <li><a href="javascript:;">Sex</a></li>
+                                            </ul></li>
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Total number of months of part A coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Total number of months of part B coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Total number of months of HMO coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Total number of months of part D plan coverage for the beneficiary</a></li>
+                                                    <li><a href="javascript:;">Inpatient annual Medicare reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Inpatient annual beneficiary responsibility amount</a></li>
+                                                    <li><a href="javascript:;">Inpatient annual primary payer reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Outpatient annual Medicare reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Outpatient annual beneficiary responsibility amount</a></li>
+                                                    <li><a href="javascript:;">Outpatient annual primary payer reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Carrier annual Medicare reimbursement amount</a></li>
+                                                    <li><a href="javascript:;">Carrier annual beneficiary responsibility amount</a></li>
+                                                    <li><a href="javascript:;">Carrier annual primary payer reimbursement amount</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Disease</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Chronic Condition: Alzheimer or related disorders or senile</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Heart Failure</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Chronic Kidney Disease</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Cancer</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Chronic Obstructive Pulmonary Disease</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Depression</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Diabetes</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Ischemic Heart Disease</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Osteoporosis</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Rheumatoid Arthritis or Osteoarthritis (RA/OA)</a></li>
+                                                    <li><a href="javascript:;">Chronic Condition: Stroke/transient Ischemic Attack</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="extendedAttr">
+                                <div class="selectWrap selectWrapAlt">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">less than</span><i></i>
+                                    </a>
+                                    <strong class="toggle operator typeIsNot">IS</strong>
+                                    <div class="selListWrap defaultList">
+                                        <ul class="selList">
+                                            <li>
+                                                <ul>
+                                                    <li><a href="javascript:;">less than</a></li>
+                                                    <li><a href="javascript:;">equal to</a></li>
+                                                    <li><a href="javascript:;">greater than</a></li>
+                                                    <li><a href="javascript:;">less than or equal to</a></li>
+													<li><a href="javascript:;">greater than or equal to</a></li>
+                                                    <li><a href="javascript:;">between</a></li>
+                                                    <li><a href="javascript:;">is</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- /.dateCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input type="text" class="text txtPrice" />
+                                <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                </span>
+                            </div>
+                            <!-- /.extendedAttr -->
+                            <a href="javascript:;" class="chkGr"></a>
+                            <a href="javascript:;" class="removeGr"></a>
+                            <div class="mask"></div>
+                        </div>
+                        <!--  /.qbGr -->
+                        <div class="qbAction">
+                            <a href="javascript:;" class="btn  btnAddAttr ieFB">
+                                <i></i>Add Attribute
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.queryConstructor -->
+                </div>
+                <!-- #/queryBuilder -->
+            </div>
+            <div class="sub-tab-content rule-wizard-content">
+                <div class="placeholder">
+                    RULE WIZARD (VISUAL GUI WIZARD)<br />PLACEHOLDER
+                </div>
+            </div>
+        </div>
+        <!-- End .tab-wrapper -->
+        <div class="buttons">
+            <a href="javascript:;" class="btn-save-and-execute">
+                <span><span><span class="icon">SAVE AND EXECUTE</span></span></span>
+            </a>
+            <a href="javascript:;" class="btn-save-as-draft">
+                <span><span><span class="icon">SAVE AS DRAFT</span></span></span>
+            </a>
+            <a href="/studies" class="btn-cancel">
+                <span class="icon">CANCEL</span>
+            </a>
+            <!-- This link lead to Home.html -->
+        </div>
+    </div>
+    <!-- End .sub-tab-container -->
+</div>
+<!-- End .rule-switch -->
+
+                    	</div></div>
+                    	<!-- Carrier begins!!! -->
+                    	<div class="switch-tab-content carrier-section hide">
+                    		<div class="carrier-container">
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   -->
+
+<div class="study-details">
+    <label >Query String:</label>
+    <div class="textarea-section">
+        <div class="textarea queryText" id="carrier_builtQuery"></div>
+        {{ form.carrier_query | add_class:"study-query" }}
+    </div>
+</div>
+<!-- End .study-details -->
+<div class="rule-switch">
+    <h3>Business Rules to describe the study</h3>
+    <div class="sub-tab-container">
+        {{ form.carrier_query.errors }}
+        <div class="empty-error hide" style="color:#F00">Contains empty conditions. Check all 5 tabs.</div>
+        <div class="sub-tab">
+            <ul>
+                <li class="active"><a href="javascript:;">Rule Editor</a></li>
+            </ul>
+        </div>
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="sub-tab-content sub-tab-content-alt">
+                <div id="carrier_queryBuilder" class="queryBuilder">
+                    <div class="header">
+                        <div class="actions">
+                            <a class="btn btnMerge" href="javascript:;">Merge</a>
+                            <a href="javascript:;" class="btn btnGroup">Group</a>
+                            <a href="javascript:;" class="btn btnUnGroup">UnGroup</a>
+                        </div>
+                    </div>
+                    <!-- /.header -->
+
+
+                    <div id="carrier_queryConstructor" class="queryConstructor">
+                        <div class="template hide">
+                            <p class="qbOp qbOpAlt tempLvl1is">
+                                <a href="javascript:;" class="toggleBtn operator typeIsNot">IS</a>
+                            </p>
+                            <!-- /.templvl1is -->
+                            <div class="qbGr templvl1qbGr">
+                                <div class="selectWrap">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">Select Attribute</span><i></i>
+                                    </a>
+                                    <div class="selListWrap">
+                                        <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim start date</a></li>
+                                                    <li><a href="javascript:;">Claim end date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 1</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 2</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 3</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 4</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 5</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 6</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 7</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 8</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 9</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 10</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 11</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 12</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 13</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 9</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 10</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 11</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 12</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 13</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim ID</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 1</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 2</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 3</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 4</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 5</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 6</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 7</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 8</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 9</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 10</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 11</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 12</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 13</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 1</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 2</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 3</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 4</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 5</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 6</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 7</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 8</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 9</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 10</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 11</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 12</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 13</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 1</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 2</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 3</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 4</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 5</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 6</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 7</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 8</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 9</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 10</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 11</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 12</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 13</a></li>
+                                                    <li><a href="javascript:;"></a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 13</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="extendedAttr">
+                                    <div class="selectWrap selectWrapAlt">
+                                        <a href="javascript:;" class="select">
+                                            <span class="val">less than</span><i></i>
+                                        </a>
+                                        <strong class="toggle operator typeIsNot">IS</strong>
+                                        <div class="selListWrap defaultList">
+                                            <ul class="selList">
+                                                <li>
+                                                    <ul>
+                                                        <li><a href="javascript:;">less than</a></li>
+                                                        <li><a href="javascript:;">equal to</a></li>
+                                                        <li><a href="javascript:;">greater than</a></li>
+                                                        <li><a href="javascript:;">less than or equal to</a></li>
+							<li><a href="javascript:;">greater than or equal to</a></li>
+                                                        <li><a href="javascript:;">between</a></li>
+                                                        <li><a href="javascript:;">is</a></li>
+                                                    </ul>
+                                                </li>
+                                                <!-- /.dateCol -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text txtPrice" />
+                                    <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                    </span>
+                                </div>
+                                <!-- /.extendedAttr -->
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!--  /.qbGr /.templvl1qbGr -->
+
+                            <p class="qbOp tempLvl1qbOp">
+                                <a href="javascript:;" class="toggleBtn operator typeAndOr">AND</a>
+                            </p>
+                            <!-- /.tempLvl1qbOp -->
+
+                            <div class="qbGr qbGrAlt isMovable tempQbGrParent">
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!-- /.tempQbGrParent -->
+
+                        </div>
+                        <!-- /.template -->
+                        <div class="qbGr isMovable">
+                            <div class="selectWrap">
+                                <a href="javascript:;" class="select">
+                                    <span class="val">Select Attribute</span><i></i>
+                                </a>
+                                <div class="selListWrap">
+                                    <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim start date</a></li>
+                                                    <li><a href="javascript:;">Claim end date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 1</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 2</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 3</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 4</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 5</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 6</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 7</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 8</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 9</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 10</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 11</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 12</a></li>
+                                                    <li><a href="javascript:;">Line Processing Indicator Code 13</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 9</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 10</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 11</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 12</a></li>
+                                                    <li><a href="javascript:;">Line Diagnosis Code 13</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim ID</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 1</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 2</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 3</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 4</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 5</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 6</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 7</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 8</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 9</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 10</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 11</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 12</a></li>
+                                                    <li><a href="javascript:;">Provider Physician - National Provider Identifier Number 13</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 1</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 2</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 3</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 4</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 5</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 6</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 7</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 8</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 9</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 10</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 11</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 12</a></li>
+                                                    <li><a href="javascript:;">Provider Institution Tax Number 13</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 1</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 2</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 3</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 4</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 5</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 6</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 7</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 8</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 9</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 10</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 11</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 12</a></li>
+                                                    <li><a href="javascript:;">Line HCFA Common Procedure Coding System 13</a></li>
+                                                    <li><a href="javascript:;"></a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line NCH Payment Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Part B Deductible Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Beneficiary Primary Payer Paid Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Coinsurance Amount 13</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 1</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 2</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 3</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 4</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 5</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 6</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 7</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 8</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 9</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 10</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 11</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 12</a></li>
+                                                    <li><a href="javascript:;">Line Allowed Charge Amount 13</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="extendedAttr">
+                                <div class="selectWrap selectWrapAlt">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">less than</span><i></i>
+                                    </a>
+                                    <strong class="toggle operator typeIsNot">IS</strong>
+                                    <div class="selListWrap defaultList">
+                                        <ul class="selList">
+                                            <li>
+                                                <ul>
+                                                    <li><a href="javascript:;">less than</a></li>
+                                                    <li><a href="javascript:;">equal to</a></li>
+                                                    <li><a href="javascript:;">greater than</a></li>
+                                                    <li><a href="javascript:;">less than or equal to</a></li>
+													<li><a href="javascript:;">greater than or equal to</a></li>
+                                                    <li><a href="javascript:;">between</a></li>
+                                                    <li><a href="javascript:;">is</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- /.dateCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input type="text" class="text txtPrice" />
+                                <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                </span>
+                            </div>
+                            <!-- /.extendedAttr -->
+                            <a href="javascript:;" class="chkGr"></a>
+                            <a href="javascript:;" class="removeGr"></a>
+                            <div class="mask"></div>
+                        </div>
+                        <!--  /.qbGr -->
+                        <div class="qbAction">
+                            <a href="javascript:;" class="btn  btnAddAttr ieFB">
+                                <i></i>Add Attribute
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.queryConstructor -->
+                </div>
+                <!-- #/queryBuilder -->
+            </div>
+            <div class="sub-tab-content rule-wizard-content">
+                <div class="placeholder">
+                    RULE WIZARD (VISUAL GUI WIZARD)<br />PLACEHOLDER
+                </div>
+            </div>
+        </div>
+        <!-- End .tab-wrapper -->
+        <div class="buttons">
+            <a href="javascript:;" class="btn-save-and-execute">
+                <span><span><span class="icon">SAVE AND EXECUTE</span></span></span>
+            </a>
+            <a href="javascript:;" class="btn-save-as-draft">
+                <span><span><span class="icon">SAVE AS DRAFT</span></span></span>
+            </a>
+            <a href="/studies" class="btn-cancel">
+                <span class="icon">CANCEL</span>
+            </a>
+            <!-- This link lead to Home.html -->
+        </div>
+    </div>
+    <!-- End .sub-tab-container -->
+</div>
+<!-- End .rule-switch -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+                    	</div></div>
+                    	<!-- Inpatient begins!!! -->
+                    	<div class="switch-tab-content inpatient-section hide">
+                    		<div class="inpatient-container">
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   -->
+
+<div class="study-details">
+    <label >Query String:</label>
+    <div class="textarea-section">
+        <div class="textarea queryText" id="inpatient_builtQuery"></div>
+        {{ form.inpatient_query | add_class:"study-query" }}
+    </div>
+</div>
+<!-- End .study-details -->
+<div class="rule-switch">
+    <h3>Business Rules to describe the study</h3>
+    <div class="sub-tab-container">
+        <div class="empty-error hide" style="color:#F00">Contains empty conditions. Check all 5 tabs.</div>
+        {{ form.inpatient_query.errors }}
+        <div class="sub-tab">
+            <ul>
+                <li class="active"><a href="javascript:;">Rule Editor</a></li>
+            </ul>
+        </div>
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="sub-tab-content sub-tab-content-alt">
+                <div id="inpatient_queryBuilder" class="queryBuilder">
+                    <div class="header">
+                        <div class="actions">
+                            <a class="btn btnMerge" href="javascript:;">Merge</a>
+                            <a href="javascript:;" class="btn btnGroup">Group</a>
+                            <a href="javascript:;" class="btn btnUnGroup">UnGroup</a>
+                        </div>
+                    </div>
+                    <!-- /.header -->
+
+
+                    <div id="inpatient_queryConstructor" class="queryConstructor">
+                        <div class="template hide">
+                            <p class="qbOp qbOpAlt tempLvl1is">
+                                <a href="javascript:;" class="toggleBtn operator typeIsNot">IS</a>
+                            </p>
+                            <!-- /.templvl1is -->
+                            <div class="qbGr templvl1qbGr">
+                                <div class="selectWrap">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">Select Attribute</span><i></i>
+                                    </a>
+                                    <div class="selListWrap">
+                                        <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claims start date</a></li>
+                                                    <li><a href="javascript:;">Claims end date</a></li>
+                                                    <li><a href="javascript:;">Inpatient admission date</a></li>
+                                                    <li><a href="javascript:;">Inpatient discharged date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Claim Admitting Diagnosis Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Related Group Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 9</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 10</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 6</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 1</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 2</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 3</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 4</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 5</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 6</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 7</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 8</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 9</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 10</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 11</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 12</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 13</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 14</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 15</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 16</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 17</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 18</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 19</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 20</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 21</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 22</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 23</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 24</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 25</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 26</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 27</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 28</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 29</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 30</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 31</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 32</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 33</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 34</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 35</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 36</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 37</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 38</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 39</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 40</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 41</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 42</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 43</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 44</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 45</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim ID</a></li>
+                                                    <li><a href="javascript:;">Provider institution</a></li>
+                                                    <li><a href="javascript:;">Attending Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Operating Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Other Physician - National Provider Identifier Number</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim Line Segment</a></li>
+                                                    <li><a href="javascript:;">Claim Payment Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Primary Payer Claim Paid Amount</a></li>
+                                                    <li><a href="javascript:;">Claim Pass Thru Per Diem Amount</a></li>
+                                                    <li><a href="javascript:;">Claim Pass Thru Per Diem Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Inpatient Deductible Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Part A Coinsurance Liability Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Blood Deductible Liability Amount</a></li>
+                                                    <li><a href="javascript:;">Claim Utilization Day Count</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="extendedAttr">
+                                    <div class="selectWrap selectWrapAlt">
+                                        <a href="javascript:;" class="select">
+                                            <span class="val">less than</span><i></i>
+                                        </a>
+                                        <strong class="toggle operator typeIsNot">IS</strong>
+                                        <div class="selListWrap defaultList">
+                                            <ul class="selList">
+                                                <li>
+                                                    <ul>
+                                                        <li><a href="javascript:;">less than</a></li>
+                                                        <li><a href="javascript:;">equal to</a></li>
+                                                        <li><a href="javascript:;">greater than</a></li>
+                                                        <li><a href="javascript:;">less than or equal to</a></li>
+							<li><a href="javascript:;">greater than or equal to</a></li>
+                                                        <li><a href="javascript:;">between</a></li>
+                                                        <li><a href="javascript:;">is</a></li>
+                                                    </ul>
+                                                </li>
+                                                <!-- /.dateCol -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text txtPrice" />
+                                    <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                    </span>
+                                </div>
+                                <!-- /.extendedAttr -->
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!--  /.qbGr /.templvl1qbGr -->
+
+                            <p class="qbOp tempLvl1qbOp">
+                                <a href="javascript:;" class="toggleBtn operator typeAndOr">AND</a>
+                            </p>
+                            <!-- /.tempLvl1qbOp -->
+
+                            <div class="qbGr qbGrAlt isMovable tempQbGrParent">
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!-- /.tempQbGrParent -->
+
+                        </div>
+                        <!-- /.template -->
+                        <div class="qbGr isMovable">
+                            <div class="selectWrap">
+                                <a href="javascript:;" class="select">
+                                    <span class="val">Select Attribute</span><i></i>
+                                </a>
+                                <div class="selListWrap">
+                                    <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claims start date</a></li>
+                                                    <li><a href="javascript:;">Claims end date</a></li>
+                                                    <li><a href="javascript:;">Inpatient admission date</a></li>
+                                                    <li><a href="javascript:;">Inpatient discharged date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Claim Admitting Diagnosis Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Related Group Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 9</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 10</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 6</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 1</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 2</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 3</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 4</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 5</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 6</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 7</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 8</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 9</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 10</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 11</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 12</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 13</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 14</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 15</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 16</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 17</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 18</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 19</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 20</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 21</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 22</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 23</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 24</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 25</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 26</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 27</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 28</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 29</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 30</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 31</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 32</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 33</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 34</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 35</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 36</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 37</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 38</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 39</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 40</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 41</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 42</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 43</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 44</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 45</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim ID</a></li>
+                                                    <li><a href="javascript:;">Provider institution</a></li>
+                                                    <li><a href="javascript:;">Attending Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Operating Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Other Physician - National Provider Identifier Number</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim Line Segment</a></li>
+                                                    <li><a href="javascript:;">Claim Payment Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Primary Payer Claim Paid Amount</a></li>
+                                                    <li><a href="javascript:;">Claim Pass Thru Per Diem Amount</a></li>
+                                                    <li><a href="javascript:;">Claim Pass Thru Per Diem Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Inpatient Deductible Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Part A Coinsurance Liability Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Blood Deductible Liability Amount</a></li>
+                                                    <li><a href="javascript:;">Claim Utilization Day Count</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="extendedAttr">
+                                <div class="selectWrap selectWrapAlt">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">less than</span><i></i>
+                                    </a>
+                                    <strong class="toggle operator typeIsNot">IS</strong>
+                                    <div class="selListWrap defaultList">
+                                        <ul class="selList">
+                                            <li>
+                                                <ul>
+                                                    <li><a href="javascript:;">less than</a></li>
+                                                    <li><a href="javascript:;">equal to</a></li>
+                                                    <li><a href="javascript:;">greater than</a></li>
+                                                    <li><a href="javascript:;">less than or equal to</a></li>
+													<li><a href="javascript:;">greater than or equal to</a></li>
+                                                    <li><a href="javascript:;">between</a></li>
+                                                    <li><a href="javascript:;">is</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- /.dateCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input type="text" class="text txtPrice" />
+                                <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                </span>
+                            </div>
+                            <!-- /.extendedAttr -->
+                            <a href="javascript:;" class="chkGr"></a>
+                            <a href="javascript:;" class="removeGr"></a>
+                            <div class="mask"></div>
+                        </div>
+                        <!--  /.qbGr -->
+                        <div class="qbAction">
+                            <a href="javascript:;" class="btn  btnAddAttr ieFB">
+                                <i></i>Add Attribute
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.queryConstructor -->
+                </div>
+                <!-- #/queryBuilder -->
+            </div>
+            <div class="sub-tab-content rule-wizard-content">
+                <div class="placeholder">
+                    RULE WIZARD (VISUAL GUI WIZARD)<br />PLACEHOLDER
+                </div>
+            </div>
+        </div>
+        <!-- End .tab-wrapper -->
+        <div class="buttons">
+            <a href="javascript:;" class="btn-save-and-execute">
+                <span><span><span class="icon">SAVE AND EXECUTE</span></span></span>
+            </a>
+            <a href="javascript:;" class="btn-save-as-draft">
+                <span><span><span class="icon">SAVE AS DRAFT</span></span></span>
+            </a>
+            <a href="/studies" class="btn-cancel">
+                <span class="icon">CANCEL</span>
+            </a>
+            <!-- This link lead to Home.html -->
+        </div>
+    </div>
+    <!-- End .sub-tab-container -->
+</div>
+<!-- End .rule-switch -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+                    	</div></div>
+                    	<!-- Outpatient begins!!! -->
+                    	<div class="switch-tab-content outpatient-section hide">
+                    		<div class="outpatient-container">
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   -->
+
+<div class="study-details">
+    <label >Query String:</label>
+    <div class="textarea-section">
+        <div class="textarea queryText" id="outpatient_builtQuery"></div>
+        {{ form.outpatient_query | add_class:"study-query" }}
+    </div>
+</div>
+<!-- End .study-details -->
+<div class="rule-switch">
+    <h3>Business Rules to describe the study</h3>
+    <div class="sub-tab-container">
+        {{ form.outpatient_query.errors }}
+        <div class="empty-error hide" style="color:#F00">Contains empty conditions. Check all 5 tabs.</div>
+        <div class="sub-tab">
+            <ul>
+                <li class="active"><a href="javascript:;">Rule Editor</a></li>
+            </ul>
+        </div>
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="sub-tab-content sub-tab-content-alt">
+                <div id="outpatient_queryBuilder" class="queryBuilder">
+                    <div class="header">
+                        <div class="actions">
+                            <a class="btn btnMerge" href="javascript:;">Merge</a>
+                            <a href="javascript:;" class="btn btnGroup">Group</a>
+                            <a href="javascript:;" class="btn btnUnGroup">UnGroup</a>
+                        </div>
+                    </div>
+                    <!-- /.header -->
+
+
+                    <div id="outpatient_queryConstructor" class="queryConstructor">
+                        <div class="template hide">
+                            <p class="qbOp qbOpAlt tempLvl1is">
+                                <a href="javascript:;" class="toggleBtn operator typeIsNot">IS</a>
+                            </p>
+                            <!-- /.templvl1is -->
+                            <div class="qbGr templvl1qbGr">
+                                <div class="selectWrap">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">Select Attribute</span><i></i>
+                                    </a>
+                                    <div class="selListWrap">
+                                        <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claims start date</a></li>
+                                                    <li><a href="javascript:;">Claims end date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 9</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 10</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Admitting Diagnosis Code</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 1</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 2</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 3</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 4</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 5</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 6</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 7</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 8</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 9</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 10</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 11</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 12</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 13</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 14</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 15</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 16</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 17</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 18</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 19</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 20</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 21</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 22</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 23</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 24</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 25</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 26</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 27</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 28</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 29</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 30</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 31</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 32</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 33</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 34</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 35</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 36</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 37</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 38</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 39</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 40</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 41</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 42</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 43</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 44</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 45</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim ID</a></li>
+                                                    <li><a href="javascript:;">Provider institution</a></li>
+                                                    <li><a href="javascript:;">Attending Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Operating Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Other Physician - National Provider Identifier Number</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim Line Segment</a></li>
+                                                    <li><a href="javascript:;">Claim Payment Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Primary Payer Claim Paid Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Blood Deductible Liability Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Part B Deductible Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Part B Coinsurance Amount</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="extendedAttr">
+                                    <div class="selectWrap selectWrapAlt">
+                                        <a href="javascript:;" class="select">
+                                            <span class="val">less than</span><i></i>
+                                        </a>
+                                        <strong class="toggle operator typeIsNot">IS</strong>
+                                        <div class="selListWrap defaultList">
+                                            <ul class="selList">
+                                                <li>
+                                                    <ul>
+                                                        <li><a href="javascript:;">less than</a></li>
+                                                        <li><a href="javascript:;">equal to</a></li>
+                                                        <li><a href="javascript:;">greater than</a></li>
+                                                        <li><a href="javascript:;">less than or equal to</a></li>
+							<li><a href="javascript:;">greater than or equal to</a></li>
+                                                        <li><a href="javascript:;">between</a></li>
+                                                        <li><a href="javascript:;">is</a></li>
+                                                    </ul>
+                                                </li>
+                                                <!-- /.dateCol -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text txtPrice" />
+                                    <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                    </span>
+                                </div>
+                                <!-- /.extendedAttr -->
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!--  /.qbGr /.templvl1qbGr -->
+
+                            <p class="qbOp tempLvl1qbOp">
+                                <a href="javascript:;" class="toggleBtn operator typeAndOr">AND</a>
+                            </p>
+                            <!-- /.tempLvl1qbOp -->
+
+                            <div class="qbGr qbGrAlt isMovable tempQbGrParent">
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!-- /.tempQbGrParent -->
+
+                        </div>
+                        <!-- /.template -->
+                        <div class="qbGr isMovable">
+                            <div class="selectWrap">
+                                <a href="javascript:;" class="select">
+                                    <span class="val">Select Attribute</span><i></i>
+                                </a>
+                                <div class="selListWrap">
+                                    <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claims start date</a></li>
+                                                    <li><a href="javascript:;">Claims end date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 7</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 8</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 9</a></li>
+                                                    <li><a href="javascript:;">Claim Diagnosis Code 10</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 1</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 2</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 3</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 4</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 5</a></li>
+                                                    <li><a href="javascript:;">Claim Procedure Code 6</a></li>
+                                                    <li><a href="javascript:;">Claim Admitting Diagnosis Code</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 1</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 2</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 3</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 4</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 5</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 6</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 7</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 8</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 9</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 10</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 11</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 12</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 13</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 14</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 15</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 16</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 17</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 18</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 19</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 20</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 21</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 22</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 23</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 24</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 25</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 26</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 27</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 28</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 29</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 30</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 31</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 32</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 33</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 34</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 35</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 36</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 37</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 38</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 39</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 40</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 41</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 42</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 43</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 44</a></li>
+                                                    <li><a href="javascript:;">Revenue Center HCFA Common Procedure Coding System 45</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim ID</a></li>
+                                                    <li><a href="javascript:;">Provider institution</a></li>
+                                                    <li><a href="javascript:;">Attending Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Operating Physician - National Provider Identifier Number</a></li>
+                                                    <li><a href="javascript:;">Other Physician - National Provider Identifier Number</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Claim Line Segment</a></li>
+                                                    <li><a href="javascript:;">Claim Payment Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Primary Payer Claim Paid Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Blood Deductible Liability Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Part B Deductible Amount</a></li>
+                                                    <li><a href="javascript:;">NCH Beneficiary Part B Coinsurance Amount</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="extendedAttr">
+                                <div class="selectWrap selectWrapAlt">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">less than</span><i></i>
+                                    </a>
+                                    <strong class="toggle operator typeIsNot">IS</strong>
+                                    <div class="selListWrap defaultList">
+                                        <ul class="selList">
+                                            <li>
+                                                <ul>
+                                                    <li><a href="javascript:;">less than</a></li>
+                                                    <li><a href="javascript:;">equal to</a></li>
+                                                    <li><a href="javascript:;">greater than</a></li>
+                                                    <li><a href="javascript:;">less than or equal to</a></li>
+													<li><a href="javascript:;">greater than or equal to</a></li>
+                                                    <li><a href="javascript:;">between</a></li>
+                                                    <li><a href="javascript:;">is</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- /.dateCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input type="text" class="text txtPrice" />
+                                <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                </span>
+                            </div>
+                            <!-- /.extendedAttr -->
+                            <a href="javascript:;" class="chkGr"></a>
+                            <a href="javascript:;" class="removeGr"></a>
+                            <div class="mask"></div>
+                        </div>
+                        <!--  /.qbGr -->
+                        <div class="qbAction">
+                            <a href="javascript:;" class="btn  btnAddAttr ieFB">
+                                <i></i>Add Attribute
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.queryConstructor -->
+                </div>
+                <!-- #/queryBuilder -->
+            </div>
+            <div class="sub-tab-content rule-wizard-content">
+                <div class="placeholder">
+                    RULE WIZARD (VISUAL GUI WIZARD)<br />PLACEHOLDER
+                </div>
+            </div>
+        </div>
+        <!-- End .tab-wrapper -->
+        <div class="buttons">
+            <a href="javascript:;" class="btn-save-and-execute">
+                <span><span><span class="icon">SAVE AND EXECUTE</span></span></span>
+            </a>
+            <a href="javascript:;" class="btn-save-as-draft">
+                <span><span><span class="icon">SAVE AS DRAFT</span></span></span>
+            </a>
+            <a href="/studies" class="btn-cancel">
+                <span class="icon">CANCEL</span>
+            </a>
+            <!-- This link lead to Home.html -->
+        </div>
+    </div>
+    <!-- End .sub-tab-container -->
+</div>
+<!-- End .rule-switch -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+                    	</div></div>
+                    	<!-- Prescription begins!!! -->
+                    	<div class="switch-tab-content prescription-section hide">
+                    		<div class="prescription-container">
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   -->
+
+<div class="study-details">
+    <label >Query String:</label>
+    <div class="textarea-section">
+        <div class="textarea queryText" id="prescription_builtQuery"></div>
+        {{ form.prescription_query | add_class:"study-query" }}
+    </div>
+</div>
+<!-- End .study-details -->
+<div class="rule-switch">
+    <h3>Business Rules to describe the study</h3>
+    <div class="sub-tab-container">
+        {{ form.prescription_query.errors }}
+		<div class="empty-error hide" style="color:#F00">Contains empty conditions. Check all 5 tabs.</div>
+        <div class="sub-tab">
+            <ul>
+                <li class="active"><a href="javascript:;">Rule Editor</a></li>
+            </ul>
+        </div>
+        <!-- End .tab -->
+        <div class="tab-wrapper">
+            <div class="sub-tab-content sub-tab-content-alt">
+                <div id="prescription_queryBuilder" class="queryBuilder">
+                    <div class="header">
+                        <div class="actions">
+                            <a class="btn btnMerge" href="javascript:;">Merge</a>
+                            <a href="javascript:;" class="btn btnGroup">Group</a>
+                            <a href="javascript:;" class="btn btnUnGroup">UnGroup</a>
+                        </div>
+                    </div>
+                    <!-- /.header -->
+
+
+                    <div id="prescription_queryConstructor" class="queryConstructor">
+                        <div class="template hide">
+                            <p class="qbOp qbOpAlt tempLvl1is">
+                                <a href="javascript:;" class="toggleBtn operator typeIsNot">IS</a>
+                            </p>
+                            <!-- /.templvl1is -->
+                            <div class="qbGr templvl1qbGr">
+                                <div class="selectWrap">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">Select Attribute</span><i></i>
+                                    </a>
+                                    <div class="selListWrap">
+                                        <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">RX Service Date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">CCW Part D Event Number</a></li>
+                                                    <li><a href="javascript:;">Product Service ID</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Quantity Dispensed</a></li>
+                                                    <li><a href="javascript:;">Days Supply</a></li>
+                                                    <li><a href="javascript:;">Patient Pay Amount</a></li>
+                                                    <li><a href="javascript:;">Gross Drug Cost</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="extendedAttr">
+                                    <div class="selectWrap selectWrapAlt">
+                                        <a href="javascript:;" class="select">
+                                            <span class="val">less than</span><i></i>
+                                        </a>
+                                        <strong class="toggle operator typeIsNot">IS</strong>
+                                        <div class="selListWrap defaultList">
+                                            <ul class="selList">
+                                                <li>
+                                                    <ul>
+                                                        <li><a href="javascript:;">less than</a></li>
+                                                        <li><a href="javascript:;">equal to</a></li>
+                                                        <li><a href="javascript:;">greater than</a></li>
+                                                        <li><a href="javascript:;">less than or equal to</a></li>
+							<li><a href="javascript:;">greater than or equal to</a></li>
+                                                        <li><a href="javascript:;">between</a></li>
+                                                        <li><a href="javascript:;">is</a></li>
+                                                    </ul>
+                                                </li>
+                                                <!-- /.dateCol -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="text txtPrice" />
+                                    <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                    </span>
+                                </div>
+                                <!-- /.extendedAttr -->
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!--  /.qbGr /.templvl1qbGr -->
+
+                            <p class="qbOp tempLvl1qbOp">
+                                <a href="javascript:;" class="toggleBtn operator typeAndOr">AND</a>
+                            </p>
+                            <!-- /.tempLvl1qbOp -->
+
+                            <div class="qbGr qbGrAlt isMovable tempQbGrParent">
+                                <a href="javascript:;" class="chkGr"></a>
+                                <a href="javascript:;" class="removeGr"></a>
+                                <div class="mask"></div>
+                            </div>
+                            <!-- /.tempQbGrParent -->
+
+                        </div>
+                        <!-- /.template -->
+                        <div class="qbGr isMovable">
+                            <div class="selectWrap">
+                                <a href="javascript:;" class="select">
+                                    <span class="val">Select Attribute</span><i></i>
+                                </a>
+                                <div class="selListWrap">
+                                    <ul class="selList">
+                                            <li class="colDate"><p class="liTitle">Date</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">RX Service Date</a></li>
+                                                </ul></li>
+                                            <!-- /.dateCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Related Code</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Beneficiary Code</a></li>
+                                                </ul></li>
+                                            <!-- /.medicalCol -->
+                                            <li class="colID"><p class="liTitle">ID</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">CCW Part D Event Number</a></li>
+                                                    <li><a href="javascript:;">Product Service ID</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                            <li class="colMedicalCode"><p class="liTitle">Amount</p>
+                                                <ul>
+                                                    <li><a href="javascript:;">Quantity Dispensed</a></li>
+                                                    <li><a href="javascript:;">Days Supply</a></li>
+                                                    <li><a href="javascript:;">Patient Pay Amount</a></li>
+                                                    <li><a href="javascript:;">Gross Drug Cost</a></li>
+                                                </ul></li>
+                                            <!-- /.idCol -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="extendedAttr">
+                                <div class="selectWrap selectWrapAlt">
+                                    <a href="javascript:;" class="select">
+                                        <span class="val">less than</span><i></i>
+                                    </a>
+                                    <strong class="toggle operator typeIsNot">IS</strong>
+                                    <div class="selListWrap defaultList">
+                                        <ul class="selList">
+                                            <li>
+                                                <ul>
+                                                    <li><a href="javascript:;">less than</a></li>
+                                                    <li><a href="javascript:;">equal to</a></li>
+                                                    <li><a href="javascript:;">greater than</a></li>
+                                                    <li><a href="javascript:;">less than or equal to</a></li>
+													<li><a href="javascript:;">greater than or equal to</a></li>
+                                                    <li><a href="javascript:;">between</a></li>
+                                                    <li><a href="javascript:;">is</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- /.dateCol -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input type="text" class="text txtPrice" />
+                                <span class="priceGrMin"> <span class="sep">-</span> <input type="text" class="text txtPrice" />
+                                </span>
+                            </div>
+                            <!-- /.extendedAttr -->
+                            <a href="javascript:;" class="chkGr"></a>
+                            <a href="javascript:;" class="removeGr"></a>
+                            <div class="mask"></div>
+                        </div>
+                        <!--  /.qbGr -->
+                        <div class="qbAction">
+                            <a href="javascript:;" class="btn  btnAddAttr ieFB">
+                                <i></i>Add Attribute
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.queryConstructor -->
+                </div>
+                <!-- #/queryBuilder -->
+            </div>
+            <div class="sub-tab-content rule-wizard-content">
+                <div class="placeholder">
+                    RULE WIZARD (VISUAL GUI WIZARD)<br />PLACEHOLDER
+                </div>
+            </div>
+        </div>
+        <!-- End .tab-wrapper -->
+        <div class="buttons">
+            <a href="javascript:;" class="btn-save-and-execute">
+                <span><span><span class="icon">SAVE AND EXECUTE</span></span></span>
+            </a>
+            <a href="javascript:;" class="btn-save-as-draft">
+                <span><span><span class="icon">SAVE AS DRAFT</span></span></span>
+            </a>
+            <a href="/studies" class="btn-cancel">
+                <span class="icon">CANCEL</span>
+            </a>
+            <!-- This link lead to Home.html -->
+        </div>
+    </div>
+    <!-- End .sub-tab-container -->
+</div>
+<!-- End .rule-switch -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+
+<!-- End OF ALL THE TABS -->
+</div></div></div></div>
+
+
+
+</form>
+{% endblock %}
+
+{% block modal %}
+    <div id="modal">
+        <div class="modal" id="modal-save-draft">
+            <div class="modal-header">
+                <a href="/studies?status=0" class="close-modal">CLOSE</a>
+                <!-- This link lead to Home.html -->
+                <h2>Message</h2>
+            </div>
+            <!-- End .modal-header -->
+            <div class="modal-container">
+                <p>
+                    New Study <strong>{{ study_id }}</strong> has been sucessfully created and saved as draft.
+                </p>
+                <div class="buttons">
+                    <a href="/studies?status=0" class="btn-ok">
+                        <span><span><span>OK</span></span></span>
+                    </a>
+                    <!-- This link lead to Home.html -->
+                </div>
+            </div>
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #modal-save-draft -->
+        <div class="modal" id="modal-save-execute">
+            <div class="modal-header">
+                <a href="/studies?status=1" class="close-modal">CLOSE</a>
+                <!-- This link lead to Study_Details_In_Progress.html -->
+                <h2>Message</h2>
+            </div>
+            <!-- End .modal-header -->
+            <div class="modal-container">
+                <p>
+                    New Study <strong>{{ study_id }}</strong> has been sucessfully created and executed.
+                </p>
+                <div class="buttons">
+                    <a href="/studies?status=1" class="btn-ok">
+                        <span><span><span>OK</span></span></span>
+                    </a>
+                    <!-- This link lead to Study_Details_In_Progress.html -->
+                </div>
+            </div>
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #modal-save-execute -->
+        <div class="modal mDelConfirmation" id="removeGroup">
+            <div class="modal-header">
+                <a href="javascript:;" class="close-modal">CLOSE</a>
+                <!-- This link lead to Study_Details_In_Progress.html -->
+                <h2>Confirm</h2>
+            </div>
+            <!-- End .modal-header -->
+            <div class="modal-container">
+                <p>Are you sure you want to delete the whole query?</p>
+                <div class="buttons">
+                    <a href="javascript:;" class="btn btnBig btnYes">Yes</a>
+                    <a href="javascript:;" class="btn btnBig btnNo">No</a>
+                </div>
+            </div>
+            <!-- End .modal-container -->
+        </div>
+        <!-- End #modal-save-execute -->
+    </div>
+{% endblock %}

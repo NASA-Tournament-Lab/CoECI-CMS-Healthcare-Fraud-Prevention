@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>$request.id</RequestID>
+    <RespondentID>$response.respondentId</RespondentID>
+    <RequestDenied>$response.requestDenied</RequestDenied>
+    #if( !$response.requestDenied )
+    <Data>
+        <![CDATA[
+        $response.data
+        ]]>
+    </Data>
+    #end
+</DataResponse>

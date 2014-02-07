@@ -1,0 +1,1 @@
+from .partner import partnercli

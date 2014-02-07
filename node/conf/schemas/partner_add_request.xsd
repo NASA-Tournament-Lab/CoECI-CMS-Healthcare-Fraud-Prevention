@@ -1,0 +1,13 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="PartnerAddRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="Username" minOccurs="1" maxOccurs="1"/>
+        <xs:element type="xs:string" name="Password" minOccurs="1" maxOccurs="1"/>
+        <xs:element type="xs:string" name="OrganizationName" minOccurs="1" maxOccurs="1"/>
+        <xs:element type="xs:string" name="RoleID" minOccurs="1" maxOccurs="1"/>
+        <xs:element type="xs:boolean" name="AutoRetrieveCachedData" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,36 @@
+<BeneficiarySummaries>
+    <BeneficiarySummary>
+        <BeneficiaryCode>0000BAF51F7D7F01</BeneficiaryCode>
+        <DateOfBirth>1926-04-01</DateOfBirth>
+        <DateOfDeath>9999-12-31</DateOfDeath>
+        <Sex>2</Sex>
+        <BeneficiaryRaceCode>5</BeneficiaryRaceCode>
+        <EndStageRenalDiseaseIndicator>0</EndStageRenalDiseaseIndicator>
+        <StateCode>54</StateCode>
+        <CountyCode>999</CountyCode>
+        <PartACoverageTotalMonths>12</PartACoverageTotalMonths>
+        <PartBCoverageTotalMonths>12</PartBCoverageTotalMonths>
+        <HMOCoverageTotalMonths>0</HMOCoverageTotalMonths>
+        <PartDPlanCoverageTotalMonths>12</PartDPlanCoverageTotalMonths>
+        <AlzheimerOrRelatedDisordersOrSenile>2</AlzheimerOrRelatedDisordersOrSenile>
+        <HeartFailure>2</HeartFailure>
+        <ChronicKidneyDisease>2</ChronicKidneyDisease>
+        <Cancer>2</Cancer>
+        <ChronicObstructivePulmonaryDisease>1</ChronicObstructivePulmonaryDisease>
+        <Depression>2</Depression>
+        <Diabetes>1</Diabetes>
+        <IschemicHeartDisease>1</IschemicHeartDisease>
+        <Osteoporosis>1</Osteoporosis>
+        <RheumatoidArthritisAndOsteoarthritis>2</RheumatoidArthritisAndOsteoarthritis>
+        <StrokeIschemicAttack>1</StrokeIschemicAttack>
+        <InpatientAnnualMedicareReimbursementAmount>0.0</InpatientAnnualMedicareReimbursementAmount>
+        <InpatientAnnualBeneficiaryResponsibilityAmount>0.0</InpatientAnnualBeneficiaryResponsibilityAmount>
+        <InpatientAnnualPrimaryPayerReimbursementAmount>0.0</InpatientAnnualPrimaryPayerReimbursementAmount>
+        <OutpatientInstitutionalAnnualMedicareReimbursementAmount>600.0</OutpatientInstitutionalAnnualMedicareReimbursementAmount>
+        <OutpatientInstitutionalAnnualBeneficiaryResponsibilityAmount>370.0</OutpatientInstitutionalAnnualBeneficiaryResponsibilityAmount>
+        <OutpatientInstitutionalAnnualPrimaryPayerReimbursementAmount>0.0</OutpatientInstitutionalAnnualPrimaryPayerReimbursementAmount>
+        <CarrierAnnualMedicareReimbursementAmount>5180.0</CarrierAnnualMedicareReimbursementAmount>
+        <CarrierAnnualBeneficiaryResponsibilityAmount>1850.0</CarrierAnnualBeneficiaryResponsibilityAmount>
+        <CarrierAnnualPrimaryPayerReimbursementAmount>0.0</CarrierAnnualPrimaryPayerReimbursementAmount>
+    </BeneficiarySummary>
+</BeneficiarySummaries>

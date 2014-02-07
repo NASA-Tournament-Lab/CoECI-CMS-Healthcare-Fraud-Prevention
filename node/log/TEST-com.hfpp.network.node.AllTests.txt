@@ -1,0 +1,293 @@
+Testsuite: com.hfpp.network.node.AllTests
+Tests run: 43, Failures: 0, Errors: 0, Time elapsed: 71.148 sec
+------------- Standard Output ---------------
+2013-08-29 22:34:35,435 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:35,435 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>}.
+2013-08-29 22:34:35,436 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:35,436 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>}.
+2013-08-29 22:34:35,532 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:35,532 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataRequestAcknowledgement>
+2013-08-29 22:34:35,532 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:35,532 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataRequestAcknowledgement>
+2013-08-29 22:34:40,549 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateGeneralServiceRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:40,550 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>}.
+2013-08-29 22:34:40,550 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:40,550 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>}.
+2013-08-29 22:34:40,632 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:40,632 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>
+2013-08-29 22:34:40,632 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.initiateGeneralServiceRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:40,632 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>
+2013-08-29 22:34:45,660 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.deliverAnalysisResult(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:45,660 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResult>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Result>
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Study>
+        </Study>
+    ]]>
+    </Result>
+</AnalysisResult>}.
+2013-08-29 22:34:45,660 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:45,660 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResult>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Result>
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Study>
+        </Study>
+    ]]>
+    </Result>
+</AnalysisResult>}.
+2013-08-29 22:34:45,723 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:45,724 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</AnalysisResultAcknowledgement>
+2013-08-29 22:34:45,724 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.deliverAnalysisResult(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:45,724 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</AnalysisResultAcknowledgement>
+2013-08-29 22:34:50,756 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Entering method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.respondToDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:50,756 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]>
+    </Data>
+</DataResponse>}.
+2013-08-29 22:34:50,756 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:50,756 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]>
+    </Data>
+</DataResponse>}.
+2013-08-29 22:34:50,826 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:50,826 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataResponseAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataResponseAcknowledgement>
+2013-08-29 22:34:50,826 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Exiting method com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController.respondToDataRequest(@RequestHeader("x-hfpp-username") String username, @RequestHeader("x-hfpp-password") String password, @RequestBody String messageXML).
+2013-08-29 22:34:50,826 - com.hfpp.network.node.httpservices.NetworkNodeHTTPServicesController - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataResponseAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataResponseAcknowledgement>
+2013-08-29 22:34:55,875 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:55,876 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataRequest>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <OriginalRequesterID>091f80d7-8ecb-429c-8f0b-caeaae18dcd8</OriginalRequesterID>
+    <Query><![CDATA[ Query Text ]]></Query>
+    <RequestedPartners>
+        <PartnerID>c72b0f04-82f9-432f-9bb0-6bea2364b162</PartnerID>
+    </RequestedPartners>
+    <ExpirationTime>2013-09-22T09:30:10-06:00</ExpirationTime>
+</DataRequest>}.
+2013-08-29 22:34:56,009 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:34:56,009 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataRequestAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataRequestAcknowledgement>
+2013-08-29 22:35:01,033 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:01,033 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<PartnerListRequest>
+    <OrganizationName>ABC</OrganizationName>
+    <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+    <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+</PartnerListRequest>}.
+2013-08-29 22:35:01,091 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:01,091 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>
+2013-08-29 22:35:06,107 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:06,107 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResult>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Result>
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Study>
+        </Study>
+    ]]>
+    </Result>
+</AnalysisResult>}.
+2013-08-29 22:35:06,175 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:06,175 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</AnalysisResultAcknowledgement>
+2013-08-29 22:35:11,201 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Entering method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:11,201 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Input parameters: {username:user1, password:******, messageXML:<?xml version="1.0" encoding="utf-8"?>
+<DataResponse>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <RequestDenied>false</RequestDenied>
+    <Data useCache="false">
+    <![CDATA[
+        <!-- Just an example, specific format is unknown yet and the network doesn't really care about it -->
+        <Claims>
+            <Claim>
+                <ID>12345</ID>
+                <Amount>120</Amount>
+            </Claim>
+        </Claims>
+    ]]>
+    </Data>
+</DataResponse>}.
+2013-08-29 22:35:11,276 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Exiting method com.hfpp.network.node.services.impl.DataExchangeServiceImpl.initiateDataRequest(String username, String password, String messageXML).
+2013-08-29 22:35:11,276 - com.hfpp.network.node.services.impl.DataExchangeServiceImpl - DEBUG - Output parameter: <?xml version="1.0" encoding="utf-8"?>
+<DataResponseAcknowledgement>
+    <RequestID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</RequestID>
+    <Status>Accepted</Status>
+</DataResponseAcknowledgement>
+2013-08-29 22:35:16,416 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:16,418 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 26400260}.
+2013-08-29 22:35:19,734 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:19,743 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:19,743 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 17292542}.
+2013-08-29 22:35:21,484 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:21,487 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:21,488 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 27059322}.
+2013-08-29 22:35:23,618 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:23,621 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Entering method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+2013-08-29 22:35:23,621 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Input parameters: {message:Mock for TextMessage, hashCode: 11320634}.
+2013-08-29 22:35:25,399 - com.hfpp.network.node.messaging.GenericForwardMessageListener - DEBUG - Exiting method com.hfpp.network.node.messaging.GenericForwardMessageListener.onMessage(Message message).
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+log4j:WARN No appenders could be found for logger (org.apache.qpid.jndi.PropertiesFileInitialContextFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+------------- ---------------- ---------------
+
+Testcase: test_InitiateDataRequest took 5.753 sec
+Testcase: test_InitiateGeneralServiceRequest took 5.089 sec
+Testcase: test_DeliverAnalysisResult took 5.082 sec
+Testcase: test_RespondToDataRequest took 5.093 sec
+Testcase: testCtor took 0.067 sec
+Testcase: test_initiateDataRequest took 5.101 sec
+Testcase: test_initiateGeneralServiceRequest took 5.11 sec
+Testcase: test_deliverAnalysisResult took 5.096 sec
+Testcase: test_respondToDataRequest took 5.099 sec
+Testcase: testCtor took 0.01 sec
+Testcase: test_initiateDataRequest took 5.16 sec
+Testcase: test_initiateGeneralServiceRequest took 5.093 sec
+Testcase: test_deliverAnalysisResult took 5.084 sec
+Testcase: test_respondToDataRequest took 5.103 sec
+Testcase: testCtor took 0.134 sec
+Testcase: test_onMessage took 3.335 sec
+Testcase: testCtor took 0.001 sec
+Testcase: test_onMessage took 1.742 sec
+Testcase: testCtor took 0 sec
+Testcase: test_onMessage took 2.132 sec
+Testcase: testCtor took 0 sec
+Testcase: test_onMessage took 1.778 sec
+Testcase: testInheritance took 0 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec
+Testcase: testInheritance took 0 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec
+Testcase: testInheritance took 0 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec
+Testcase: testInheritance took 0 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec
+Testcase: testInheritance took 0 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec
+Testcase: testInheritance took 0.001 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec
+Testcase: testInheritance took 0 sec
+Testcase: testCtor1 took 0 sec
+Testcase: testCtor2 took 0 sec

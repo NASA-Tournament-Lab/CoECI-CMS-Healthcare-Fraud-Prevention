@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AnalysisResultAcknowledgement>
+    <RequestID>$requestId</RequestID>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</AnalysisResultAcknowledgement>

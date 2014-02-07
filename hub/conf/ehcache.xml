@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="NetworkHubCache">
+   <diskStore path="java.io.tmpdir"/>
+    <defaultCache
+        maxEntriesLocalHeap="500"
+        eternal="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskExpiryThreadIntervalSeconds="1">
+    </defaultCache>
+        <Cache name="ehcache1"
+        maxEntriesLocalHeap="500"
+        eternal="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskExpiryThreadIntervalSeconds="1">
+    </Cache>
+</ehcache>

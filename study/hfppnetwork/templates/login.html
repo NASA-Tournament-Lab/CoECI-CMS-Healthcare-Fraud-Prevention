@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Healthcare Fraud Prevention Partnership</title>
+<link href="/css/screen.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/ie7.css" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.min.js"></script>
+<!-- JQ Transform -->
+<script type="text/javascript" src="/js/jquery.jqtransform.js"></script>
+<!-- Date Picker -->
+<script type="text/javascript" src="/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/js/jquery.ui.datepicker.js"></script>
+
+<script type="text/javascript" src="/js/script.js"></script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+        
+        <div id="main">
+        
+            <div id="header">
+                <div class="inner">
+                    <h1>HFPP Study Management Interface</h1>
+                </div>
+            </div>
+            <!-- End #header -->
+            
+            <div id="login-form">
+                <h2>LOGIN HERE</h2>
+                <form id="LoginForm" method="post" action="/login/">{% csrf_token %}
+                <div class="login-form">
+                    <div class="error-infor">Username or password incorrect</div>
+                    <!-- End .error-infor -->
+                    <div class="row">
+                        <div class="input-wrapper">
+                            <input type="text" id="id_username" name="username" class="text default" value="Username" />
+                        </div>
+                    </div>
+                    <!-- End .row -->
+                    <div class="row last">
+                        <div class="input-wrapper">
+                            <input type="text" id="password-holder" class="text default" value="Password" />
+                            <input type="password" id="id_password" name="password" class="text" />
+                        </div>
+                    </div>
+                    <!-- End .row -->
+                    <a href="javascript:;" class="btn-login"><span><span>LOGIN</span></span></a>
+                    <div class="forget-password">
+                        Can't Login? <a href="javascript:;">Contact Administrator</a>
+                    </div>
+                </div>
+                </form>
+                <!-- End .login-form -->
+            </div>
+            <!-- End #login-form -->
+        
+        </div>
+        <!-- End #main -->
+        
+        <div class="flyout-login">
+            <ul>
+                <li><a href="Home.html">Valid Credentials</a></li>
+                <!-- This link lead to Home.html -->
+                <li><a href="javascript:;" class="invalid-credentials">Invalid Credentials</a></li>
+            </ul>
+        </div>
+    
+    </div>
+    <!-- End #wrapper -->
+    
+    <div id="footer">
+        <div class="inner">
+            <ul>
+                <li><a href="javascript:;">Footer</a></li>
+                <li><a href="javascript:;">Lorem Ipsum</a></li>
+                <li><a href="javascript:;">Dolorsit Amet</a></li>
+                <li><a href="javascript:;">Consectetur</a></li>
+                <li class="last"><a href="javascript:;">Adipisci velit</a></li>
+            </ul>
+            <!-- End footer navigation -->
+            <p>Copyright &copy; 2013 Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</p>
+            <!-- End copyright -->
+        </div>
+    </div>
+    <!-- End #footer -->
+    
+</body>
+</html>

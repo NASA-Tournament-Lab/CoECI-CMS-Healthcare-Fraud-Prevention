@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerGet>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+    <PartnerID>$user.id</PartnerID>
+    <Username>$user.username</Username>
+    <OrganizationName>$user.organizationName</OrganizationName>
+    <RoleID>$user.role.id</RoleID>
+    <AutoRetrieveCachedData>$user.autoRetrieveCachedData</AutoRetrieveCachedData>
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</PartnerGet>

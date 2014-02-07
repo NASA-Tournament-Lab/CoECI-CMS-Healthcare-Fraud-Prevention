@@ -1,0 +1,13 @@
+
+DROP TRIGGER IF EXISTS user_delete;
+DROP TRIGGER IF EXISTS user_update;
+DROP TRIGGER IF EXISTS user_insert;
+
+DROP TABLE IF EXISTS audit_record;
+DROP TABLE IF EXISTS user_stat;
+DROP TABLE IF EXISTS data_response;
+DROP TABLE IF EXISTS h_user;
+DROP TABLE IF EXISTS data_request_requested_user;
+DROP TABLE IF EXISTS data_request;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS role;

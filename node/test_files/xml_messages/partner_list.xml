@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    <Status>Accepted</Status>
+    <Partner>
+        <PartnerID>7a32ff98-a704-41e7-8cdf-059df6c2e8db</PartnerID>
+        <OrganizationName>ABCD Company</OrganizationName>
+        <EligibleToReceiveDataRequest>true</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>false</EligibleToInitiateDataRequest>
+    </Partner>
+</PartnerList>

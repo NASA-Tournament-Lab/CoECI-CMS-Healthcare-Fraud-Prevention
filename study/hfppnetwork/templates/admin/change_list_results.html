@@ -1,0 +1,23 @@
+{# Copyright (C) 2013 TopCoder Inc., All Rights Reserved. #}
+{# This template overwrite the default page which shows users information to hfppnetwork style. #}
+
+<div class="users-table-tbody">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr align="left">
+                {% for header in result_headers %}
+                <th>{{ header.text|capfirst }}</th> {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %} {% if result.form.non_field_errors %}
+            <tr>
+                <td colspan="{{ result|length }}">{{ result.form.non_field_errors }}</td>
+            </tr>
+            {% endif %}
+            <tr align="left">{% for item in result %}{{ item }}{% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

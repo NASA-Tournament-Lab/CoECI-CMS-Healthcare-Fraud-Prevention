@@ -1,0 +1,197 @@
+{% extends "studies/detail_base.html" %}
+{% load widget_tweaks %}
+{% block switch-tab-wrapper %}
+<div class="switch-tab-content">
+    <div class="transaction-container">
+        <div class="transaction-graphics">
+            <div class="graphics">
+               <!-- <div class="total-pic"><span>{{ study.count_of_data_requests_sent }}</span></div>-->
+                <div class="total-requests-pic"><span>{{ study.count_of_data_requests_sent }}</span>Total<br />Requests</div>
+                <div class="satisfied-requests-pic"><span>{{ study.count_of_data_requests_satisfied }}</span>Satisfied<br />Requests</div>
+                <div class="pending-requests-pic"><span>{{ study.count_of_data_requests_pending }}</span>Pending<br />Requests</div>
+                <div class="declined-requests-pic"><span>{{ study.count_of_data_requests_declined }}</span>Declined<br />Requests</div>
+            </div>
+            <!-- End .graphics -->
+            <div class="rate">
+                <span id="transactions-response-rate">Response Rate {{ response_rate | floatformat }} %</span>
+                <div class="rate-bar">
+                    <div class="rate-l">{{ count_of_data_responsed }}</div>
+                    <div class="rate-r">{{ study.count_of_data_requests_sent }}</div>
+                </div>
+            </div>
+        </div>
+        <!-- End .transaction-graphics -->
+        <div class="transaction-table">
+
+            <div class="table-action">
+                <form action="/studies/{{ study.id }}/transactions" method="get">
+                <div class="search-action">
+                    <a href="javascript:;" class="btn-search js-transaction-search-partner"><span class="icon">SEARCH</span></a>
+                    {{ search_form.company_name | add_class:'text' | attr:"id:partner-name-top" }}
+                    <label for="partner-name-top">Partner Name</label>
+                </div>
+                </form>
+                <!-- End .search-action -->
+
+                <div class="pagination">
+                    {% if paginator.count > 0 %}
+                    <div class="page-turn form">
+                        <span class="page-turn-txt">Show</span>
+                        <select class="js-transaction-partner-page-size" data-page-size='{{ extra_vars }}'>
+                            <option>5</option>
+                            <option selected="selected">10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>All</option>
+                        </select>
+                        <span class="page-turn-txt">per page</span>
+                    </div>
+                    <div class="total">
+                        <strong>{{ page_obj.start_index }}</strong>-<strong>{{ page_obj.end_index }}</strong> of <strong>{{ paginator.count }}</strong> Studies
+                    </div>
+                    <div class="pagination-buttons">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{{ extra_vars }}" class="btn-previous"><span class="icon">Previous</span></a>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{{ extra_vars }}" class="btn-next"><span class="icon">Next</span></a>
+                        {% endif %}
+                    </div>
+					{% endif %}
+                </div>
+                <!-- End .pagination -->
+
+            </div>
+            <!-- End .table-action -->
+
+            <div class="table-wrapper">
+                <div class="table-header">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="cell-parner">Partner</th>
+                                <th class="cell-total-requests">Total Requests Sent</th>
+                                <th class="cell-requests-received">Requests Received</th>
+                                <th class="cell-requestd-declined">Requested Declined</th>
+                                <th class="cell-requests-pendng">Requests Pending</th>
+                                <th class="cell-reciprocity">Reciprocity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-tbody">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            {% for study_data_request in transactions %}
+                            <tr>
+                                <td class="cell-parner"><p class="name-partner">{{ study_data_request.partner.company_name }}</p></td>
+                                <td class="cell-total-requests">{{ study_data_request.partner.count_of_data_requests_sent }}</td>
+                                <td class="cell-requests-received">{{ study_data_request.partner.count_of_data_requests_received }}</td>
+                                <td class="cell-requestd-declined">{{ study_data_request.partner.count_of_data_requests_declined }}</td>
+                                <td class="cell-requests-pendng">{{ study_data_request.partner.count_of_data_requests_pending }}</td>
+                                <td class="cell-reciprocity">{% widthratio study_data_request.partner.reciprocity 1 100 %} %</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End .table-wrapper -->
+
+            <div class="table-action table-bottom-action">
+                <form action="/studies/{{ study.id }}/transactions" method="get">
+                <div class="search-action">
+                    <a href="javascript:;" class="btn-search js-transaction-search-partner"><span class="icon">SEARCH</span></a>
+                    {{ search_form.company_name | add_class:'text' | attr:"id:partner-name-top" }}
+                    <label for="partner-name-top">Partner Name</label>
+                </div>
+                </form>
+                <!-- End .search-action -->
+
+                <div class="pagination">
+                    {% if paginator.count > 0 %}
+                    <div class="page-turn form">
+                        <span class="page-turn-txt">Show</span>
+                        <select class="js-transaction-partner-page-size" data-page-size='{{ extra_vars }}'>
+                            <option>5</option>
+                            <option selected="selected">10</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>All</option>
+                        </select>
+                        <span class="page-turn-txt">per page</span>
+                    </div>
+                    <div class="total">
+                        <strong>{{ page_obj.start_index }}</strong>-<strong>{{ page_obj.end_index }}</strong> of <strong>{{ paginator.count }}</strong> Studies
+                    </div>
+                    <div class="pagination-buttons">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{{ extra_vars }}" class="btn-previous"><span class="icon">Previous</span></a>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{{ extra_vars }}" class="btn-next"><span class="icon">Next</span></a>
+                        {% endif %}
+                    </div>
+					{% endif %}
+                </div>
+                <!-- End .pagination -->
+
+            </div>
+            <!-- End .table-action -->
+        </div>
+        <!-- End .transaction-table -->
+    </div>
+    <!-- End .transaction-container -->
+</div>
+<!-- End .switch-tab-content -->
+{% endblock %}
+
+{% block modal %}
+<div id="modal">
+    <div class="modal" id="modal-finalize-transactions" data-src="transactions">
+        <div class="modal-header">
+            <a href="/studies?status=1" class="close-modal">CLOSE</a>
+            <h2>Finalize Transactions</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <p>Are you sure you want to finalize the transactions
+and complete the study?</p>
+
+            <div class="buttons">
+                <a href="javascript:;" class="btn-yes"><span><span><span>YES</span></span></span></a>
+                <a href="javascript:;" class="btn-no close-modal"><span><span><span>NO</span></span></span></a>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-finalize-transactions -->
+
+    <div class="modal" id="modal-finalize-transactions-success">
+        <div class="modal-header">
+            <a href="javascript:;" class="close-modal">CLOSE</a>
+            <h2>Successfull</h2>
+        </div>
+        <!-- End .modal-header -->
+        <div class="modal-container">
+
+            <p>Transactions are finalized and study is ready for analysis.</p>
+
+            <div class="buttons">
+                <a href="/studies/{{ study.id }}/results" class="btn-ok close-modal"><span><span><span>OK</span></span></span></a>
+            </div>
+
+        </div>
+        <!-- End .modal-container -->
+    </div>
+    <!-- End #modal-finalize-transactions-success -->
+</div>
+{% endblock %}

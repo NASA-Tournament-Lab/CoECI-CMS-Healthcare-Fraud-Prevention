@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PartnerList>
+    #if (!$errorCode)
+    <Status>Accepted</Status>
+        #foreach( $user in $users )
+    <Partner>
+        <PartnerID>$user.id</PartnerID>
+        <OrganizationName>$user.organizationName</OrganizationName>
+        <EligibleToReceiveDataRequest>$user.eligibleToReceiveDataRequest</EligibleToReceiveDataRequest>
+        <EligibleToInitiateDataRequest>$user.eligibleToInitiateDataRequest</EligibleToInitiateDataRequest>
+    </Partner>
+        #end
+    #else
+    <Status>Not Accepted</Status>
+    <ErrorCode>$errorCode</ErrorCode>
+    <ErrorMessage>$errorMessage</ErrorMessage>
+    #end
+</PartnerList>

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block extra_js_src %}
+<script type="text/javascript" src="/js/raphael-min.js"></script>
+<script type="text/javascript" src="/js/chart.common.js"></script>
+<script type="text/javascript" src="/js/chart.pie.js"></script>
+<script type="text/javascript" src="/js/raphael.export.js"></script>
+{% endblock %}
+{% block main-container %}
+<span id="study_id" data-id="{{ study.id }}"></span>
+<div class="title">
+    <div class="buttons">
+        <form id="study_op_form" method="post">{% csrf_token %}
+            <input name="ids" type="hidden" value="{{ study.id }}"/>
+        </form>
+        {% if study.status == 0 %}
+        <a href="javascript:;" class="btn-execute-study js-delete-study"><span><span><span class="icon">DELETE TRANSACTION</span></span></span></a>
+        <a href="javascript:;" class="btn-execute-study js-execute-study"><span><span><span class="icon">EXECUTE TRANSACTION</span></span></span></a>
+        <a href="/studies/{{ study.id }}/edit" class="btn-edit-study"><span><span><span class="icon">EDIT STUDY</span></span></span></a>
+        {% endif %}
+        {% if study.status == 1 %}
+        <a href="javascript:;" class="btn-transactions"><span><span><span class="icon">FINALIZE TRANSACTIONS</span></span></span></a>
+        {% endif %}
+        {% if study.status == 2 %}
+        <a href="javascript:;" class="btn-archive-study"><span><span><span class="icon">ARCHIVE STUDY</span></span></span></a>
+        {% endif %}
+        <a href="javascript:history.back();" class="btn-back"><span class="icon">Back</span></a>
+        <!-- This link lead to Home.html -->
+    </div>
+    <h2>Study Details - <strong>Study.ID.{{ study.id }}</strong></h2>
+</div>
+<div class="study-details study-details-edited">
+    <label>Study Description:</label>
+    <div class="study-text">
+        <p>{{ study.description }}</p>
+    </div>
+    {% if study.report != '' %}
+    <label>Study Report:</label>
+    <a href="/studies/{{ study.id }}/report" class="pdf">{{ study.id }}.xlsx</a>
+    {% endif %}
+</div>
+<div class="switch-tab-container">
+    <div class="switch-tab">
+        <ul>
+            <li><a href="/studies/{{ study.id }}/business_rule">Study Description</a></li>
+            {% if study.status > 0 %}
+            <li><a href="/studies/{{ study.id }}/transactions">Transactions</a></li>
+            {% endif %}
+            {% if study.status > 1 %}
+            <li><a href="/studies/{{ study.id }}/results">Study Results</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="switch-tab-wrapper">
+        {% block switch-tab-wrapper %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
